@@ -1,2 +1,6 @@
-export { NativeFocusWrapper } from './RCA11yFocusWrapper';
-export { FocusWrapperProps, OnFocusChangeFn } from './RCA11yFocusWrapper.types';
+export { NativeFocusWrapper } from "./RCA11yFocusWrapper";
+export {
+  FocusWrapperProps,
+  OnFocusChangeFn,
+  KeyboardFocusEvent,
+} from "./RCA11yFocusWrapper.types";

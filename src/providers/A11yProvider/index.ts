@@ -1,1 +1,1 @@
-export { A11yProvider} from './A11yProvider';
+export { A11yProvider } from "./A11yProvider";

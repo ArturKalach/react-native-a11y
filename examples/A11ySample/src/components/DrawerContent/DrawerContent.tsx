@@ -1,23 +1,23 @@
-import React from 'react';
-import { DrawerActions, CommonActions } from '@react-navigation/native';
+import React from "react";
+import { StyleSheet, Text } from "react-native";
+import { DrawerActions, CommonActions } from "@react-navigation/native";
 import {
   DrawerContentComponentProps,
   getDrawerStatusFromState,
-} from '@react-navigation/drawer';
-import { KeyboardProvider, Pressable } from 'react-native-a11y';
-import { StyleSheet, Text } from 'react-native';
+} from "@react-navigation/drawer";
+import { KeyboardProvider, Pressable } from "react-native-a11y";
 
 export const DrawerContent = (props: DrawerContentComponentProps) => {
   const { state, navigation, descriptors } = props;
-  const isDrawerOpen = getDrawerStatusFromState(state) === 'open';
+  const isDrawerOpen = getDrawerStatusFromState(state) === "open";
   return (
     <KeyboardProvider value={isDrawerOpen}>
-      {props.state.routes.map((route, i) => {
+      {state.routes.map((route, i) => {
         const focused = i === state.index;
 
         const onPress = () => {
           const event = navigation.emit({
-            type: 'drawerItemPress',
+            type: "drawerItemPress",
             target: route.key,
             canPreventDefault: true,
           });
@@ -35,7 +35,7 @@ export const DrawerContent = (props: DrawerContentComponentProps) => {
           }
         };
 
-        const { title = '' } = descriptors[route.key]?.options || {};
+        const { title = "" } = descriptors[route.key]?.options || {};
 
         return (
           <Pressable key={route.key} onPress={onPress} style={styles.item}>

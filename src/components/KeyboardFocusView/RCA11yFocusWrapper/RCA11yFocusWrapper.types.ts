@@ -1,4 +1,4 @@
-import type { NativeSyntheticEvent, ViewProps } from 'react-native';
+import type { NativeSyntheticEvent, ViewProps } from "react-native";
 
 export type KeyboardFocusEvent = NativeSyntheticEvent<{
   isFocused: boolean;

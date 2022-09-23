@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useKeyboardStatus } from 'react-native-a11y';
-import { B } from '../B';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { useKeyboardStatus } from "react-native-a11y";
+import { B } from "../B";
 
 export const KeyboardExample: React.FC = ({ children }) => {
   const isKeyboardConnected = useKeyboardStatus();
@@ -22,6 +22,6 @@ export const KeyboardExample: React.FC = ({ children }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { justifyContent: 'center' },
+  container: { justifyContent: "center" },
   line: { fontSize: 20, marginBottom: 5 },
 });

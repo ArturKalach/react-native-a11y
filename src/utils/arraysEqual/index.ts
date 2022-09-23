@@ -1,1 +1,1 @@
-export { arraysEqual } from './arraysEqual';
+export { arraysEqual } from "./arraysEqual";

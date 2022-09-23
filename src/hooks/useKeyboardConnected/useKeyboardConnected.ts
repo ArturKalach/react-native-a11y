@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { A11yModule } from 'react-native-a11y';
+import { useEffect, useState } from "react";
+import { A11yModule } from "../../modules";
 
 export const useKeyboardConnected = () => {
-    const [state, setState] = useState(false);
-    
-    useEffect(() => {
-      A11yModule.isKeyboardConnected().then(setState);
+  const [state, setState] = useState(false);
 
-      return A11yModule.keyboardStatusListener(
-        ({ status }: { status: boolean }) => setState(status),
-      );
-    }, []);
-  
-    return state;
+  useEffect(() => {
+    A11yModule.isKeyboardConnected().then(setState);
+
+    return A11yModule.keyboardStatusListener(
+      ({ status }: { status: boolean }) => setState(status),
+    );
+  }, []);
+
+  return state;
 };

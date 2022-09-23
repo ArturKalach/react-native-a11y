@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, ViewStyle } from 'react-native';
-import { Pressable, FocusStyle, OnFocusChangeFn } from 'react-native-a11y';
+import React, { useState } from "react";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Pressable, FocusStyle, OnFocusChangeFn } from "react-native-a11y";
 
 type Props = {
   title?: string;
@@ -44,17 +44,17 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     borderWidth: 2,
-    borderColor: '#111',
+    borderColor: "#111",
     borderRadius: 50,
-    width: '100%',
+    width: "100%",
     maxHeight: 58,
   },
-  font: { fontSize: 18, fontWeight: 'bold', color: '#111' },
+  font: { fontSize: 18, fontWeight: "bold", color: "#111" },
   focus: {
-    backgroundColor: '#aaa',
-    borderColor: '#eee',
+    backgroundColor: "#aaa",
+    borderColor: "#eee",
   },
   focusedFont: {
-    color: '#fff',
+    color: "#fff",
   },
 });

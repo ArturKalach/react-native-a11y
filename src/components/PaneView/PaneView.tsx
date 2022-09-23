@@ -1,11 +1,15 @@
-import React from 'react';
-import { Platform, requireNativeComponent, ViewProps, StyleSheet } from 'react-native';
+import React from "react";
+import {
+  Platform,
+  requireNativeComponent,
+  ViewProps,
+  StyleSheet,
+} from "react-native";
 
-const AndroidPaneView = requireNativeComponent<ViewProps>('RCA11yPaneView');
+const AndroidPaneView = requireNativeComponent<ViewProps>("RCA11yPaneView");
 
-export const PaneView: React.FC = ({
-  children,
-}) => Platform.select({
+export const PaneView: React.FC = ({ children }) =>
+  Platform.select({
     android: (
       <AndroidPaneView style={paneViewStyles.container}>
         {children}
@@ -15,8 +19,7 @@ export const PaneView: React.FC = ({
   });
 
 const paneViewStyles = StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-  });
-  
+  container: {
+    flex: 1,
+  },
+});

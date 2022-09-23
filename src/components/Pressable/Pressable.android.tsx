@@ -8,12 +8,29 @@
  * @format
  */
 
-import React from 'react';
-import { Pressable as RNPressable } from 'react-native';
-import { KeyboardFocusView, KeyboardFocusViewProps } from "../KeyboardFocusView"
+import React from "react";
+import { Pressable as RNPressable } from "react-native";
+import {
+  KeyboardFocusView,
+  KeyboardFocusViewProps,
+} from "../KeyboardFocusView";
 
-export const Pressable: React.FC<KeyboardFocusViewProps> = React.forwardRef(({ canBeFocused, focusStyle, style, onFocusChange, ...props}, ref) => {
-  return <KeyboardFocusView style={style} focusStyle={focusStyle} ref={ref} withView={false} canBeFocused={canBeFocused} onFocusChange={onFocusChange}>
-    <RNPressable {...props} />
-  </KeyboardFocusView>
-})
+export const Pressable: React.FC<KeyboardFocusViewProps> = React.forwardRef(
+  ({ canBeFocused, focusStyle, style, onFocusChange, ...props }, ref) => {
+    return (
+      <KeyboardFocusView
+        style={style}
+        focusStyle={focusStyle}
+        ref={ref}
+        withView={false}
+        canBeFocused={canBeFocused}
+        onFocusChange={onFocusChange}
+      >
+        <RNPressable
+          // eslint-disable-next-line react/jsx-props-no-spreading
+          {...props}
+        />
+      </KeyboardFocusView>
+    );
+  },
+);

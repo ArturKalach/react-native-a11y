@@ -1,5 +1,5 @@
-import type { DrawerNavigationProp } from '@react-navigation/drawer';
-import * as Names from './navigation.consts';
+import type { DrawerNavigationProp } from "@react-navigation/drawer";
+import * as Names from "./navigation.consts";
 
 export type DrawerParamList = {
   [Names.A11Y_ORDER]: undefined;

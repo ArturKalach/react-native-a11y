@@ -1,13 +1,13 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useRef } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
-import { A11yModule } from 'react-native-a11y';
+import { useNavigation } from "@react-navigation/native";
+import React, { useRef } from "react";
+import { Button, StyleSheet, View } from "react-native";
+import { A11yModule } from "react-native-a11y";
 import {
   A11Y_ORDER,
   DrawerNavigation,
   KEYBOARD_FOCUS,
-} from '../../../navigation';
-import { NavBar, ReaderExample, Screen } from '../../components';
+} from "../../../navigation";
+import { NavBar, ReaderExample, Screen } from "../../components";
 
 export const ReaderFocusScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
@@ -51,5 +51,5 @@ export const ReaderFocusScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  example: { alignSelf: 'stretch', marginBottom: 20 },
+  example: { alignSelf: "stretch", marginBottom: 20 },
 });

@@ -1,14 +1,14 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { useRef } from 'react';
-import { StyleSheet } from 'react-native';
-import { A11yModule, KeyboardProvider } from 'react-native-a11y';
-import { KeyboardExample, NavBar, Screen } from '../../components';
+import { useNavigation } from "@react-navigation/native";
+import React, { useRef } from "react";
+import { StyleSheet } from "react-native";
+import { A11yModule, KeyboardProvider } from "react-native-a11y";
+import { KeyboardExample, NavBar, Screen } from "../../components";
 import {
   DrawerNavigation,
   READER_FOCUS,
   STATUS_SCREEN,
-} from '../../../navigation';
-import { Button } from '../../components/Button/Button';
+} from "../../../navigation";
+import { Button } from "../../components/Button/Button";
 
 export const KeyboardFocusScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
@@ -63,5 +63,5 @@ export const KeyboardFocusScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  btn: { marginBottom: 10, width: '100%' },
+  btn: { marginBottom: 10, width: "100%" },
 });
