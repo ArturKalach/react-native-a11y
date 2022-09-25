@@ -197,7 +197,7 @@ You can find a new `A11yOrder` component it's just shorts for `<View {...a11yOrd
 Soon
 
 ## Acknowledgements
-I really appreciate the work and solutions provided by Andrii Koval (https://github.com/ZioVio), Michail Chavkin (https://github.com/mchavkin), Dzmitry Khamitsevich (https://github.com/bulletxenus). I think there was not this library without them, I also want to thank Aliaksei Kisel (https://github.com/ziginsider) and Herman Tseranevich (https://github.com/lollegend) for help with publishing and reviewing.
+I really appreciate the work and solutions provided by [Andrii Koval](https://github.com/ZioVio), [Michail Chavkin](https://github.com/mchavkin), [Dzmitry Khamitsevich](https://github.com/bulletxenus). I think there was not this library without them, I also want to thank [Aliaksei Kisel](https://github.com/ziginsider) and [Herman Tseranevich](https://github.com/lollegend) for help with publishing and reviewing.
 
 ## License
 
