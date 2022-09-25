@@ -1,12 +1,7 @@
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import React, { useCallback } from "react";
+import React from "react";
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text } from "react-native";
-import {
-  A11yModule,
-  A11yOrder,
-  useCombinedRef,
-  useFocusOrder,
-} from "react-native-a11y";
+import { A11yOrder, useFocusOrder } from "react-native-a11y";
 
 import { ABOUT, DrawerNavigation, READER_FOCUS } from "../../../navigation";
 import { NavBar, ReaderExample, Screen } from "../../components";
@@ -17,21 +12,12 @@ export const A11yOrderScreen = () => {
   const goBack = () => navigation.navigate(ABOUT);
 
   const { a11yOrder, refs } = useFocusOrder<Text>(3);
-  const [firstRef, defineFirstRef] = useCombinedRef<Text>(null);
-
-  useFocusEffect(
-    useCallback(() => {
-      A11yModule.setA11yFocus(firstRef);
-    }, [firstRef]),
-  );
-
-  const onLayoutHandler = () => A11yModule.setA11yFocus(firstRef);
 
   return (
     <Screen>
       <ReaderExample>
-        <A11yOrder onLayout={onLayoutHandler} a11yOrder={a11yOrder}>
-          <Text style={styles.font} ref={defineFirstRef}>
+        <A11yOrder a11yOrder={a11yOrder}>
+          <Text style={styles.font} ref={refs[0]}>
             First
           </Text>
           <Text style={styles.font} ref={refs[2]}>

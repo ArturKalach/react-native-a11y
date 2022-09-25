@@ -29,7 +29,7 @@ export interface IA11yModule {
   announceScreenChange: (announcement: string) => void;
   setA11yFocus: (ref: React.RefObject<React.Component>) => void;
   setPreferredKeyboardFocus: (nativeTag: number, nextTag: number) => void;
-  setKeyboardFocus: (nativeTag: React.RefObject<React.Component>) => void;
+  setKeyboardFocus: (ref: React.RefObject<React.Component>) => void;
   focusFirstInteractiveElement: (ref: React.RefObject<React.Component>) => void;
   setA11yElementsOrder: <T>(info: A11yOrderInfo<T>) => void;
 }

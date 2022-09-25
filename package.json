@@ -1,7 +1,7 @@
 {
   "name": "react-native-a11y",
   "version": "0.1.0",
-  "description": "test",
+  "description": "Improvements of a11y for ReactNative, this library improve work with reader and keyboard focus and reader in general.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/index.d.ts",
@@ -33,7 +33,13 @@
   "keywords": [
     "react-native",
     "ios",
-    "android"
+    "android",
+    "react-native a11y",
+    "a11y",
+    "keyboard",
+    "reader focus",
+    "keyboard focus",
+    "WCAG"
   ],
   "repository": "https://github.com/ArturKalach/react-native-a11y",
   "author": "Artur Kalach <artur.kalach.andreevich@gmail.com> (https://github.com/ArturKalach)",
