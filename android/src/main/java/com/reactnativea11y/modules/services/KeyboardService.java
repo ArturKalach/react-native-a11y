@@ -17,6 +17,7 @@ import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.UIManager;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.facebook.react.uimanager.UIManagerModule;
 
@@ -51,23 +52,26 @@ public class KeyboardService implements LifecycleEventListener {
   }
 
   public void setKeyboardFocus(int tag) {
-    Activity activity = context.getCurrentActivity();
-    UIManagerModule uiManager = context.getNativeModule(UIManagerModule.class);
+    final UIManager uiManager = context.getNativeModule(UIManagerModule.class);
+    final Activity activity = context.getCurrentActivity();
+
     if (uiManager == null || activity == null) {
       return;
     }
 
-    try {
-      View view = uiManager.resolveView(tag);
-      activity.runOnUiThread(view::requestFocus);
-    } catch (IllegalViewOperationException error) {
-      Log.e("KEYBOARD_FOCUS_ERROR", error.getMessage());
-    }
+    activity.runOnUiThread(() -> {
+      try {
+        View view = uiManager.resolveView(tag);
+        view.requestFocus();
+      } catch (IllegalViewOperationException error) {
+        Log.e("KEYBOARD_FOCUS_ERROR", error.getMessage());
+      }
+    });
   }
 
   @Override
   public void onHostResume() {
-    Activity activity = context.getCurrentActivity();
+    final Activity activity = context.getCurrentActivity();
 
     if (activity == null) {
       return;
@@ -77,7 +81,7 @@ public class KeyboardService implements LifecycleEventListener {
 
   @Override
   public void onHostPause() {
-    Activity activity = context.getCurrentActivity();
+    final Activity activity = context.getCurrentActivity();
     if (activity == null) return;
     try {
       activity.unregisterReceiver(receiver);

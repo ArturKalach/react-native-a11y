@@ -7,4 +7,5 @@ export type FocusOrderInfo<T> = {
   };
   refs: ((ref: T | null) => void)[];
   reset: () => void;
+  setOrder: (force: boolean) => void;
 };

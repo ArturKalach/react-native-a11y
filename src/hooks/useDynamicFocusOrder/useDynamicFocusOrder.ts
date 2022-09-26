@@ -12,6 +12,7 @@ export const useDynamicFocusOrder: UseDynamicFocusOrder = () => {
     onViewShown: onLayout,
     updateRefList,
     reset: resetOrderManager,
+    setOrder,
   } = managerRef.current;
 
   useEffect(updateRefList);
@@ -28,5 +29,6 @@ export const useDynamicFocusOrder: UseDynamicFocusOrder = () => {
     },
     registerOrder,
     reset,
+    setOrder,
   };
 };

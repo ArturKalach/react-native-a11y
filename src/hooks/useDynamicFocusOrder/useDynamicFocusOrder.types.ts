@@ -8,4 +8,5 @@ export type UseDynamicFocusOrder = () => {
   };
   registerOrder: (order: number) => (ref: View) => void;
   reset: () => void;
+  setOrder: () => void;
 };

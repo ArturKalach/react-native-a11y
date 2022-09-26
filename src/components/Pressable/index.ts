@@ -1,1 +1,1 @@
-export { Pressable } from "./Pressable.d";
+export { Pressable } from "./Pressable";

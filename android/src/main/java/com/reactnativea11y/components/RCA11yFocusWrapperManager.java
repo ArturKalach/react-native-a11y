@@ -17,7 +17,6 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.facebook.react.views.view.ReactViewGroup;
 import com.facebook.react.views.view.ReactViewManager;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -44,26 +43,20 @@ public class RCA11yFocusWrapperManager extends ReactViewManager {
   @NonNull
   @Override
   public ReactViewGroup createViewInstance(@NonNull ThemedReactContext reactContext) {
-    ReactViewGroup wrapper = super.createViewInstance(reactContext);
+    final ReactViewGroup wrapper = super.createViewInstance(reactContext);
     this.reactContext = reactContext;
     this.addEventEmitter(wrapper);
     return wrapper;
   }
 
-  protected void addEventEmitter(@NotNull final ReactViewGroup wrapper) {
+  protected void addEventEmitter(@NonNull final ReactViewGroup wrapper) {
     wrapper.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
       @Override
       public void onChildViewAdded(View parent, View child) {
         child.setOnFocusChangeListener(
           (_v, hasFocus) -> onFocusChanged(hasFocus, child.getId())
         );
-
-        child.setOnKeyListener(new View.OnKeyListener() {
-          @Override
-          public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
-            return onKeyPressed(keyCode, keyEvent, child.getId());
-          }
-        });
+        child.setOnKeyListener((v, keyCode, keyEvent) -> onKeyPressed(keyCode, keyEvent, child.getId()));
       }
 
       @Override

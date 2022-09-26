@@ -37,10 +37,10 @@ export class A11yOrderManager<T> {
     this.setOrder();
   };
 
-  private setOrder = () => {
+  setOrder = (force = false) => {
     if (
-      arraysEqual(this.inProgress, this.current) ||
-      !this.componentsWasShown
+      !force &&
+      (arraysEqual(this.inProgress, this.current) || !this.componentsWasShown)
     ) {
       return;
     }

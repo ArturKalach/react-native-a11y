@@ -24,7 +24,7 @@ public class MainActivity extends ReactActivity {
   @Override
   public void onConfigurationChanged(Configuration newConfig) {
     super.onConfigurationChanged(newConfig);
-    Intent intent = new Intent(ON_CONFIGURATION_CHANGED);
+    final Intent intent = new Intent(ON_CONFIGURATION_CHANGED);
     intent.putExtra(NEW_CONFIG, newConfig);
     this.sendBroadcast(intent);
   }

@@ -11,6 +11,7 @@ export const useFocusOrder = <T>(size: number): FocusOrderInfo<T> => {
     reset: resetOrderManager,
     registerOrderRef,
     updateRefList,
+    setOrder,
   } = managerRef.current;
 
   const reset = useCallback(() => {
@@ -33,5 +34,6 @@ export const useFocusOrder = <T>(size: number): FocusOrderInfo<T> => {
     },
     refs,
     reset,
+    setOrder,
   };
 };
