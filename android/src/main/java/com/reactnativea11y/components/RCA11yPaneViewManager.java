@@ -13,7 +13,7 @@ public class RCA11yPaneViewManager extends ReactViewManager {
 
   @Override
   public ReactViewGroup createViewInstance(ThemedReactContext context) {
-    ReactViewGroup reactViewGroup = super.createViewInstance(context);
+    final ReactViewGroup reactViewGroup = super.createViewInstance(context);
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
       reactViewGroup.setAccessibilityPaneTitle(PANE_VIEW_STUB_TITLE);
     }

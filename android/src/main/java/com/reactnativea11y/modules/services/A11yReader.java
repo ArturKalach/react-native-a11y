@@ -24,7 +24,7 @@ import java.util.List;
 public class A11yReader {
   private static final String TALKBACK_SETTING_ACTIVITY_NAME = "com.android.talkback.TalkBackPreferencesActivity";
 
-  private ReactApplicationContext context;
+  private final ReactApplicationContext context;
 
   public A11yReader(ReactApplicationContext context) {
     this.context = context;
@@ -32,15 +32,10 @@ public class A11yReader {
   }
 
   private void startListening() {
-    AccessibilityManager accessibilityManager = (AccessibilityManager) context
+    final AccessibilityManager accessibilityManager = (AccessibilityManager) context
       .getSystemService(Context.ACCESSIBILITY_SERVICE);
     if (accessibilityManager != null) {
-      accessibilityManager.addAccessibilityStateChangeListener(new AccessibilityManager.AccessibilityStateChangeListener() {
-        @Override
-        public void onAccessibilityStateChanged(boolean b) {
-          accessibilityChanged(b);
-        }
-      });
+      accessibilityManager.addAccessibilityStateChangeListener(this::accessibilityChanged);
       accessibilityChanged(accessibilityManager.isEnabled());
     }
   }
@@ -50,14 +45,14 @@ public class A11yReader {
   }
 
   public void announceScreenChange(String screenName) {
-    AccessibilityManager accessibilityManager = (AccessibilityManager) context
+    final AccessibilityManager accessibilityManager = (AccessibilityManager) context
       .getSystemService(Context.ACCESSIBILITY_SERVICE);
 
     if (accessibilityManager == null || !accessibilityManager.isEnabled()) {
       return;
     }
 
-    AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
+    final AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED);
     event.getText().add(screenName);
 
     accessibilityManager.sendAccessibilityEvent(event);
@@ -66,11 +61,11 @@ public class A11yReader {
 
   @RequiresApi(api = Build.VERSION_CODES.N)
   public void setA11yOrder(@NonNull ReadableArray reactTags) {
-    int length = reactTags.size();
+    final int length = reactTags.size();
     if (length < 2) return;
 
-    UIManagerModule uiManager = context.getNativeModule(UIManagerModule.class);
-    ArrayList<View> views = new ArrayList<>();
+    final UIManagerModule uiManager = context.getNativeModule(UIManagerModule.class);
+    final ArrayList<View> views = new ArrayList<>();
     for (int i = 0; i < length; i++) {
       try {
         views.add(uiManager.resolveView(reactTags.getInt(i)));
@@ -79,8 +74,8 @@ public class A11yReader {
       }
     }
     for (int i = 0; i < views.size() - 1; i++) {
-      View currentView = views.get(i);
-      View nextView = views.get(i + 1);
+      final View currentView = views.get(i);
+      final View nextView = views.get(i + 1);
       currentView.setNextFocusForwardId(nextView.getId());
       currentView.setAccessibilityTraversalBefore(nextView.getId());
     }
@@ -88,15 +83,13 @@ public class A11yReader {
 
   public boolean isTalkBackEnabled() {
     boolean enable = false;
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-        AccessibilityManager manager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-        List<AccessibilityServiceInfo> serviceList = manager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_SPOKEN);
-        for (AccessibilityServiceInfo serviceInfo : serviceList) {
-          String name = serviceInfo.getSettingsActivityName();
-          if (!TextUtils.isEmpty(name) && name.equals(TALKBACK_SETTING_ACTIVITY_NAME)) {
-            enable = true;
-          }
-        }
+    final AccessibilityManager manager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
+    final List<AccessibilityServiceInfo> serviceList = manager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_SPOKEN);
+    for (AccessibilityServiceInfo serviceInfo : serviceList) {
+      final String name = serviceInfo.getSettingsActivityName();
+      if (!TextUtils.isEmpty(name) && name.equals(TALKBACK_SETTING_ACTIVITY_NAME)) {
+        enable = true;
+      }
     }
     return enable;
   }

@@ -26,7 +26,7 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
   public static final String EVENT_PROP = "status";
 
   private A11yReader a11yReader;
-  private ReactApplicationContext context;
+  private final ReactApplicationContext context;
   private KeyboardService keyboardService;
 
   @Override
@@ -58,13 +58,13 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
 
 
   private void a11yChanged(Boolean a11yState) {
-    WritableMap params = Arguments.createMap();
+    final WritableMap params = Arguments.createMap();
     params.putBoolean(EVENT_PROP, a11yState);
     sendEvent(context, A11Y_STATUS_EVENT, params);
   }
 
   private void kChanged(Boolean info) {
-    WritableMap params = Arguments.createMap();
+    final WritableMap params = Arguments.createMap();
     params.putBoolean(EVENT_PROP, info);
     sendEvent(context, KEYBOARD_STATUS_EVENT, params);
   }

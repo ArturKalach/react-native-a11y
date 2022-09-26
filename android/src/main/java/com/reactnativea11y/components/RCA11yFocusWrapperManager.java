@@ -67,18 +67,19 @@ public class RCA11yFocusWrapperManager extends ReactViewManager {
 
   private boolean onKeyPressed(int keyCode, KeyEvent keyEvent, int childId) {
     if (keyEvent.getAction() == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-      WritableMap eventInfo = Arguments.createMap();
+      final WritableMap eventInfo = Arguments.createMap();
       eventInfo.putBoolean(IS_ENTER_PRESSED, true);
       eventInfo.putBoolean(IS_ALT_PRESSED, keyEvent.isAltPressed());
       eventInfo.putBoolean(IS_SHIFT_PRESSED, keyEvent.isShiftPressed());
       pushEvent(childId, eventInfo, ON_ENTER_PRESSED);
+      return true;
     }
 
     return false;
   }
 
   private void onFocusChanged(Boolean hasFocus, int id) {
-    WritableMap eventInfo = Arguments.createMap();
+    final WritableMap eventInfo = Arguments.createMap();
     eventInfo.putBoolean(IS_FOCUSED, hasFocus);
     pushEvent(id, eventInfo, ON_FOCUS_CHANGE);
   }

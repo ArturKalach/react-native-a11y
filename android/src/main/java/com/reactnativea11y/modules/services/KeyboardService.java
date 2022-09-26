@@ -14,9 +14,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.facebook.react.bridge.LifecycleEventListener;
-import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.UIManager;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.facebook.react.uimanager.UIManagerModule;
@@ -25,11 +23,11 @@ public class KeyboardService implements LifecycleEventListener {
   private final String NEW_CONFIG = "newConfig";
   private final String ON_CONFIGURATION_CHANGED = "onConfigurationChanged";
 
-  private ReactApplicationContext context;
-  private BroadcastReceiver receiver;
+  private final ReactApplicationContext context;
+  private final BroadcastReceiver receiver;
 
   public boolean isKeyboardConnected() {
-    int keyboard = context.getResources().getConfiguration().keyboard;
+    final int keyboard = context.getResources().getConfiguration().keyboard;
     return keyboard != KEYBOARD_UNDEFINED && keyboard != KEYBOARD_NOKEYS;
   }
 
@@ -39,7 +37,7 @@ public class KeyboardService implements LifecycleEventListener {
     receiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
-        Configuration newConfig = intent.getParcelableExtra(NEW_CONFIG);
+        final Configuration newConfig = intent.getParcelableExtra(NEW_CONFIG);
         keyboardChanged(newConfig.hardKeyboardHidden == HARDKEYBOARDHIDDEN_NO);
       }
     };
