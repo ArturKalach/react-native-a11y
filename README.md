@@ -7,6 +7,15 @@ This is a React Native A11y Library with following main features
 ⌨️ Keyboard features: Focus </br>
 🙌 Others features soon </br>
 
+| iOS reader    | Android reader |
+| ------------- | -------------- |
+| <img src="/.github/images/ios-reader.gif" height="500" />| <img src="/.github/images/android-reader.gif" height="500" />|
+
+
+| iOS Keyboard  | Android Keyboard |
+| ------------- | ---------------- |
+| <img src="/.github/images/ios-keyboard.gif" height="500" />| <img src="/.github/images/android-keyboard.gif" height="500" />|
+
 A11y is important, there are a lot of reasons to support and be compliant with it. First of all, it helps people with disabilities work and use your application easily and live a better life. Banks, medication, shops, and delivery is a small list of what people are usually interested in, and it can be more important for people with limitations.
 
 There are can be other reasons, customer requirements, laws and requirements for specific groups of apps, 
@@ -216,6 +225,104 @@ const App = () => {
 The code in example set a new order for components, instead of a direct one it will follow 1 -> 3 -> 2
 
 You also can find a new `A11yOrder` component it's just shorts for `<View {...a11yOrder} />` 
+
+### KeyboardFocusView
+
+`KeyboardFocusView` is view based component, has additional props and provide possibility to make component focusable by a keyboard
+
+| Props         | Description   |
+| ------------- | ------------- |
+| onFocusChange?| Event to handle focus change, `(e: event.nativeEvent.isFocused) => void` |
+| canBeFocused? | `boolean` default true, describe whether component can be focused by keyboard |
+
+
+#### Examples
+
+```
+import { KeyboardFocusView } "react-native-a11y";
+
+const App = () => {
+
+  return <KeyboardFocusView> 
+    <Text>Focusable</Text>
+  </KeyboardFocusView>
+}
+
+
+```
+
+### Pressable
+
+Almost original pressable, but used `KeyboardFocusView` instead of `View`
+
+Provides additional functionality for usual `Pressable`
+
+| Props         | Description   |
+| ------------- | ------------- |
+| onFocusChange?| Event to handle focus change, `(e: event.nativeEvent.isFocused) => void` |
+| canBeFocused? | `boolean` default true, describe whether component can be focused by keyboard |
+
+
+#### Examples
+
+```
+watch: examples/A11ySample/src/components/Button
+
+import React, { useState } from "react";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Pressable, FocusStyle, OnFocusChangeFn } from "react-native-a11y";
+
+
+export const Button = React.forwardRef<View, Props>(
+  ({ title, onPress, style, focusStyle, canBeFocused = true }, ref) => {
+    ...
+
+    const [focused, setFocusStatus] = useState(false);
+
+    const onFocusChangeHandler: OnFocusChangeFn = event => {
+      setFocusStatus(event.nativeEvent.isFocused);
+    };
+
+    return (
+      <View style={style}>
+        <Pressable
+          onFocusChange={onFocusChangeHandler}
+          canBeFocused={canBeFocused}
+          onPress={onPress}
+          style={[styles.container]}
+          focusStyle={focusStyle || fStyle}
+          ref={ref}
+        >
+          <Text style={[styles.font, focused && styles.focusedFont]}>
+            {title}
+          </Text>
+        </Pressable>
+      </View>
+    );
+  },
+);
+```
+
+### KeyboardProvider
+Specific provider, used to block all focusable views (KeyboardFocusView). Based on value props disable or not KeyboardFocusView. It can be useful to block list of components, on screen for example or on Drawer in React Navigation.
+
+```
+watch: examples/A11ySample/src/screens/KeyboardFocusScreen
+
+const App = () => {
+  return <>
+     <Button
+        style={styles.btn}
+        title="Title"
+      />
+      <KeyboardProvider value={false}>
+        <Button title="Disabled focus" />
+        <Button title="Disabled focus" />
+      </KeyboardProvider>
+  </>
+}
+```
+
 
 ## Roadmap 
 - Add more examples, update Readme
