@@ -3,9 +3,9 @@
 
 This is a React Native A11y Library with following main features
 
-🤖 Reader features: Focus, Order, Reader
-⌨️ Keyboard features: Focus
-🙌 Others features soon
+🤖 Reader features: Focus, Order, Reader </br>
+⌨️ Keyboard features: Focus </br>
+🙌 Others features soon </br>
 
 A11y is important, there are a lot of reasons to support and be compliant with it. First of all, it helps people with disabilities work and use your application easily and live a better life. Banks, medication, shops, and delivery is a small list of what people are usually interested in, and it can be more important for people with limitations.
 
