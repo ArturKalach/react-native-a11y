@@ -1,7 +1,7 @@
 import { View } from "react-native";
 
-import { FocusWrapperProps } from "./RCA11yFocusWrapper";
+import { KeyboardFocusViewProps } from "./KeyboardFocusView.types";
 
 declare const KeyboardFocusView: React.ForwardRefExoticComponent<
-  FocusWrapperProps & React.RefAttributes<View>
+  KeyboardFocusViewProps & React.RefAttributes<View>
 >;

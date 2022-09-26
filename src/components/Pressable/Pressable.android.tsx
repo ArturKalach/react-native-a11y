@@ -9,13 +9,13 @@
  */
 
 import React from "react";
-import { Pressable as RNPressable } from "react-native";
+import { Pressable as RNPressable, View } from "react-native";
 import {
   KeyboardFocusView,
   KeyboardFocusViewProps,
 } from "../KeyboardFocusView";
 
-export const Pressable: React.FC<KeyboardFocusViewProps> = React.forwardRef(
+export const Pressable = React.forwardRef<View, KeyboardFocusViewProps>(
   ({ canBeFocused, focusStyle, style, onFocusChange, ...props }, ref) => {
     return (
       <KeyboardFocusView
