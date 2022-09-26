@@ -1,34 +1,39 @@
 
 # React Native A11y
 
+This is a React Native A11y Library with following main features
+
+🤖 Reader features: Focus, Order, Reader
+⌨️ Keyboard features: Focus
+🙌 Others features soon
+
+A11y is important, there are a lot of reasons to support and be compliant with it. First of all, it helps people with disabilities work and use your application easily and live a better life. Banks, medication, shops, and delivery is a small list of what people are usually interested in, and it can be more important for people with limitations.
+
+There are can be other reasons, customer requirements, laws and requirements for specific groups of apps, 
+remote control, etc. Based on this you can find a lot of advantages and benefits to supporting A11y.
+
 **_NOTE:_**   
 0.67.* - checked only, old architecture.
-Unfortunately, it is currently only for old architecture, we are working on updating to the new one.
+Unfortunately, the new architecture is not supported yet, we plan to do it asap. Not all applications can switch architecture to the new one, there are a lot of problems with migration, usually with external libs, this library was developed on 0.67.* and it was decided to start with it. We plan to update the library to support 0.68.* - 0.70.* and also check the old versions for working.
 ---
-
-A11y components and utils for RN. A11y is important, there are a lot of reasons to make your application accessible, at least requirements from customers.
-
-`react-native-a11y` is a set of tools and components that will help make your application more accessible and provides additional solutions for working with `reader` (TalkBack/VoiceOver) and hardware `keyboard focus`. 
-
-
-The components and utils of this library were developed to achieve WCAG 2.1 AA which can be different from standard mobile accessibility.
-
-This library does not change standard components, it only extends functionally, so you can install it to use some features in an already existing project or a new one.
-
 ## Installation
-This library is quite alfa, and needs to be tested a lot. Solutions of this library was tested a lot by different people a11y specialist and QAs, but there are some changes which are new one and we need some time to check and implement everything, to try and help you can follow the gide below. We will be glad to issues, questions, and help.
+This library is not finished yer and currently on alfa stage. We will be glad to issues, questions, and help.
+
+1. Download package with npm or yarn
 
 ```
 npm i react-native-a11y
 ```
-or
 ```
 yarn add react-native-a11y
 ```
 
-### Additional for Android 
+2. Install pods
+cd ios && pod install
 
-To listen to android changes the Android Intent is used, you need to add additional lines to your `MainActivity.java` file
+3. Android only
+
+Add to the  `MainActivity.java` lines:
 
 ```
   //android/app/src/main/java/com/project-name/MainActivity.java
@@ -48,11 +53,7 @@ To listen to android changes the Android Intent is used, you need to add additio
 
 ```
 
-## Usage
-
-A11y library consists of different components and hooks, to start work with `react-native-a11y` you can get familiar with an example app in `examples/A11ySample`.
-
-First of all providers: 
+4. Add provider to root of your app:
 
 ```
 watch: examples/A11ySample/App.tsx
@@ -66,31 +67,33 @@ export const App = () => {
 };
 ```
 
+## Usage
+
+A11y library consists of different components and hooks, to start work with `react-native-a11y` you can get familiar with an example app in `examples/A11ySample`.
+
 ### A11yModule
-The core of this library is `A11yModule` that provides additional functions to work with a11y such as a11y order, keyboard and reader focus, keyboard focus view, etc
 
-Usually you will use `setA11yFocus` | `setKeyboardFocus` | `announceForAccessibility` and probably `announceScreenChange`, you can find a list of all functions with description bellow.
-
-
-| Function      | Description   |
-| ------------- | ------------- |
-| isA11yReaderEnabled  | Check whether an a11y reader (TalkBack or VoiceOver) is enabled  |
-| isKeyboardConnected | Check whether a keyboard is connected  |
-|a11yStatusListener | listener for a11y reader status change |
-|keyboardStatusListener| listener to keyboard connection status changes |
-|announceForAccessibility | soon |
-|announceScreenChange | soon |
-|setA11yFocus| set a11y reader focus |
-|setKeyboardFocus | set keyboard focus |
-|setPreferredKeyboardFocus| soon  |
-|focusFirstInteractiveElement| focus first interactive element on a screen |
-|setA11yElementsOrder| set a11y reader focus |
-
-A11yModule is a facade of functions that call different native methods.
-
-`setA11yFocus` and `setKeyboardFocus` works similar to ` AccessibilityInfo.setAccessibilityFocus` but allows set focus on iOS and for keyboard, one additional difference is they request refs instead of tags and you don't need use `findNodeHandle` we use it inside.
+The core of the library is `A11yModule`, `A11yModule` provides additional functions to work with a11y such as order, reader focus, keyboard focus, announcements, etc
 
 
+| Function      | Description   | Interface |
+| ------------- | ------------- | --------- |
+| `isA11yReaderEnabled` | return promise with status of a11y reader (TalkBack or VoiceOver)  true(enabled)/false(disabled) |  `() => Promise<boolean>` |
+| `isKeyboardConnected` | return promise with status of keyboard connection, true(connected)/false(disconnected) | `() => Promise<boolean>` |
+| `a11yStatusListener` | listener for a11y reader status | `((e: { status: boolean }) => void) => void;` |
+| `keyboardStatusListener` | listener for keyboard connection status | `((e: { status: boolean }) => void) => void;` |
+| `announceForAccessibility` | Post a string to be announced by the screen reader. Android default, ios specific. | `(announcement: string) => void;` |
+| `announceScreenChange` | Announces new screen name. | `(announcement: string) => void;` |
+| `setA11yFocus` | Set a11y reader focus to the component | `(ref: React.RefObject<React.Component>) => void;` |
+| `setKeyboardFocus` | Set keyboard focus to the component | `(ref: React.RefObject<React.Component>) => void;` |
+| `setPreferredKeyboardFocus` | `iOS` only, set redirection of keyboard from one component to another one | `(nativeTag: number, nextTag: number) => void;` |
+| `focusFirstInteractiveElement` | Focus first interactive element on a screen | `(ref: React.RefObject<React.Component>) => void;` |
+| `setA11yElementsOrder` | Set a11y reader focus order | `setA11yElementsOrder: <T>(info: { tag?: RefObject<T>; views: T[]; }) => void;` |
+
+`setA11yFocus` and `setKeyboardFocus` works similar to ` AccessibilityInfo.setAccessibilityFocus`, difference is they request refs instead of tags and you don't need use `findNodeHandle`.
+
+
+### Examples
 #### setA11yFocus
 ```
 watch: examples/A11ySample/src/screens/ReaderFocusScreen
@@ -118,8 +121,6 @@ return (
   />
 }
 ```
-
-
 
 #### setKeyboardFocus
 ```
@@ -149,14 +150,26 @@ return (
 }
 ```
 
-I don't provide an example of `A11yModule.setA11yElementsOrder` here because we have a better solution than a direct call.
-### useFocusOrder and useDynamicFocusOrder
-To set an order for components we have `useFocusOrder`, `useDynamicFocusOrder` and `A11yModule.setA11yElementsOrder`
+You can but not really need to use `A11yModule.setA11yElementsOrder` directly, we have specific useful hooks to work with order. 
 
-`A11yModule.setA11yElementsOrder` is more direct one we just pass refs to components and set order, but there are a lot of problems with understanding when this function have to be called, to solve these problems we use two similar hooks `useFocusOrder` and `useDynamicFocusOrder`
+### useFocusOrder and useDynamicFocusOrder
+To set an order for components we have `useFocusOrder`, `useDynamicFocusOrder`
+
+`A11yModule.setA11yElementsOrder` is a more direct one we just pass refs to components and set order, but there are a lot of questions about when to call and set order. To make a better experience two similar hooks were created `useFocusOrder` and `useDynamicFocusOrder`
 
 #### useDynamicFocusOrder
 `useDynamicFocusOrder` returns target ref, trigger function, and function to register your components.
+
+```
+export type UseDynamicFocusOrder = () => {
+  a11yOrder: { 
+    ref: RefObject<View>; /// target ref, we need a target ref to a container View
+    onLayout: () => void; // trigger, we use onLayout to realize when components are appear on a screen, useEffect and useLayoutEffect don't work properly
+  };
+  registerOrder: (order: number) => (ref: View) => void; // function to set order
+  reset: () => void; // clear function
+};
+```
 
 ```
 soon
@@ -166,39 +179,46 @@ soon
 `useFocusOrder` is based on `useDynamicFocusOrder` but more static and predictable.
 
 ```
+(size: number) // count of refs
+    => FocusOrderInfo<T> = {
+  a11yOrder: { 
+    ref: RefObject<T>; // target ref, we need a target ref to a container View
+    onLayout: () => void; // trigger, we use onLayout to realize when components are appear on a screen, useEffect and useLayoutEffect don't work properly
+  };
+  refs: ((ref: T | null) => void)[]; // array of callback refs to use for order 
+  reset: () => void; // clear function
+};
+
+```
+
+```
 watch: examples/A11ySample/src/screens/A11yOrderScreen
  
 import { A11yOrder, useFocusOrder } from "react-native-a11y";
-...
 
 const App = () => {
-
- const { a11yOrder, refs } = useFocusOrder(3); // 3 number of wanted refs
-
-...
-
-return (
-    <A11yOrder onLayout={onLayoutHandler} a11yOrder=  {a11yOrder}>
-        <Text style={styles.font} ref={refs[0]}>
-        First
-        </Text>
-        <Text style={styles.font} ref={refs[2]}>
-        Third
-        </Text>
-        <Text style={styles.font} ref={refs[1]}>
-        Second
-        </Text>
-    </A11yOrder>
-)
-
-}
+    const { a11yOrder, refs } = useFocusOrder(3); // 3 number of wanted refs
+    ...
+    return (
+        <A11yOrder onLayout={onLayoutHandler} a11yOrder=  {a11yOrder}>
+            <Text style={styles.font} ref={refs[0]}>
+                First
+            </Text>
+            <Text style={styles.font} ref={refs[2]}>
+                Third
+            </Text>
+            <Text style={styles.font} ref={refs[1]}>
+                Second
+            </Text>
+        </A11yOrder>
+    )
 ```
-This code set a new order for components, instead of a direct one it will follow 1 -> 3 -> 2
+The code in example set a new order for components, instead of a direct one it will follow 1 -> 3 -> 2
 
 You also can find a new `A11yOrder` component it's just shorts for `<View {...a11yOrder} />` 
 
 ## Roadmap 
-- Add examples and update samples
+- Add more examples, update Readme
 - Add tests
 - Migrate to the new architecture
 - Check React Navigation for A11y and make examples 
