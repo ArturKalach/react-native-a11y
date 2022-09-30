@@ -1,26 +1,26 @@
-package com.reactnativea11y.modules;
+package com.reactnativea11y;
 
 import android.os.Build;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
+import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.ReactContext;
-import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
-import com.reactnativea11y.modules.services.A11yReader;
-import com.reactnativea11y.modules.services.KeyboardService;
-
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.Arguments;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.reactnativea11y.services.A11yReader;
+import com.reactnativea11y.services.KeyboardService;
 
-public class RCA11yModule extends ReactContextBaseJavaModule {
-  public static final String REACT_CLASS = "RCA11yModule";
+
+public class RCA11yModuleImpl {
+    private final ReactApplicationContext context;
+    private A11yReader a11yReader;
+    private KeyboardService keyboardService;
+
   public static final String A11Y_STATUS_EVENT = "a11yStatus";
   public static final String KEYBOARD_STATUS_EVENT = "keyboardStatus";
   public static final String EVENT_PROP = "status";
@@ -29,9 +29,7 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
   private A11yReader a11yReader;
   private KeyboardService keyboardService;
 
-  @Override
   public void initialize() {
-    super.initialize();
     this.keyboardService = new KeyboardService(context) {
       @Override
       public void keyboardChanged(Boolean info) {
@@ -41,14 +39,8 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
     this.a11yReader = new A11yReader(context);
   }
 
-  public RCA11yModule(ReactApplicationContext applicationContext) {
-    super(applicationContext);
-    context = applicationContext;
-  }
-
-  @Override
   public String getName() {
-    return REACT_CLASS;
+    return NAME;
   }
 
 
@@ -58,20 +50,18 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
     sendEvent(context, KEYBOARD_STATUS_EVENT, params);
   }
 
-  private void sendEvent(ReactContext reactContext,
+  private void sendEvent(ReactApplicationContext reactContext,
                          String eventName,
-                         @Nullable WritableMap params) {
+                         @NonNull WritableMap params) {
     reactContext
       .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit(eventName, params);
   }
 
-  @ReactMethod
   public void setKeyboardFocus(int tag) {
     this.keyboardService.setKeyboardFocus(tag);
   }
 
-  @ReactMethod
   public void announceScreenChange(String screenName) {
     this.a11yReader.announceScreenChange(screenName);
   }
@@ -82,18 +72,7 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
   }
 
   @RequiresApi(api = Build.VERSION_CODES.N)
-  @ReactMethod
   public void setA11yOrder(@NonNull ReadableArray reactTags) {
     this.a11yReader.setA11yOrder(reactTags);
-  }
-
-  @ReactMethod
-  public void addListener(String eventName) {
-
-  }
-
-  @ReactMethod
-  public void removeListeners(Integer count) {
-
   }
 }

@@ -1,20 +1,19 @@
+import React from "react";
 import {
   AccessibilityInfo,
   findNodeHandle,
   InteractionManager,
-  NativeModules,
   NativeEventEmitter,
 } from "react-native";
 import type {
   A11yOrderInfo,
-  A11yNativeModule,
   IA11yModule,
   StatusCallback,
 } from "./A11yModule.types";
 import { noop } from "../../utils";
 import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
 
-const NativeModule = NativeModules.RCA11yModule as A11yNativeModule;
+import { RCA11yModule } from "./RCA11yModule";
 
 class A11yAndroidImpl implements IA11yModule {
   announceForAccessibility(announcement: string) {
@@ -24,7 +23,7 @@ class A11yAndroidImpl implements IA11yModule {
   isKeyboardConnected = NativeModule.isKeyboardConnected;
 
   keyboardStatusListener = (callback: StatusCallback) => {
-    const eventEmitter = new NativeEventEmitter(NativeModules.RCA11yModule);
+    const eventEmitter = new NativeEventEmitter(RCA11yModule);
     const eventListener = eventEmitter.addListener(
       KEYBOARD_STATUS_EVENT,
       callback,
@@ -36,7 +35,7 @@ class A11yAndroidImpl implements IA11yModule {
     const tag = findNodeHandle(ref.current);
     if (tag) {
       InteractionManager.runAfterInteractions(() => {
-        NativeModule.setKeyboardFocus(tag);
+        RCA11yModule.setKeyboardFocus(tag);
       });
     }
   }
@@ -44,7 +43,7 @@ class A11yAndroidImpl implements IA11yModule {
   focusFirstInteractiveElement = this.setA11yFocus;
 
   announceScreenChange(announcement: string) {
-    NativeModule.announceScreenChange(announcement);
+    RCA11yModule.announceScreenChange(announcement);
   }
 
   setPreferredKeyboardFocus = noop;
@@ -60,7 +59,7 @@ class A11yAndroidImpl implements IA11yModule {
     const tags = views
       .map(view => findNodeHandle(view as React.Component))
       .filter(view => Boolean(view));
-    NativeModule.setA11yOrder?.(tags as number[]);
+    RCA11yModule.setA11yOrder?.(tags as number[]);
   };
 }
 

@@ -7,12 +7,10 @@ import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
 
 import type {
   A11yOrderInfo,
-  A11yNativeModule,
   IA11yModule,
   StatusCallback,
 } from "./A11yModule.types";
-
-const NativeModule = NativeModules.RCA11yModule as A11yNativeModule;
+import { RCA11yModule } from "./RCA11yModule";
 
 class A11yModuleIOSImpl implements IA11yModule {
   private _currentFocusedTag: number | null = null;
@@ -33,23 +31,23 @@ class A11yModuleIOSImpl implements IA11yModule {
   };
 
   announceForAccessibility = (announcement: string) => {
-    NativeModule.announceForAccessibility(announcement);
+    RCA11yModule.announceForAccessibility(announcement);
   };
 
   announceScreenChange = (announcement: string) => {
-    NativeModule.announceScreenChange(announcement);
+    RCA11yModule.announceScreenChange(announcement);
   };
 
-  setA11yFocus = (ref: React.RefObject<React.Component>) => {
+  setA11yFocus = (ref: React.RefObject<React.Component<any, any>>) => {
     const tag = findNodeHandle(ref.current);
     if (tag) {
-      NativeModule.setAccessibilityFocus(tag);
+      RCA11yModule.setAccessibilityFocus(tag);
     }
   };
 
   setPreferredKeyboardFocus = (tag: number, targetTag: number) => {
     if (Number.isInteger(tag) && Number.isInteger(targetTag)) {
-      NativeModule.setPreferredKeyboardFocus(tag, targetTag);
+      RCA11yModule.setPreferredKeyboardFocus(tag, targetTag);
     }
   };
 
@@ -61,7 +59,7 @@ class A11yModuleIOSImpl implements IA11yModule {
       Number.isInteger(this._currentFocusedTag) &&
       Number.isInteger(tag)
     ) {
-      NativeModule.setKeyboardFocus(this._currentFocusedTag, tag);
+      RCA11yModule.setKeyboardFocus(this._currentFocusedTag, tag);
     }
   };
 
@@ -85,7 +83,7 @@ class A11yModuleIOSImpl implements IA11yModule {
       .map(view => findNodeHandle(view as React.Component))
       .filter(view => Boolean(view)) as number[];
 
-    NativeModule?.setA11yOrder?.(tags, targetView);
+    RCA11yModule?.setA11yOrder?.(tags, targetView);
   };
 }
 
