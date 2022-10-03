@@ -54,7 +54,7 @@ export class A11yOrderManager<T> {
 
   onViewShown = () => {
     this.componentsWasShown = true;
-    this.setOrder();
+    this.updateRefList();
   };
 
   reset = () => {
