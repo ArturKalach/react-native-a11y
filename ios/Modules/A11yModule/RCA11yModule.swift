@@ -13,15 +13,12 @@ import GameController
 
 @objc(RCA11yModule)
 class RCA11yModule : RCTEventEmitter, KeyboardFocusManager, A11yOrderManager {
-    let a11yStatusEvent: String = "a11yStatus"
     let keyboardStatusEvent: String = "keyboardStatus"
     
     let eventProp = "status";
     
     override init(){
         super.init()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.voiceOverStatusChanged(notification:)), name: UIAccessibility.voiceOverStatusDidChangeNotification, object: nil)
         
         if #available(iOS 14.0, *) {
             NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasConnected(notification:)), name: Notification.Name.GCKeyboardDidConnect, object: nil)
@@ -31,13 +28,10 @@ class RCA11yModule : RCTEventEmitter, KeyboardFocusManager, A11yOrderManager {
     }
     
     override func supportedEvents() -> [String]! {
-        return [a11yStatusEvent, keyboardStatusEvent]
+        return [keyboardStatusEvent]
     }
     
-    @objc func voiceOverStatusChanged(notification: Notification) {
-        sendEvent(withName: a11yStatusEvent, body: [eventProp: UIAccessibility.isVoiceOverRunning])
-    }
-    
+
     @objc func keyboardWasConnected(notification: Notification) {
         sendEvent(withName: keyboardStatusEvent, body: [eventProp: true])
     }
@@ -84,11 +78,6 @@ class RCA11yModule : RCTEventEmitter, KeyboardFocusManager, A11yOrderManager {
                 }
             }
         }
-    }
-    
-    @objc
-    func isA11yReaderEnabled(_ resolve: RCTPromiseResolveBlock, rejecter reject: RCTPromiseRejectBlock) -> Void {
-        resolve(UIAccessibility.isVoiceOverRunning)
     }
     
     @objc
