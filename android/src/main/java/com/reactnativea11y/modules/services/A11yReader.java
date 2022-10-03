@@ -28,20 +28,6 @@ public class A11yReader {
 
   public A11yReader(ReactApplicationContext context) {
     this.context = context;
-    this.startListening();
-  }
-
-  private void startListening() {
-    final AccessibilityManager accessibilityManager = (AccessibilityManager) context
-      .getSystemService(Context.ACCESSIBILITY_SERVICE);
-    if (accessibilityManager != null) {
-      accessibilityManager.addAccessibilityStateChangeListener(this::accessibilityChanged);
-      accessibilityChanged(accessibilityManager.isEnabled());
-    }
-  }
-
-  public void accessibilityChanged(Boolean isEnabled) {
-    Log.i("A11y was changed", String.valueOf(isEnabled));
   }
 
   public void announceScreenChange(String screenName) {
@@ -79,18 +65,5 @@ public class A11yReader {
       currentView.setNextFocusForwardId(nextView.getId());
       currentView.setAccessibilityTraversalBefore(nextView.getId());
     }
-  }
-
-  public boolean isTalkBackEnabled() {
-    boolean enable = false;
-    final AccessibilityManager manager = (AccessibilityManager) context.getSystemService(Context.ACCESSIBILITY_SERVICE);
-    final List<AccessibilityServiceInfo> serviceList = manager.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_SPOKEN);
-    for (AccessibilityServiceInfo serviceInfo : serviceList) {
-      final String name = serviceInfo.getSettingsActivityName();
-      if (!TextUtils.isEmpty(name) && name.equals(TALKBACK_SETTING_ACTIVITY_NAME)) {
-        enable = true;
-      }
-    }
-    return enable;
   }
 }
