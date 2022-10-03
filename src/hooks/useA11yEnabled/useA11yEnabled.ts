@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { A11yModule } from "../../modules";
+import { AccessibilityInfo } from "react-native";
 
 export const useA11yEnabled = () => {
   const [state, setState] = useState(false);
   useEffect(() => {
-    A11yModule.isA11yReaderEnabled().then(setState);
-
-    return A11yModule.a11yStatusListener(({ status }: { status: boolean }) =>
-      setState(status),
-    );
+    AccessibilityInfo.isScreenReaderEnabled().then(setState);
+    const listener = AccessibilityInfo.addEventListener("change", setState);
+    return listener.remove;
   }, []);
 
   return state;

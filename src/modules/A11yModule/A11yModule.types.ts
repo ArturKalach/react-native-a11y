@@ -6,7 +6,6 @@ export type A11yOrderInfo<T> = {
 };
 
 export type A11yNativeModule = {
-  isA11yReaderEnabled: () => Promise<boolean>;
   isKeyboardConnected: () => Promise<boolean>;
   announceForAccessibility: (announcement: string) => void;
   announceScreenChange: (announcement: string) => void;
@@ -21,9 +20,7 @@ export type StatusCallback = (e: { status: boolean }) => void;
 export interface IA11yModule {
   currentFocusedTag?: number;
 
-  isA11yReaderEnabled: () => Promise<boolean>;
   isKeyboardConnected: () => Promise<boolean>;
-  a11yStatusListener: (callback: StatusCallback) => void;
   keyboardStatusListener: (callback: StatusCallback) => void;
   announceForAccessibility: (announcement: string) => void;
   announceScreenChange: (announcement: string) => void;

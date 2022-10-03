@@ -39,10 +39,6 @@ RCT_EXTERN_METHOD(
                   node:(nonnull NSNumber *)node
                   )
 RCT_EXTERN_METHOD(
-                  isA11yReaderEnabled: (RCTPromiseResolveBlock)resolve
-                  rejecter:(RCTPromiseRejectBlock)reject
-                  )
-RCT_EXTERN_METHOD(
                   isKeyboardConnected: (RCTPromiseResolveBlock)resolve
                   rejecter:(RCTPromiseRejectBlock)reject
                   )

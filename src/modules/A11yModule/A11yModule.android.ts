@@ -21,15 +21,7 @@ class A11yAndroidImpl implements IA11yModule {
     AccessibilityInfo.announceForAccessibility(announcement);
   }
 
-  isA11yReaderEnabled = NativeModule.isA11yReaderEnabled;
-
   isKeyboardConnected = NativeModule.isKeyboardConnected;
-
-  a11yStatusListener = (callback: StatusCallback) => {
-    const eventEmitter = new NativeEventEmitter(NativeModules.RCA11yModule);
-    const eventListener = eventEmitter.addListener(A11Y_STATUS_EVENT, callback);
-    return eventListener.remove;
-  };
 
   keyboardStatusListener = (callback: StatusCallback) => {
     const eventEmitter = new NativeEventEmitter(NativeModules.RCA11yModule);

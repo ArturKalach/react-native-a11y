@@ -25,8 +25,8 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
   public static final String KEYBOARD_STATUS_EVENT = "keyboardStatus";
   public static final String EVENT_PROP = "status";
 
-  private A11yReader a11yReader;
   private final ReactApplicationContext context;
+  private A11yReader a11yReader;
   private KeyboardService keyboardService;
 
   @Override
@@ -38,12 +38,7 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
         kChanged(info);
       }
     };
-    this.a11yReader = new A11yReader(context) {
-      @Override
-      public void accessibilityChanged(Boolean isEnabled) {
-        a11yChanged(isEnabled);
-      }
-    };
+    this.a11yReader = new A11yReader(context);
   }
 
   public RCA11yModule(ReactApplicationContext applicationContext) {
@@ -56,12 +51,6 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
     return REACT_CLASS;
   }
 
-
-  private void a11yChanged(Boolean a11yState) {
-    final WritableMap params = Arguments.createMap();
-    params.putBoolean(EVENT_PROP, a11yState);
-    sendEvent(context, A11Y_STATUS_EVENT, params);
-  }
 
   private void kChanged(Boolean info) {
     final WritableMap params = Arguments.createMap();
@@ -86,16 +75,6 @@ public class RCA11yModule extends ReactContextBaseJavaModule {
   public void announceScreenChange(String screenName) {
     this.a11yReader.announceScreenChange(screenName);
   }
-
-  @ReactMethod
-  public void isA11yReaderEnabled(Promise promise) {
-    try {
-      promise.resolve(this.a11yReader.isTalkBackEnabled());
-    } catch(Exception e) {
-      promise.reject("Create Event Error", e);
-    }
-  }
-
 
   @ReactMethod
   public void isKeyboardConnected(Promise promise) {
