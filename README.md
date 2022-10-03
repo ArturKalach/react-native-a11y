@@ -3,9 +3,9 @@
 
 This is a React Native A11y Library with following main features
 
-- 🤖 Reader features: Focus, Order, Reader </br>
-- ⌨️ Keyboard features: Focus </br>
-- 🙌 Others features soon </br>
+🤖 Reader features: Focus, Order, Reader </br>
+⌨️ Keyboard features: Focus </br>
+🙌 Others features soon </br>
 
 | iOS reader    | Android reader |
 | ------------- | -------------- |
