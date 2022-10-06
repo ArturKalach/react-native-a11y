@@ -1,10 +1,10 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text } from "react-native";
 import { A11yOrder, useFocusOrder } from "react-native-a11y";
 
-import { ABOUT, DrawerNavigation, READER_FOCUS } from "../../../navigation";
-import { NavBar, ReaderExample, Screen } from "../../components";
+import { ABOUT, DrawerNavigation, READER_FOCUS } from "../../../../navigation";
+import { NavBar, ReaderExample, Screen } from "../../../components";
 
 export const A11yOrderScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
@@ -12,11 +12,7 @@ export const A11yOrderScreen = () => {
   const goBack = () => navigation.navigate(ABOUT);
 
   const { a11yOrder, refs, setOrder } = useFocusOrder<Text>(3);
-  useFocusEffect(
-    useCallback(() => {
-      setOrder(true);
-    }, [setOrder]),
-  );
+  useFocusEffect(setOrder);
 
   return (
     <Screen>

@@ -12,7 +12,7 @@ import type {
   StatusCallback,
 } from "./A11yModule.types";
 import { noop } from "../../utils";
-import { A11Y_STATUS_EVENT, KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
+import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
 
 const NativeModule = NativeModules.RCA11yModule as A11yNativeModule;
 

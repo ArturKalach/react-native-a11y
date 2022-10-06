@@ -2,12 +2,17 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useA11yStatus, useKeyboardStatus } from "react-native-a11y";
-import { NavBar } from "../../components";
-import { DrawerNavigation, KEYBOARD_FOCUS } from "../../../navigation";
+import { NavBar } from "../../../components";
+import {
+  DYNAMIC_ORDER,
+  DrawerNavigation,
+  KEYBOARD_FOCUS,
+} from "../../../../navigation";
 
 export const StatusScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
   const goBack = () => navigation.navigate(KEYBOARD_FOCUS);
+  const goNext = () => navigation.navigate(DYNAMIC_ORDER);
 
   const isKeyboardConnected = useKeyboardStatus();
   const isA11yEnabled = useA11yStatus();
@@ -20,7 +25,7 @@ export const StatusScreen = () => {
       <Text style={styles.font}>
         Keyboard: {isKeyboardConnected ? "connected" : "disconnected"}
       </Text>
-      <NavBar back={goBack} />
+      <NavBar back={goBack} next={goNext} />
     </View>
   );
 };

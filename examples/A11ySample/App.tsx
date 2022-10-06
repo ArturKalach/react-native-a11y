@@ -7,6 +7,8 @@ import {
   HomeScreen,
   KeyboardFocusScreen,
   A11yOrderScreen,
+  DynamicOrderScreen,
+  ManagingRefsScreen,
 } from "./src/screens";
 import { StatusScreen } from "./src";
 import * as Nav from "./navigation";
@@ -49,6 +51,16 @@ export const App = () => {
             options={{ title: "Status" }}
             name={Nav.STATUS_SCREEN}
             component={StatusScreen}
+          />
+          <Drawer.Screen
+            options={{ title: "Dynamic order" }}
+            name={Nav.DYNAMIC_ORDER}
+            component={DynamicOrderScreen}
+          />
+          <Drawer.Screen
+            options={{ title: "Ref management" }}
+            name={Nav.REF_MANAGEMENT}
+            component={ManagingRefsScreen}
           />
         </Drawer.Navigator>
       </NavigationContainer>

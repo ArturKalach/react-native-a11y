@@ -1,31 +1,25 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useRef, useLayoutEffect } from "react";
 import type { View } from "react-native";
 
-import { A11yOrderManager } from "../../utils";
+import { useA11yOrderManager } from "../dev";
 import type { UseDynamicFocusOrder } from "./useDynamicFocusOrder.types";
 
-export const useDynamicFocusOrder: UseDynamicFocusOrder = () => {
+export const useDynamicFocusOrder = <T>(): UseDynamicFocusOrder<T> => {
   const a11yOrderRef = useRef<View>(null);
-  const managerRef = useRef(new A11yOrderManager(a11yOrderRef));
+
   const {
     registerOrderRef: registerOrder,
-    onViewShown: onLayout,
     updateRefList,
-    reset: resetOrderManager,
+    reset,
     setOrder,
-  } = managerRef.current;
+  } = useA11yOrderManager(a11yOrderRef);
 
-  useEffect(updateRefList);
-
-  const reset = useCallback(() => {
-    resetOrderManager();
-    managerRef.current = new A11yOrderManager(a11yOrderRef);
-  }, [resetOrderManager]);
+  useLayoutEffect(updateRefList);
 
   return {
     a11yOrder: {
       ref: a11yOrderRef,
-      onLayout,
+      onLayout: updateRefList,
     },
     registerOrder,
     reset,

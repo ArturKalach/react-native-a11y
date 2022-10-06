@@ -3,7 +3,7 @@ import {
   NativeModules,
   NativeEventEmitter,
 } from "react-native";
-import { A11Y_STATUS_EVENT, KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
+import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
 
 import type {
   A11yOrderInfo,
