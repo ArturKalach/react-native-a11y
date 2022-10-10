@@ -1,10 +1,11 @@
-export const debounce = (callback: () => void, timeout = 100) => {
+export const debounce = <T extends Function>(callback: T, timeout = 100) => {
   let timer: NodeJS.Timeout | null;
-  return () => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return (...args: any) => {
     if (timer) {
       clearTimeout(timer);
       timer = null;
     }
-    timer = setTimeout(callback, timeout);
+    timer = setTimeout(() => callback(args), timeout);
   };
 };

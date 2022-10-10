@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StyleSheet, Text } from "react-native";
 import { A11yOrder, useDynamicFocusOrder } from "react-native-a11y";
@@ -17,15 +17,9 @@ export const DynamicOrderScreen = () => {
   const [showThird, setState] = useState(true);
 
   const { a11yOrder, registerOrder, setOrder } = useDynamicFocusOrder();
-  useFocusEffect(
-    useCallback(() => {
-      setOrder();
-    }, [setOrder]),
-  );
+  useFocusEffect(setOrder);
 
   const onPressHandler = () => setState(v => !v);
-
-  useFocusEffect(setOrder);
 
   return (
     <Screen>
