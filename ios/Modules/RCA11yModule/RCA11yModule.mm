@@ -6,11 +6,18 @@
 //  Copyright © 2022 Facebook. All rights reserved.
 //
 
-#import "RCA11yModule.h"
+
 #import "RCA11yFocusWrapper.h"
 #import <React/RCTLog.h>
-#import "GameController/GameController.h"
+//#import "GameController/GameController.h"
 #import <React/RCTUIManager.h>
+#import "RCA11yModule.h"
+
+#ifdef RCT_NEW_ARCH_ENABLED
+#import "RNA11ySpec/RNA11ySpec.h"
+using namespace facebook::react;
+
+#endif
 
 @implementation RCA11yModule
 {
@@ -49,8 +56,8 @@ NSString * const EVENT_PROP = @"status";
 {
     if(self = [super init]) {
         if (@available(iOS 14.0, *)) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasConnected:) name: GCKeyboardDidConnectNotification object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasDisconnected:) name: GCKeyboardDidDisconnectNotification object:nil];
+//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasConnected:) name: GCKeyboardDidConnectNotification object:nil];
+//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasDisconnected:) name: GCKeyboardDidDisconnectNotification object:nil];
         }
     }
     
@@ -160,5 +167,13 @@ RCT_EXPORT_METHOD(
         [self sendEventWithName:@"EventReminder" body:@{@"name": eventName}];
     }
 }
+
+#ifdef RCT_NEW_ARCH_ENABLED
+- (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
+    (const facebook::react::ObjCTurboModule::InitParams &)params
+{
+    return std::make_shared<facebook::react::NativeCalculatorSpecJSI>(params);
+}
+#endif
 
 @end

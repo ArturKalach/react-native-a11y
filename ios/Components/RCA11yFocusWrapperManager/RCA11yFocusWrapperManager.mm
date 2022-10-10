@@ -6,7 +6,6 @@
 //  Copyright © 2022 Facebook. All rights reserved.
 //
 
-
 #import "RCA11yFocusWrapperManager.h"
 #import "RCA11yFocusWrapper.h"
 

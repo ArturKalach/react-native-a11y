@@ -1,11 +1,13 @@
-import React, { useContext } from "react";
+import React, { PropsWithChildren, useContext } from "react";
 import { useKeyboardConnected } from "../../hooks";
 
 const A11yKeyboardContext = React.createContext<boolean>(false);
 
 export const useKeyboardStatus = () => useContext(A11yKeyboardContext);
 
-export const A11yStatusKeyboard: React.FC = ({ children }) => {
+export const A11yStatusKeyboard: React.FC<PropsWithChildren<{}>> = ({
+  children,
+}) => {
   const status = useKeyboardConnected();
 
   return (

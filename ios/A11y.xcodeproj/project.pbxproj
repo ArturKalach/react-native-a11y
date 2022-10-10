@@ -7,22 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4987BF8428F43A9C005C529E /* RCA11yFocusWrapperManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF8328F43A9C005C529E /* RCA11yFocusWrapperManager.m */; };
-		4987BF8828F43AD8005C529E /* RCA11yFocusWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF8728F43AD8005C529E /* RCA11yFocusWrapper.m */; };
-		4987BF8E28F43B19005C529E /* RCA11yModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF8D28F43B19005C529E /* RCA11yModule.m */; };
-		4909A59628C3F09E004737E2 /* A11yOrderManager in Sources */ = {isa = PBXBuildFile; fileRef = 4909A59528C3F09E004737E2 /* A11yOrderManager */; };
 		497895E528C238E5004F293B /* RCA11yModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 497895E428C238E5004F293B /* RCA11yModule.mm */; };
 		497895E728C23910004F293B /* RCA11yModule in Sources */ = {isa = PBXBuildFile; fileRef = 497895E628C23910004F293B /* RCA11yModule */; };
-		497895EB28C23A06004F293B /* RCA11yFocusWrapperManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 497895EA28C23A06004F293B /* RCA11yFocusWrapperManager.mm */; };
-		497895ED28C23A35004F293B /* RCA11yFocusWrapper in Sources */ = {isa = PBXBuildFile; fileRef = 497895EC28C23A35004F293B /* RCA11yFocusWrapper */; };
-		497895EF28C23A5B004F293B /* RCA11yFocusWrapperManager in Sources */ = {isa = PBXBuildFile; fileRef = 497895EE28C23A5B004F293B /* RCA11yFocusWrapperManager */; };
-		497895F428C23D75004F293B /* KeyboardFocus in Sources */ = {isa = PBXBuildFile; fileRef = 497895F328C23D75004F293B /* KeyboardFocus */; };
-		497895F628C23D82004F293B /* KeyboardFocusManager in Sources */ = {isa = PBXBuildFile; fileRef = 497895F528C23D81004F293B /* KeyboardFocusManager */; };
-		49EC35D428E5E54600307B60 /* PaneViewManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49EC35D328E5E54600307B60 /* PaneViewManager.mm */; };
-		49EC35D628E5E58200307B60 /* PaneView in Sources */ = {isa = PBXBuildFile; fileRef = 49EC35D528E5E58200307B60 /* PaneView */; };
-		49EC35D828E5E5CF00307B60 /* PaneViewManager in Sources */ = {isa = PBXBuildFile; fileRef = 49EC35D728E5E5CF00307B60 /* PaneViewManager */; };
-		49EC35DA28E5E88500307B60 /* RCA11yFocusWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49EC35D928E5E88500307B60 /* RCA11yFocusWrapper.mm */; };
-		49F6110028E71D2D009CDD01 /* RCA11yFocusWrapperImpl in Sources */ = {isa = PBXBuildFile; fileRef = 49F610FF28E71D2D009CDD01 /* RCA11yFocusWrapperImpl */; };
+		4987BF8E28F43B19005C529E /* RCA11yModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF8D28F43B19005C529E /* RCA11yModule.mm */; };
+		4987BF9328F442B3005C529E /* RCA11yFocusWrapperManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF9228F442B3005C529E /* RCA11yFocusWrapperManager.mm */; };
+		4987BF9928F442FE005C529E /* RCA11yFocusWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */; };
+		49EC35D428E5E54600307B60 /* RCA11yPaneViewManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49EC35D328E5E54600307B60 /* RCA11yPaneViewManager.mm */; };
+		49F6D64128F49C2000EBAC12 /* RCA11yPaneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49F6D64028F49C2000EBAC12 /* RCA11yPaneView.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,49 +30,17 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libA11y.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libA11y.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		4987BF8328F43A9C005C529E /* RCA11yFocusWrapperManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCA11yFocusWrapperManager.m; sourceTree = "<group>"; };
-		4987BF8528F43AA4005C529E /* RCA11yFocusWrapperManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapperManager.h; sourceTree = "<group>"; };
-		4987BF8728F43AD8005C529E /* RCA11yFocusWrapper.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCA11yFocusWrapper.m; sourceTree = "<group>"; };
-		4987BF8928F43ADF005C529E /* RCA11yFocusWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapper.h; sourceTree = "<group>"; };
-		4987BF8C28F43B0D005C529E /* RCA11yModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yModule.h; sourceTree = "<group>"; };
-		4987BF8D28F43B19005C529E /* RCA11yModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCA11yModule.m; sourceTree = "<group>"; };
-		4909A59528C3F09E004737E2 /* A11yOrderManager */ = {isa = PBXFileReference; lastKnownFileType = text; path = A11yOrderManager; sourceTree = "<group>"; };
 		497895E428C238E5004F293B /* RCA11yModule.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yModule.mm; sourceTree = "<group>"; };
 		497895E628C23910004F293B /* RCA11yModule */ = {isa = PBXFileReference; lastKnownFileType = text; path = RCA11yModule; sourceTree = "<group>"; };
-		497895EA28C23A06004F293B /* RCA11yFocusWrapperManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yFocusWrapperManager.mm; sourceTree = "<group>"; };
-		497895EC28C23A35004F293B /* RCA11yFocusWrapper */ = {isa = PBXFileReference; lastKnownFileType = text; path = RCA11yFocusWrapper; sourceTree = "<group>"; };
-		497895EE28C23A5B004F293B /* RCA11yFocusWrapperManager */ = {isa = PBXFileReference; lastKnownFileType = text; path = RCA11yFocusWrapperManager; sourceTree = "<group>"; };
-		497895F328C23D75004F293B /* KeyboardFocus */ = {isa = PBXFileReference; lastKnownFileType = text; path = KeyboardFocus; sourceTree = "<group>"; };
-		497895F528C23D81004F293B /* KeyboardFocusManager */ = {isa = PBXFileReference; lastKnownFileType = text; path = KeyboardFocusManager; sourceTree = "<group>"; };
-		49EC35D128E5C0BD00307B60 /* RCA11yFocusWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapper.h; sourceTree = "<group>"; };
-		49EC35D328E5E54600307B60 /* PaneViewManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = PaneViewManager.mm; sourceTree = "<group>"; };
-		49EC35D528E5E58200307B60 /* PaneView */ = {isa = PBXFileReference; lastKnownFileType = text; path = PaneView; sourceTree = "<group>"; };
-		49EC35D728E5E5CF00307B60 /* PaneViewManager */ = {isa = PBXFileReference; lastKnownFileType = text; path = PaneViewManager; sourceTree = "<group>"; };
-		49EC35D928E5E88500307B60 /* RCA11yFocusWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yFocusWrapper.mm; sourceTree = "<group>"; };
-		49F610DA28E71871009CDD01 /* FBReactNativeSpec.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FBReactNativeSpec.h; sourceTree = "<group>"; };
-		49F610DB28E71871009CDD01 /* FBReactNativeSpec-generated.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "FBReactNativeSpec-generated.mm"; sourceTree = "<group>"; };
-		49F610DC28E71871009CDD01 /* RCTThirdPartyFabricComponentsProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTThirdPartyFabricComponentsProvider.h; sourceTree = "<group>"; };
-		49F610DD28E71871009CDD01 /* RCTThirdPartyFabricComponentsProvider.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCTThirdPartyFabricComponentsProvider.mm; sourceTree = "<group>"; };
-		49F610DF28E71872009CDD01 /* A11y.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = A11y.h; sourceTree = "<group>"; };
-		49F610E028E71872009CDD01 /* A11y-generated.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = "A11y-generated.mm"; sourceTree = "<group>"; };
-		49F610E528E71872009CDD01 /* ShadowNodes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShadowNodes.cpp; sourceTree = "<group>"; };
-		49F610E628E71872009CDD01 /* Props.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Props.h; sourceTree = "<group>"; };
-		49F610E728E71872009CDD01 /* Props.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Props.cpp; sourceTree = "<group>"; };
-		49F610E828E71872009CDD01 /* ComponentDescriptors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComponentDescriptors.h; sourceTree = "<group>"; };
-		49F610E928E71872009CDD01 /* ShadowNodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShadowNodes.h; sourceTree = "<group>"; };
-		49F610EA28E71872009CDD01 /* EventEmitters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventEmitters.h; sourceTree = "<group>"; };
-		49F610EB28E71872009CDD01 /* EventEmitters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EventEmitters.cpp; sourceTree = "<group>"; };
-		49F610EC28E71872009CDD01 /* RCTComponentViewHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTComponentViewHelpers.h; sourceTree = "<group>"; };
-		49F610EE28E71872009CDD01 /* ShadowNodes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ShadowNodes.cpp; sourceTree = "<group>"; };
-		49F610EF28E71872009CDD01 /* Props.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Props.h; sourceTree = "<group>"; };
-		49F610F028E71872009CDD01 /* Props.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Props.cpp; sourceTree = "<group>"; };
-		49F610F128E71872009CDD01 /* ComponentDescriptors.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComponentDescriptors.h; sourceTree = "<group>"; };
-		49F610F228E71872009CDD01 /* ShadowNodes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShadowNodes.h; sourceTree = "<group>"; };
-		49F610F328E71872009CDD01 /* EventEmitters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventEmitters.h; sourceTree = "<group>"; };
-		49F610F428E71872009CDD01 /* EventEmitters.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = EventEmitters.cpp; sourceTree = "<group>"; };
-		49F610F528E71872009CDD01 /* RCTComponentViewHelpers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTComponentViewHelpers.h; sourceTree = "<group>"; };
-		49F610FF28E71D2D009CDD01 /* RCA11yFocusWrapperImpl */ = {isa = PBXFileReference; lastKnownFileType = text; path = RCA11yFocusWrapperImpl; sourceTree = "<group>"; };
-		49F6110128E71E67009CDD01 /* RCA11yFocusWrapperImpl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapperImpl.h; sourceTree = "<group>"; };
+		4987BF8C28F43B0D005C529E /* RCA11yModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yModule.h; sourceTree = "<group>"; };
+		4987BF8D28F43B19005C529E /* RCA11yModule.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yModule.mm; sourceTree = "<group>"; };
+		4987BF9228F442B3005C529E /* RCA11yFocusWrapperManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yFocusWrapperManager.mm; sourceTree = "<group>"; };
+		4987BF9428F442BA005C529E /* RCA11yFocusWrapperManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapperManager.h; sourceTree = "<group>"; };
+		4987BF9728F442F4005C529E /* RCA11yFocusWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapper.h; sourceTree = "<group>"; };
+		4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yFocusWrapper.mm; sourceTree = "<group>"; };
+		49EC35D328E5E54600307B60 /* RCA11yPaneViewManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yPaneViewManager.mm; sourceTree = "<group>"; };
+		49F6D64028F49C2000EBAC12 /* RCA11yPaneView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yPaneView.mm; sourceTree = "<group>"; };
+		49F6D64228F49C2A00EBAC12 /* RCA11yPaneView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yPaneView.h; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* A11y-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "A11y-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -104,57 +63,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4987BF8128F43A7D005C529E /* Components */ = {
-			isa = PBXGroup;
-			children = (
-				4987BF8228F43A8E005C529E /* RCA11yFocusWrapperManager */,
-				4909A59528C3F09E004737E2 /* A11yOrderManager */,
-			);
-			path = A11yOrder;
-			sourceTree = "<group>";
-		};
-		497895E328C238AE004F293B /* A11yModule */ = {
-			isa = PBXGroup;
-			children = (
-				497895E428C238E5004F293B /* RCA11yModule.mm */,
-				497895E628C23910004F293B /* RCA11yModule */,
-			);
-			path = A11yModule;
-			sourceTree = "<group>";
-		};
 		497895E828C239BE004F293B /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				49EC35D228E5E51200307B60 /* PaneView */,
-				497895E928C239C8004F293B /* RCA11yFocusWrapperManager */,
+				4987BF9128F44267005C529E /* RCA11yFocusWrapperManager */,
+				49EC35D228E5E51200307B60 /* RCA11yPaneViewManager */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		4987BF8228F43A8E005C529E /* RCA11yFocusWrapperManager */ = {
-			isa = PBXGroup;
-			children = (
-				4987BF8628F43ACD005C529E /* RCA11yFocusWrapper */,
-				4987BF8328F43A9C005C529E /* RCA11yFocusWrapperManager.m */,
-				4987BF8528F43AA4005C529E /* RCA11yFocusWrapperManager.h */,
-				497895EA28C23A06004F293B /* RCA11yFocusWrapperManager.mm */,
-				497895EC28C23A35004F293B /* RCA11yFocusWrapper */,
-				497895EE28C23A5B004F293B /* RCA11yFocusWrapperManager */,
-				49EC35D128E5C0BD00307B60 /* RCA11yFocusWrapper.h */,
-				49EC35D928E5E88500307B60 /* RCA11yFocusWrapper.mm */,
-				49F610FF28E71D2D009CDD01 /* RCA11yFocusWrapperImpl */,
-				49F6110128E71E67009CDD01 /* RCA11yFocusWrapperImpl.h */,
-			);
-			path = RCA11yFocusWrapperManager;
-			sourceTree = "<group>";
-		};
-		4987BF8628F43ACD005C529E /* RCA11yFocusWrapper */ = {
-			isa = PBXGroup;
-			children = (
-				4987BF8728F43AD8005C529E /* RCA11yFocusWrapper.m */,
-				4987BF8928F43ADF005C529E /* RCA11yFocusWrapper.h */,
-			);
-			path = RCA11yFocusWrapper;
 			sourceTree = "<group>";
 		};
 		4987BF8A28F43AF8005C529E /* Modules */ = {
@@ -169,135 +84,65 @@
 			isa = PBXGroup;
 			children = (
 				4987BF8C28F43B0D005C529E /* RCA11yModule.h */,
-				4987BF8D28F43B19005C529E /* RCA11yModule.m */,
-				497895F328C23D75004F293B /* KeyboardFocus */,
-				497895F528C23D81004F293B /* KeyboardFocusManager */,
+				4987BF8D28F43B19005C529E /* RCA11yModule.mm */,
 			);
 			path = RCA11yModule;
 			sourceTree = "<group>";
 		};
-		49EC35D228E5E51200307B60 /* PaneView */ = {
+		4987BF8F28F44100005C529E /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				49EC35D328E5E54600307B60 /* PaneViewManager.mm */,
-				49EC35D528E5E58200307B60 /* PaneView */,
-				49EC35D728E5E5CF00307B60 /* PaneViewManager */,
+				497895E428C238E5004F293B /* RCA11yModule.mm */,
+				497895E628C23910004F293B /* RCA11yModule */,
 			);
-			path = PaneView;
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		49F610D628E71871009CDD01 /* build */ = {
+		4987BF9128F44267005C529E /* RCA11yFocusWrapperManager */ = {
 			isa = PBXGroup;
 			children = (
-				49F610D728E71871009CDD01 /* generated */,
+				4987BF9528F442D9005C529E /* RCA11yFocusWrapper */,
+				4987BF9228F442B3005C529E /* RCA11yFocusWrapperManager.mm */,
+				4987BF9428F442BA005C529E /* RCA11yFocusWrapperManager.h */,
 			);
-			path = build;
+			path = RCA11yFocusWrapperManager;
 			sourceTree = "<group>";
 		};
-		49F610D728E71871009CDD01 /* generated */ = {
+		4987BF9528F442D9005C529E /* RCA11yFocusWrapper */ = {
 			isa = PBXGroup;
 			children = (
-				49F610D828E71871009CDD01 /* ios */,
+				4987BF9728F442F4005C529E /* RCA11yFocusWrapper.h */,
+				4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */,
 			);
-			path = generated;
+			path = RCA11yFocusWrapper;
 			sourceTree = "<group>";
 		};
-		49F610D828E71871009CDD01 /* ios */ = {
+		49EC35D228E5E51200307B60 /* RCA11yPaneViewManager */ = {
 			isa = PBXGroup;
 			children = (
-				49F610D928E71871009CDD01 /* FBReactNativeSpec */,
-				49F610DC28E71871009CDD01 /* RCTThirdPartyFabricComponentsProvider.h */,
-				49F610DD28E71871009CDD01 /* RCTThirdPartyFabricComponentsProvider.mm */,
-				49F610DE28E71871009CDD01 /* A11y */,
-				49F610E128E71872009CDD01 /* react */,
+				49F6D63F28F49C1200EBAC12 /* RCA11yPaneView */,
+				49EC35D328E5E54600307B60 /* RCA11yPaneViewManager.mm */,
 			);
-			path = ios;
+			path = RCA11yPaneViewManager;
 			sourceTree = "<group>";
 		};
-		49F610D928E71871009CDD01 /* FBReactNativeSpec */ = {
+		49F6D63F28F49C1200EBAC12 /* RCA11yPaneView */ = {
 			isa = PBXGroup;
 			children = (
-				49F610DA28E71871009CDD01 /* FBReactNativeSpec.h */,
-				49F610DB28E71871009CDD01 /* FBReactNativeSpec-generated.mm */,
+				49F6D64028F49C2000EBAC12 /* RCA11yPaneView.mm */,
+				49F6D64228F49C2A00EBAC12 /* RCA11yPaneView.h */,
 			);
-			path = FBReactNativeSpec;
-			sourceTree = "<group>";
-		};
-		49F610DE28E71871009CDD01 /* A11y */ = {
-			isa = PBXGroup;
-			children = (
-				49F610DF28E71872009CDD01 /* A11y.h */,
-				49F610E028E71872009CDD01 /* A11y-generated.mm */,
-			);
-			path = A11y;
-			sourceTree = "<group>";
-		};
-		49F610E128E71872009CDD01 /* react */ = {
-			isa = PBXGroup;
-			children = (
-				49F610E228E71872009CDD01 /* renderer */,
-			);
-			path = react;
-			sourceTree = "<group>";
-		};
-		49F610E228E71872009CDD01 /* renderer */ = {
-			isa = PBXGroup;
-			children = (
-				49F610E328E71872009CDD01 /* components */,
-			);
-			path = renderer;
-			sourceTree = "<group>";
-		};
-		49F610E328E71872009CDD01 /* components */ = {
-			isa = PBXGroup;
-			children = (
-				49F610E428E71872009CDD01 /* A11y */,
-				49F610ED28E71872009CDD01 /* rncore */,
-			);
-			path = components;
-			sourceTree = "<group>";
-		};
-		49F610E428E71872009CDD01 /* A11y */ = {
-			isa = PBXGroup;
-			children = (
-				49F610E528E71872009CDD01 /* ShadowNodes.cpp */,
-				49F610E628E71872009CDD01 /* Props.h */,
-				49F610E728E71872009CDD01 /* Props.cpp */,
-				49F610E828E71872009CDD01 /* ComponentDescriptors.h */,
-				49F610E928E71872009CDD01 /* ShadowNodes.h */,
-				49F610EA28E71872009CDD01 /* EventEmitters.h */,
-				49F610EB28E71872009CDD01 /* EventEmitters.cpp */,
-				49F610EC28E71872009CDD01 /* RCTComponentViewHelpers.h */,
-			);
-			path = A11y;
-			sourceTree = "<group>";
-		};
-		49F610ED28E71872009CDD01 /* rncore */ = {
-			isa = PBXGroup;
-			children = (
-				49F610EE28E71872009CDD01 /* ShadowNodes.cpp */,
-				49F610EF28E71872009CDD01 /* Props.h */,
-				49F610F028E71872009CDD01 /* Props.cpp */,
-				49F610F128E71872009CDD01 /* ComponentDescriptors.h */,
-				49F610F228E71872009CDD01 /* ShadowNodes.h */,
-				49F610F328E71872009CDD01 /* EventEmitters.h */,
-				49F610F428E71872009CDD01 /* EventEmitters.cpp */,
-				49F610F528E71872009CDD01 /* RCTComponentViewHelpers.h */,
-			);
-			path = rncore;
+			path = RCA11yPaneView;
 			sourceTree = "<group>";
 		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
 				4987BF8A28F43AF8005C529E /* Modules */,
-				4987BF8128F43A7D005C529E /* Components */,
-				49F610D628E71871009CDD01 /* build */,
-				497895F128C23D4F004F293B /* Mixins */,
-				497895F028C23D36004F293B /* Modules */,
 				497895E828C239BE004F293B /* Components */,
 				F4FF95D5245B92E700C19C63 /* A11y-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				4987BF8F28F44100005C529E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -358,22 +203,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4987BF8428F43A9C005C529E /* RCA11yFocusWrapperManager.m in Sources */,
-				4987BF8828F43AD8005C529E /* RCA11yFocusWrapper.m in Sources */,
-				4987BF8E28F43B19005C529E /* RCA11yModule.m in Sources */,
-				49EC35D628E5E58200307B60 /* PaneView in Sources */,
-				497895F628C23D82004F293B /* KeyboardFocusManager in Sources */,
-				497895EF28C23A5B004F293B /* RCA11yFocusWrapperManager in Sources */,
-				497895F428C23D75004F293B /* KeyboardFocus in Sources */,
-				497895ED28C23A35004F293B /* RCA11yFocusWrapper in Sources */,
+				4987BF8E28F43B19005C529E /* RCA11yModule.mm in Sources */,
+				49F6D64128F49C2000EBAC12 /* RCA11yPaneView.mm in Sources */,
+				4987BF9928F442FE005C529E /* RCA11yFocusWrapper.mm in Sources */,
 				497895E528C238E5004F293B /* RCA11yModule.mm in Sources */,
 				497895E728C23910004F293B /* RCA11yModule in Sources */,
-				4909A59628C3F09E004737E2 /* A11yOrderManager in Sources */,
-				49EC35D428E5E54600307B60 /* PaneViewManager.mm in Sources */,
-				49EC35DA28E5E88500307B60 /* RCA11yFocusWrapper.mm in Sources */,
-				49EC35D828E5E5CF00307B60 /* PaneViewManager in Sources */,
-				497895EB28C23A06004F293B /* RCA11yFocusWrapperManager.mm in Sources */,
-				49F6110028E71D2D009CDD01 /* RCA11yFocusWrapperImpl in Sources */,
+				49EC35D428E5E54600307B60 /* RCA11yPaneViewManager.mm in Sources */,
+				4987BF9328F442B3005C529E /* RCA11yFocusWrapperManager.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

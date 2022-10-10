@@ -4,6 +4,7 @@ import {
   findNodeHandle,
   InteractionManager,
   NativeEventEmitter,
+  NativeModules,
 } from "react-native";
 import type {
   A11yOrderInfo,
@@ -20,7 +21,7 @@ class A11yAndroidImpl implements IA11yModule {
     AccessibilityInfo.announceForAccessibility(announcement);
   }
 
-  isKeyboardConnected = NativeModule.isKeyboardConnected;
+  isKeyboardConnected = NativeModules.isKeyboardConnected;
 
   keyboardStatusListener = (callback: StatusCallback) => {
     const eventEmitter = new NativeEventEmitter(RCA11yModule);

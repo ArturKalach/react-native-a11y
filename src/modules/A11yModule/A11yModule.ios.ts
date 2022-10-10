@@ -19,7 +19,7 @@ class A11yModuleIOSImpl implements IA11yModule {
     this._currentFocusedTag = value;
   }
 
-  isKeyboardConnected = NativeModule.isKeyboardConnected;
+  isKeyboardConnected = NativeModules.isKeyboardConnected;
 
   keyboardStatusListener = (callback: StatusCallback) => {
     const eventEmitter = new NativeEventEmitter(NativeModules.RCA11yModule);

@@ -135,15 +135,11 @@
     ]
   },
   "codegenConfig": {
-    "libraries": [
-      {
-        "name": "A11y",
+        "name": "RNA11ySpec",
         "type": "all",
         "jsSrcsDir": "src/nativeSpecs",
         "android": {
           "javaPackageName": "com.reactnativea11y"
       }
-      }
-    ]
   }
 }
