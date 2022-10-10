@@ -1,0 +1,164 @@
+//
+//  RCA11yModule.m
+//  A11y
+//
+//  Created by Artur Kalach on 07.10.2022.
+//  Copyright © 2022 Facebook. All rights reserved.
+//
+
+#import "RCA11yModule.h"
+#import "RCA11yFocusWrapper.h"
+#import <React/RCTLog.h>
+#import "GameController/GameController.h"
+#import <React/RCTUIManager.h>
+
+@implementation RCA11yModule
+{
+    bool hasListeners;
+}
+
+NSString * const PREFS_MY_CONSTANT = @"keyboardStatus";
+NSString * const EVENT_PROP = @"status";
+
+-(void)startObserving {
+    hasListeners = YES;
+}
+
+-(void)stopObserving {
+    hasListeners = NO;
+}
+
+- (NSArray<NSString *> *)supportedEvents
+{
+    return @[PREFS_MY_CONSTANT];
+}
+
+-(void) keyboardWasConnected: (NSNotification *) notification {
+    if (hasListeners) {
+        [self sendEventWithName: PREFS_MY_CONSTANT body:@{EVENT_PROP: @(YES)}];
+    }
+}
+
+-(void) keyboardWasDisconnected: (NSNotification *) notification {
+    if (hasListeners) {
+        [self sendEventWithName: PREFS_MY_CONSTANT body:@{EVENT_PROP: @(NO)}];
+    }
+}
+
+- (instancetype)init
+{
+    if(self = [super init]) {
+        if (@available(iOS 14.0, *)) {
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasConnected:) name: GCKeyboardDidConnectNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasDisconnected:) name: GCKeyboardDidDisconnectNotification object:nil];
+        }
+    }
+    
+    return self;
+}
+
++ (BOOL)requiresMainQueueSetup
+{
+    return YES;
+}
+
+RCT_EXPORT_MODULE(RCA11yModule);
+
+
+RCT_EXPORT_METHOD(announceForAccessibility: (nonnull NSString*)announcement) {
+    if (@available(iOS 11.0, *)) {
+        UIAccessibilityPostNotification(UIAccessibilityAnnouncementNotification, announcement);
+    }
+}
+
+RCT_EXPORT_METHOD(announceScreenChange: (nonnull NSString*) title) {
+    UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, title);
+}
+
+RCT_EXPORT_METHOD(setAccessibilityFocus: (nonnull NSNumber *)nativeTag) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if(![nativeTag isEqual: [NSNull null]]) {
+            UIView *field = [self.bridge.uiManager viewForReactTag:nativeTag];
+            if(field != nil) {
+                UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, field);
+            }
+        }
+    });
+}
+
+RCT_EXPORT_METHOD(
+                  setPreferredKeyboardFocus:(nonnull NSNumber *)itemId
+                  nextElementId:(nonnull NSNumber *)nextElementId
+                  ) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIView *field = [self.bridge.uiManager viewForReactTag:itemId];
+        UIView *nextFocusElement = [self.bridge.uiManager viewForReactTag:nextElementId];
+        if(field != nil && nextFocusElement != nil && [field isKindOfClass: [RCA11yFocusWrapper class]]) {
+            RCA11yFocusWrapper *v = (RCA11yFocusWrapper *)field;
+            v.myPreferredFocusedView = nextFocusElement;
+            [v setNeedsFocusUpdate];
+            [v updateFocusIfNeeded];
+        }
+    });
+}
+
+RCT_EXPORT_METHOD(
+                  setKeyboardFocus:(nonnull NSNumber *)itemId
+                  nextElementId:(nonnull NSNumber *)nextElementId
+                  ) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIView *field = [self.bridge.uiManager viewForReactTag:itemId];
+        UIView *nextFocusElement = [self.bridge.uiManager viewForReactTag:nextElementId];
+        if(field != nil && nextFocusElement != nil && [field isKindOfClass: [RCA11yFocusWrapper class]]) {
+            RCA11yFocusWrapper *v = (RCA11yFocusWrapper *)field;
+            v.myPreferredFocusedView = nextFocusElement;
+            [v setNeedsFocusUpdate];
+            [v updateFocusIfNeeded];
+            v.myPreferredFocusedView = v;
+        }
+    });
+}
+
+RCT_EXPORT_METHOD(
+                  setA11yOrder: (nonnull NSArray *)elements
+                  node:(nonnull NSNumber *)node
+                  ) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIView *field = [self.bridge.uiManager viewForReactTag:node];
+        if(field != nil) {
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, field);
+        }
+        NSMutableArray *fields = [NSMutableArray arrayWithCapacity:[elements count]];
+        
+        [elements enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * stop) {
+            NSNumber *tag = (NSNumber *)obj;
+            UIView *field = [self.bridge.uiManager viewForReactTag:tag];
+            if (field != nil) {
+                [fields addObject:field];
+            }
+        }];
+        [field setAccessibilityElements: fields];
+    });
+}
+
+RCT_EXPORT_METHOD(
+                  isKeyboardConnected: (RCTPromiseResolveBlock)resolve
+                  rejecter:(RCTPromiseRejectBlock)reject
+                  ) {
+    if (@available(iOS 14.0, *)) {
+        bool value = [[GCKeyboard coalescedKeyboard] isEqual: [NSNull null]];
+        resolve(value ? @(NO) : @(YES));
+    } else {
+        reject(@"ios version is not supported", @"version less than 14.0", nil);
+    }
+}
+
+- (void)calendarEventReminderReceived:(NSNotification *)notification
+{
+    NSString *eventName = notification.userInfo[@"name"];
+    if (hasListeners) {
+        [self sendEventWithName:@"EventReminder" body:@{@"name": eventName}];
+    }
+}
+
+@end
