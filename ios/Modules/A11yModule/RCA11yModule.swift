@@ -44,8 +44,10 @@ class RCA11yModule : RCTEventEmitter, KeyboardFocusManager, A11yOrderManager {
     
     @objc
     func announceForAccessibility(_ announcement: String) -> Void {
-        let message: NSAttributedString = NSAttributedString(string: announcement, attributes: [.accessibilitySpeechQueueAnnouncement: true])
-        UIAccessibility.post(notification: .announcement, argument: message)
+        if #available(iOS 11.0, *) {
+            let message: NSAttributedString = NSAttributedString(string: announcement, attributes: [.accessibilitySpeechQueueAnnouncement: true])
+            UIAccessibility.post(notification: .announcement, argument: message)
+        }
     }
     
     @objc

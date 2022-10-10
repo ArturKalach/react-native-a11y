@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Text, StyleSheet } from "react-native";
-import { A11Y_ORDER, DrawerNavigation } from "../../../navigation";
-import { NavBar, Screen } from "../../components";
+import { A11Y_ORDER, DrawerNavigation } from "../../../../navigation";
+import { NavBar, Screen } from "../../../components";
 
 export const HomeScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();

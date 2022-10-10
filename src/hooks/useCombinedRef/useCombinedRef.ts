@@ -1,9 +1,13 @@
-import { ForwardedRef, RefObject, useRef } from "react";
+import { useMemo, Ref, RefObject, RefCallback, useRef } from "react";
 import { combineRefs } from "../../utils";
 
 export const useCombinedRef = <T>(
-  ref: ForwardedRef<T>,
-): [ref: RefObject<T>, setRefFunction: (ref: T | null) => void] => {
+  ...refs: Ref<T>[]
+): [ref: RefObject<T>, initRefCallback: RefCallback<T>] => {
   const targetRef = useRef<T>(null);
-  return [targetRef, combineRefs(targetRef, ref)];
+  const refCallback = useMemo(() => {
+    return combineRefs(targetRef, ...refs);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return [targetRef, refCallback];
 };

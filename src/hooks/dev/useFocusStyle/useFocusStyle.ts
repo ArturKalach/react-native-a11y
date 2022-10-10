@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import { StyleSheet } from "react-native";
-import { FocusStyle, OnFocusChangeFn } from "../../components";
+import { FocusStyle, OnFocusChangeFn } from "../../../components";
 
 export const useFocusStyle = (
   focusStyle?: FocusStyle,

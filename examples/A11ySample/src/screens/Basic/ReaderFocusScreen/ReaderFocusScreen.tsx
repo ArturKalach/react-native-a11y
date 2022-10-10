@@ -6,8 +6,8 @@ import {
   A11Y_ORDER,
   DrawerNavigation,
   KEYBOARD_FOCUS,
-} from "../../../navigation";
-import { NavBar, ReaderExample, Screen } from "../../components";
+} from "../../../../navigation";
+import { NavBar, ReaderExample, Screen } from "../../../components";
 
 export const ReaderFocusScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();

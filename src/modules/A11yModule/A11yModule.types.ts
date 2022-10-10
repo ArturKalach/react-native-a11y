@@ -1,7 +1,8 @@
 import { RefObject } from "react";
+import type { View } from "react-native";
 
 export type A11yOrderInfo<T> = {
-  tag?: RefObject<T>;
+  tag?: RefObject<View>;
   views: T[];
 };
 
