@@ -1,5 +1,5 @@
 //
-//  RCA11yFocusWrapperManager.m
+//  RCA11yModule.m
 //  A11y
 //
 //  Created by Artur Kalach on 07.10.2022.
