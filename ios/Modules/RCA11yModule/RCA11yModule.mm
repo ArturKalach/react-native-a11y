@@ -9,7 +9,9 @@
 
 #import "RCA11yFocusWrapper.h"
 #import <React/RCTLog.h>
-//#import "GameController/GameController.h"
+#import <UIKit/UIKit.h>
+#import "GameController/GameController.h"
+#import "GameController/GCKeyboard.h"
 #import <React/RCTUIManager.h>
 #import "RCA11yModule.h"
 
@@ -56,8 +58,8 @@ NSString * const EVENT_PROP = @"status";
 {
     if(self = [super init]) {
         if (@available(iOS 14.0, *)) {
-//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasConnected:) name: GCKeyboardDidConnectNotification object:nil];
-//            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasDisconnected:) name: GCKeyboardDidDisconnectNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasConnected:) name: GCKeyboardDidConnectNotification object:nil];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasDisconnected:) name: GCKeyboardDidDisconnectNotification object:nil];
         }
     }
     
@@ -155,6 +157,7 @@ RCT_EXPORT_METHOD(
     if (@available(iOS 14.0, *)) {
         bool value = [[GCKeyboard coalescedKeyboard] isEqual: [NSNull null]];
         resolve(value ? @(NO) : @(YES));
+        resolve(@(YES));
     } else {
         reject(@"ios version is not supported", @"version less than 14.0", nil);
     }
@@ -172,7 +175,7 @@ RCT_EXPORT_METHOD(
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-    return std::make_shared<facebook::react::NativeCalculatorSpecJSI>(params);
+    return std::make_shared<facebook::react::NativeA11yModuleSpecJSI>(params);
 }
 #endif
 

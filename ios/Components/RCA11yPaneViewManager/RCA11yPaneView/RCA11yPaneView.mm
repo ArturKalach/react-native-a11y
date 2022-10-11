@@ -47,8 +47,8 @@ using namespace facebook::react;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<ColoredViewProps const>(_props);
-    const auto &newViewProps = *std::static_pointer_cast<ColoredViewProps const>(props);
+//    const auto &oldViewProps = *std::static_pointer_cast<ColoredViewProps const>(_props);
+//    const auto &newViewProps = *std::static_pointer_cast<ColoredViewProps const>(props);
     //
     //    if (oldViewProps.color != newViewProps.color) {
     //        NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.color.c_str()];
@@ -58,7 +58,7 @@ using namespace facebook::react;
     [super updateProps:props oldProps:oldProps];
 }
 
-Class<RCTRCA11yPaneViewViewProtocol> RCA11yPaneViewCls(void)
+Class<RCTComponentViewProtocol> RCA11yPaneViewCls(void)
 {
     return RCA11yPaneView.class;
 }

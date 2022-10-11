@@ -61,7 +61,7 @@ return self;
     [super updateProps:props oldProps:oldProps];
 }
 
-Class<RCTRCA11yFocusWrapperViewProtocol> RCA11yFocusWrapperCls(void)
+Class<RCTComponentViewProtocol> RCA11yFocusWrapperCls(void)
 {
 return RCA11yFocusWrapper.class;
 }
