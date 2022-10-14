@@ -38,6 +38,8 @@
 		4987BF9428F442BA005C529E /* RCA11yFocusWrapperManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapperManager.h; sourceTree = "<group>"; };
 		4987BF9728F442F4005C529E /* RCA11yFocusWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapper.h; sourceTree = "<group>"; };
 		4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yFocusWrapper.mm; sourceTree = "<group>"; };
+		49E3C8D528F6C6D0004014F7 /* FocusWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FocusWrapper.h; sourceTree = "<group>"; };
+		49E3C8D628F6C6DA004014F7 /* FocusWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FocusWrapper.mm; sourceTree = "<group>"; };
 		49EC35D328E5E54600307B60 /* RCA11yPaneViewManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yPaneViewManager.mm; sourceTree = "<group>"; };
 		49F6D64028F49C2000EBAC12 /* RCA11yPaneView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yPaneView.mm; sourceTree = "<group>"; };
 		49F6D64228F49C2A00EBAC12 /* RCA11yPaneView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yPaneView.h; sourceTree = "<group>"; };
@@ -111,10 +113,20 @@
 		4987BF9528F442D9005C529E /* RCA11yFocusWrapper */ = {
 			isa = PBXGroup;
 			children = (
+				49E3C8D428F6C6BA004014F7 /* FocusWrapper */,
 				4987BF9728F442F4005C529E /* RCA11yFocusWrapper.h */,
 				4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */,
 			);
 			path = RCA11yFocusWrapper;
+			sourceTree = "<group>";
+		};
+		49E3C8D428F6C6BA004014F7 /* FocusWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				49E3C8D528F6C6D0004014F7 /* FocusWrapper.h */,
+				49E3C8D628F6C6DA004014F7 /* FocusWrapper.mm */,
+			);
+			path = FocusWrapper;
 			sourceTree = "<group>";
 		};
 		49EC35D228E5E51200307B60 /* RCA11yPaneViewManager */ = {

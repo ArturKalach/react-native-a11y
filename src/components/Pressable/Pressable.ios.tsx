@@ -37,6 +37,8 @@ export const Pressable = React.memo(
       style,
       testOnly_pressed,
       unstable_pressDelay,
+      canBeFocused,
+      onFocusChange,
       ...restProps
     } = props;
 
@@ -59,7 +61,6 @@ export const Pressable = React.memo(
     const restPropsWithDefaults = {
       ...restProps,
       ...android_rippleConfig?.viewProps,
-      accessible: accessible !== false,
       accessibilityState,
       focusable: focusable !== false,
       hitSlop,
@@ -120,6 +121,8 @@ export const Pressable = React.memo(
         {...restPropsWithDefaults}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...eventHandlers}
+        canBeFocused={canBeFocused}
+        onFocusChange={onFocusChange}
         ref={viewRef}
         style={typeof style === "function" ? style({ pressed }) : style}
         collapsable={false}

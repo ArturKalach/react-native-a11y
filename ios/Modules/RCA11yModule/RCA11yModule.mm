@@ -135,7 +135,7 @@ RCT_EXPORT_METHOD(
     dispatch_async(dispatch_get_main_queue(), ^{
         UIView *field = [self.bridge.uiManager viewForReactTag:node];
         if(field != nil) {
-            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, field);
+            UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, field); // ToDo, make this optional
         }
         NSMutableArray *fields = [NSMutableArray arrayWithCapacity:[elements count]];
         
@@ -157,7 +157,6 @@ RCT_EXPORT_METHOD(
     if (@available(iOS 14.0, *)) {
         bool value = [[GCKeyboard coalescedKeyboard] isEqual: [NSNull null]];
         resolve(value ? @(NO) : @(YES));
-        resolve(@(YES));
     } else {
         reject(@"ios version is not supported", @"version less than 14.0", nil);
     }

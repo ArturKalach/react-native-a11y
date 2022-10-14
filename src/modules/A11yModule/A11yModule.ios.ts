@@ -1,8 +1,4 @@
-import {
-  findNodeHandle,
-  NativeModules,
-  NativeEventEmitter,
-} from "react-native";
+import { findNodeHandle, NativeEventEmitter } from "react-native";
 import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
 
 import type {
@@ -19,10 +15,10 @@ class A11yModuleIOSImpl implements IA11yModule {
     this._currentFocusedTag = value;
   }
 
-  isKeyboardConnected = NativeModules.isKeyboardConnected;
+  isKeyboardConnected = RCA11yModule.isKeyboardConnected;
 
   keyboardStatusListener = (callback: StatusCallback) => {
-    const eventEmitter = new NativeEventEmitter(NativeModules.RCA11yModule);
+    const eventEmitter = new NativeEventEmitter(RCA11yModule);
     const eventListener = eventEmitter.addListener(
       KEYBOARD_STATUS_EVENT,
       callback,

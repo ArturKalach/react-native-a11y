@@ -28,6 +28,7 @@
   ],
   "include": [
     "src",
+    "examples",
     "./src/types/declarations.d.ts",
   ]
 }

@@ -12,10 +12,12 @@
 
 #ifdef RCT_NEW_ARCH_ENABLED
 
+#import "FocusWrapper/FocusWrapper.h"
 #import <react/renderer/components/RNA11ySpec/ComponentDescriptors.h>
 #import <react/renderer/components/RNA11ySpec/EventEmitters.h>
 #import <react/renderer/components/RNA11ySpec/Props.h>
 #import <react/renderer/components/RNA11ySpec/RCTComponentViewHelpers.h>
+#import <React/RCTLog.h>
 
 #import "RCTFabricComponentsPlugins.h"
 
@@ -26,7 +28,7 @@ using namespace facebook::react;
 @end
 
 @implementation RCA11yFocusWrapper {
-    UIView * _view;
+    FocusWrapper * _view;
 }
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
@@ -36,16 +38,25 @@ using namespace facebook::react;
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-if (self = [super initWithFrame:frame]) {
-    static const auto defaultProps = std::make_shared<const RCA11yFocusWrapperProps>();
-    _props = defaultProps;
-
-    _view = [[UIView alloc] init];
-
-    self.contentView = _view;
-}
-
-return self;
+    
+    if (self = [super initWithFrame:frame]) {
+        static const auto defaultProps = std::make_shared<const RCA11yFocusWrapperProps>();
+        _props = defaultProps;
+        
+        _view = [[FocusWrapper alloc] init];
+        _view.onFocusChange = [self](NSDictionary* dictionary) {
+            if (_eventEmitter) {
+                auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
+                facebook::react::RCA11yFocusWrapperEventEmitter::OnFocusChange data = {
+                    .isFocused = [[dictionary valueForKey:@"isFocused"] boolValue],
+                };
+                viewEventEmitter->onFocusChange(data);
+            };
+        };
+        self.contentView = _view;
+    }
+    
+    return self;
 }
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
@@ -53,17 +64,24 @@ return self;
     const auto &oldViewProps = *std::static_pointer_cast<RCA11yFocusWrapperProps const>(_props);
     const auto &newViewProps = *std::static_pointer_cast<RCA11yFocusWrapperProps const>(props);
 
-//    if (oldViewProps.color != newViewProps.color) {
-//        NSString * colorToConvert = [[NSString alloc] initWithUTF8String: newViewProps.color.c_str()];
-//        [_view setBackgroundColor:[self hexStringToColor:colorToConvert]];
-//    }
-
+    if (@available(iOS 14.0, *)) {
+        if(_view.focusGroupIdentifier == nil) {
+            _view.focusGroupIdentifier =  [NSString stringWithFormat:@"app.group.%ld", self.tag];
+        }
+    }
+    
     [super updateProps:props oldProps:oldProps];
+    
+    if(oldViewProps.canBeFocused != newViewProps.canBeFocused) {
+        [_view setCanBeFocused: newViewProps.canBeFocused];
+        self.isAccessibilityElement = false;
+    }
+    
 }
 
 Class<RCTComponentViewProtocol> RCA11yFocusWrapperCls(void)
 {
-return RCA11yFocusWrapper.class;
+    return RCA11yFocusWrapper.class;
 }
 
 
