@@ -2,8 +2,6 @@ import type { TurboModule } from "react-native";
 import { TurboModuleRegistry } from "react-native";
 
 export interface Spec extends TurboModule {
-  readonly getConstants: () => {};
-
   isA11yReaderEnabled: () => Promise<boolean>;
   isKeyboardConnected: () => Promise<boolean>;
   announceForAccessibility: (announcement: string) => void;

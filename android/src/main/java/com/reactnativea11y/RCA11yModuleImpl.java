@@ -17,17 +17,18 @@ import com.reactnativea11y.services.KeyboardService;
 
 
 public class RCA11yModuleImpl {
-    private final ReactApplicationContext context;
-    private A11yReader a11yReader;
-    private KeyboardService keyboardService;
+  private ReactApplicationContext context;
+  private A11yReader a11yReader;
+  private KeyboardService keyboardService;
 
   public static final String A11Y_STATUS_EVENT = "a11yStatus";
   public static final String KEYBOARD_STATUS_EVENT = "keyboardStatus";
   public static final String EVENT_PROP = "status";
 
-  private final ReactApplicationContext context;
-  private A11yReader a11yReader;
-  private KeyboardService keyboardService;
+  public RCA11yModuleImpl(ReactApplicationContext context) {
+    this.context = context;
+    this.initialize();
+  }
 
   public void initialize() {
     this.keyboardService = new KeyboardService(context) {
@@ -39,12 +40,7 @@ public class RCA11yModuleImpl {
     this.a11yReader = new A11yReader(context);
   }
 
-  public String getName() {
-    return NAME;
-  }
-
-
-  private void kChanged(Boolean info) {
+  public void kChanged(Boolean info) {
     final WritableMap params = Arguments.createMap();
     params.putBoolean(EVENT_PROP, info);
     sendEvent(context, KEYBOARD_STATUS_EVENT, params);

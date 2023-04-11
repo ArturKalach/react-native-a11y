@@ -1,5 +1,7 @@
 package com.reactnativea11y.services;
 
+
+
 import static android.content.res.Configuration.HARDKEYBOARDHIDDEN_NO;
 import static android.content.res.Configuration.KEYBOARD_NOKEYS;
 import static android.content.res.Configuration.KEYBOARD_UNDEFINED;
@@ -17,7 +19,12 @@ import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.UIManager;
 import com.facebook.react.uimanager.IllegalViewOperationException;
+import com.facebook.react.uimanager.NativeViewHierarchyManager;
+import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
+import com.facebook.react.uimanager.common.ViewUtil;
+
+import static com.facebook.react.uimanager.common.UIManagerType.FABRIC;
 
 public class KeyboardService implements LifecycleEventListener {
   private final String NEW_CONFIG = "newConfig";
@@ -42,7 +49,6 @@ public class KeyboardService implements LifecycleEventListener {
       }
     };
     keyboardChanged(isKeyboardConnected());
-    context.addLifecycleEventListener(this);
   }
 
   public void keyboardChanged(Boolean info) {
@@ -50,17 +56,27 @@ public class KeyboardService implements LifecycleEventListener {
   }
 
   public void setKeyboardFocus(int tag) {
-    final UIManager uiManager = context.getNativeModule(UIManagerModule.class);
     final Activity activity = context.getCurrentActivity();
 
-    if (uiManager == null || activity == null) {
+    if (activity == null) {
       return;
     }
 
     activity.runOnUiThread(() -> {
       try {
-        View view = uiManager.resolveView(tag);
-        view.requestFocus();
+        int uiManagerType = ViewUtil.getUIManagerType(tag);
+        if (uiManagerType == FABRIC) {
+          UIManager fabricUIManager =
+            UIManagerHelper.getUIManager(context, uiManagerType);
+          if (fabricUIManager != null) {
+            View view = fabricUIManager.resolveView(tag);
+            view.requestFocus();
+          }
+        } else {
+          UIManager uiManager = context.getNativeModule(UIManagerModule.class);
+          View view = uiManager.resolveView(tag);
+          view.requestFocus();
+        }
       } catch (IllegalViewOperationException error) {
         Log.e("KEYBOARD_FOCUS_ERROR", error.getMessage());
       }

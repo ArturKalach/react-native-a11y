@@ -5,7 +5,10 @@ export const useA11yEnabled = () => {
   const [state, setState] = useState(false);
   useEffect(() => {
     AccessibilityInfo.isScreenReaderEnabled().then(setState);
-    const listener = AccessibilityInfo.addEventListener("change", setState);
+    const listener = AccessibilityInfo.addEventListener(
+      "accessibilityServiceChanged",
+      setState,
+    );
     return listener.remove;
   }, []);
 

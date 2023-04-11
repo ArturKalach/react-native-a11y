@@ -4,7 +4,6 @@ import {
   findNodeHandle,
   InteractionManager,
   NativeEventEmitter,
-  NativeModules,
 } from "react-native";
 import type {
   A11yOrderInfo,
@@ -14,22 +13,22 @@ import type {
 import { noop } from "../../utils";
 import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
 
-import { RCA11yModule } from "./RCA11yModule";
+import * as RCA11yModule from "./RCA11yModule";
 
 class A11yAndroidImpl implements IA11yModule {
   announceForAccessibility(announcement: string) {
     AccessibilityInfo.announceForAccessibility(announcement);
   }
 
-  isKeyboardConnected = NativeModules.isKeyboardConnected;
+  isKeyboardConnected = RCA11yModule.isKeyboardConnected;
 
   keyboardStatusListener = (callback: StatusCallback) => {
-    const eventEmitter = new NativeEventEmitter(RCA11yModule);
+    const eventEmitter = new NativeEventEmitter();
     const eventListener = eventEmitter.addListener(
       KEYBOARD_STATUS_EVENT,
       callback,
     );
-    return eventListener.remove;
+    return () => eventListener.remove();
   };
 
   setKeyboardFocus(ref: React.RefObject<React.Component>) {
