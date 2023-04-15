@@ -43,12 +43,12 @@ android.iml
 # Cocoapods
 #
 examples/A11ySample/ios/Pods
-examples/NewArchitecture/ios/Pods
+examples/A11yNewArch/ios/Pods
 
 
 # Ruby
 examples/A11ySample/vendor/
-examples/NewArchitecture/ios/Pods
+examples/A11yNewArch/vendor/
 
 
 # node.js
