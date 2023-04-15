@@ -6,7 +6,7 @@ import type {
   IA11yModule,
   StatusCallback,
 } from "./A11yModule.types";
-import { RCA11yModule } from "./RCA11yModule";
+import * as RCA11yModule from "./RCA11yModule";
 
 class A11yModuleIOSImpl implements IA11yModule {
   private _currentFocusedTag: number | null = null;
@@ -18,7 +18,7 @@ class A11yModuleIOSImpl implements IA11yModule {
   isKeyboardConnected = RCA11yModule.isKeyboardConnected;
 
   keyboardStatusListener = (callback: StatusCallback) => {
-    const eventEmitter = new NativeEventEmitter(RCA11yModule);
+    const eventEmitter = new NativeEventEmitter(RCA11yModule.RCA11y);
     const eventListener = eventEmitter.addListener(
       KEYBOARD_STATUS_EVENT,
       callback,
@@ -49,6 +49,7 @@ class A11yModuleIOSImpl implements IA11yModule {
 
   setKeyboardFocus = (ref: React.RefObject<React.Component>) => {
     const tag = findNodeHandle(ref.current);
+
     if (
       this._currentFocusedTag &&
       tag &&

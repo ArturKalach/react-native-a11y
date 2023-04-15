@@ -46,8 +46,8 @@ export function setAccessibilityFocus(nativeTag: number): void {
   RCA11y.setAccessibilityFocus(nativeTag);
 }
 
-export function setKeyboardFocus(nativeTag: number, _nextTag?: number): void {
-  RCA11y.setKeyboardFocus(nativeTag, 0);
+export function setKeyboardFocus(nativeTag: number, _nextTag = 0): void {
+  RCA11y.setKeyboardFocus(nativeTag, _nextTag);
 }
 
 export function setPreferredKeyboardFocus(
@@ -57,6 +57,6 @@ export function setPreferredKeyboardFocus(
   RCA11y.setAccessibilityFocus(nativeTag, nextTag);
 }
 
-export function setA11yOrder(tags: number[], nativeTag?: number): void {
+export function setA11yOrder(tags: number[], nativeTag: number): void {
   RCA11y.setA11yOrder(tags, nativeTag);
 }

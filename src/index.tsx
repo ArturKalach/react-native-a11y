@@ -15,3 +15,4 @@ export {
   useKeyboardStatus,
 } from "./providers";
 export { combineRefs } from "./utils";
+export { a11yConfig } from "./configs";

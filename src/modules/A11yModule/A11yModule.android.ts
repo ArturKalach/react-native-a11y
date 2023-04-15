@@ -59,7 +59,7 @@ class A11yAndroidImpl implements IA11yModule {
     const tags = views
       .map(view => findNodeHandle(view as React.Component))
       .filter(view => Boolean(view));
-    RCA11yModule.setA11yOrder?.(tags as number[]);
+    RCA11yModule.setA11yOrder?.(tags as number[], 0);
   };
 }
 

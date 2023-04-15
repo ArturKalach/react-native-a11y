@@ -13,7 +13,7 @@ export const A11yOrder: React.FC<A11yOrderProps> = ({
     a11yOrder.onLayout();
   };
 
-  const id = useId(); // ToDo: use native component with tag to nativeTag
+  const id = useId?.() || "mock_id"; // ToDo: use native component with tag to nativeTag
 
   return (
     <View
