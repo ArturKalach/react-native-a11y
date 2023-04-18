@@ -1,11 +1,9 @@
-import type { RefObject } from "react";
+import { RefCallback } from "react";
+import { UseDynamicFocusOrder } from "../useDynamicFocusOrder";
 
-export type FocusOrderInfo<T> = {
-  a11yOrder: {
-    ref: RefObject<T>;
-    onLayout: () => void;
-  };
-  refs: ((ref: T | null) => void)[];
-  reset: () => void;
-  setOrder: (force: boolean) => void;
+export type FocusOrderInfo<T> = Pick<
+  UseDynamicFocusOrder<T>,
+  "a11yOrder" | "reset" | "setOrder"
+> & {
+  refs: RefCallback<T>[];
 };

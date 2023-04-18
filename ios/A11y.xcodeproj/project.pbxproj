@@ -7,14 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4909A59628C3F09E004737E2 /* A11yOrderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4909A59528C3F09E004737E2 /* A11yOrderManager.swift */; };
-		497895E528C238E5004F293B /* RCA11yModule.m in Sources */ = {isa = PBXBuildFile; fileRef = 497895E428C238E5004F293B /* RCA11yModule.m */; };
-		497895E728C23910004F293B /* RCA11yModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497895E628C23910004F293B /* RCA11yModule.swift */; };
-		497895EB28C23A06004F293B /* RCA11yFocusWrapperManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 497895EA28C23A06004F293B /* RCA11yFocusWrapperManager.m */; };
-		497895ED28C23A35004F293B /* RCA11yFocusWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497895EC28C23A35004F293B /* RCA11yFocusWrapper.swift */; };
-		497895EF28C23A5B004F293B /* RCA11yFocusWrapperManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497895EE28C23A5B004F293B /* RCA11yFocusWrapperManager.swift */; };
-		497895F428C23D75004F293B /* KeyboardFocus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497895F328C23D75004F293B /* KeyboardFocus.swift */; };
-		497895F628C23D82004F293B /* KeyboardFocusManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 497895F528C23D81004F293B /* KeyboardFocusManager.swift */; };
+		497895E528C238E5004F293B /* RCA11yModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 497895E428C238E5004F293B /* RCA11yModule.mm */; };
+		497895E728C23910004F293B /* RCA11yModule in Sources */ = {isa = PBXBuildFile; fileRef = 497895E628C23910004F293B /* RCA11yModule */; };
+		4987BF8E28F43B19005C529E /* RCA11yModule.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF8D28F43B19005C529E /* RCA11yModule.mm */; };
+		4987BF9328F442B3005C529E /* RCA11yFocusWrapperManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF9228F442B3005C529E /* RCA11yFocusWrapperManager.mm */; };
+		4987BF9928F442FE005C529E /* RCA11yFocusWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */; };
+		49EC35D428E5E54600307B60 /* RCA11yPaneViewManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49EC35D328E5E54600307B60 /* RCA11yPaneViewManager.mm */; };
+		49F6D64128F49C2000EBAC12 /* RCA11yPaneView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 49F6D64028F49C2000EBAC12 /* RCA11yPaneView.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,14 +30,19 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libA11y.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libA11y.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		4909A59528C3F09E004737E2 /* A11yOrderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = A11yOrderManager.swift; sourceTree = "<group>"; };
-		497895E428C238E5004F293B /* RCA11yModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCA11yModule.m; sourceTree = "<group>"; };
-		497895E628C23910004F293B /* RCA11yModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCA11yModule.swift; sourceTree = "<group>"; };
-		497895EA28C23A06004F293B /* RCA11yFocusWrapperManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCA11yFocusWrapperManager.m; sourceTree = "<group>"; };
-		497895EC28C23A35004F293B /* RCA11yFocusWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCA11yFocusWrapper.swift; sourceTree = "<group>"; };
-		497895EE28C23A5B004F293B /* RCA11yFocusWrapperManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCA11yFocusWrapperManager.swift; sourceTree = "<group>"; };
-		497895F328C23D75004F293B /* KeyboardFocus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardFocus.swift; sourceTree = "<group>"; };
-		497895F528C23D81004F293B /* KeyboardFocusManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardFocusManager.swift; sourceTree = "<group>"; };
+		497895E428C238E5004F293B /* RCA11yModule.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yModule.mm; sourceTree = "<group>"; };
+		497895E628C23910004F293B /* RCA11yModule */ = {isa = PBXFileReference; lastKnownFileType = text; path = RCA11yModule; sourceTree = "<group>"; };
+		4987BF8C28F43B0D005C529E /* RCA11yModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yModule.h; sourceTree = "<group>"; };
+		4987BF8D28F43B19005C529E /* RCA11yModule.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yModule.mm; sourceTree = "<group>"; };
+		4987BF9228F442B3005C529E /* RCA11yFocusWrapperManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yFocusWrapperManager.mm; sourceTree = "<group>"; };
+		4987BF9428F442BA005C529E /* RCA11yFocusWrapperManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapperManager.h; sourceTree = "<group>"; };
+		4987BF9728F442F4005C529E /* RCA11yFocusWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yFocusWrapper.h; sourceTree = "<group>"; };
+		4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yFocusWrapper.mm; sourceTree = "<group>"; };
+		49E3C8D528F6C6D0004014F7 /* FocusWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FocusWrapper.h; sourceTree = "<group>"; };
+		49E3C8D628F6C6DA004014F7 /* FocusWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FocusWrapper.mm; sourceTree = "<group>"; };
+		49EC35D328E5E54600307B60 /* RCA11yPaneViewManager.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yPaneViewManager.mm; sourceTree = "<group>"; };
+		49F6D64028F49C2000EBAC12 /* RCA11yPaneView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RCA11yPaneView.mm; sourceTree = "<group>"; };
+		49F6D64228F49C2A00EBAC12 /* RCA11yPaneView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCA11yPaneView.h; sourceTree = "<group>"; };
 		F4FF95D5245B92E700C19C63 /* A11y-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "A11y-Bridging-Header.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -61,75 +65,96 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		4909A59428C3F08D004737E2 /* A11yOrder */ = {
-			isa = PBXGroup;
-			children = (
-				4909A59528C3F09E004737E2 /* A11yOrderManager.swift */,
-			);
-			path = A11yOrder;
-			sourceTree = "<group>";
-		};
-		497895E328C238AE004F293B /* A11yModule */ = {
-			isa = PBXGroup;
-			children = (
-				497895E428C238E5004F293B /* RCA11yModule.m */,
-				497895E628C23910004F293B /* RCA11yModule.swift */,
-			);
-			path = A11yModule;
-			sourceTree = "<group>";
-		};
 		497895E828C239BE004F293B /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				497895E928C239C8004F293B /* RCA11yFocusWrapperManager */,
+				4987BF9128F44267005C529E /* RCA11yFocusWrapperManager */,
+				49EC35D228E5E51200307B60 /* RCA11yPaneViewManager */,
 			);
 			path = Components;
 			sourceTree = "<group>";
 		};
-		497895E928C239C8004F293B /* RCA11yFocusWrapperManager */ = {
+		4987BF8A28F43AF8005C529E /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				497895EA28C23A06004F293B /* RCA11yFocusWrapperManager.m */,
-				497895EC28C23A35004F293B /* RCA11yFocusWrapper.swift */,
-				497895EE28C23A5B004F293B /* RCA11yFocusWrapperManager.swift */,
-			);
-			path = RCA11yFocusWrapperManager;
-			sourceTree = "<group>";
-		};
-		497895F028C23D36004F293B /* Modules */ = {
-			isa = PBXGroup;
-			children = (
-				497895E328C238AE004F293B /* A11yModule */,
+				4987BF8B28F43B03005C529E /* RCA11yModule */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
 		};
-		497895F128C23D4F004F293B /* Mixins */ = {
+		4987BF8B28F43B03005C529E /* RCA11yModule */ = {
 			isa = PBXGroup;
 			children = (
-				4909A59428C3F08D004737E2 /* A11yOrder */,
-				497895F228C23D62004F293B /* KeyboardFocus */,
+				4987BF8C28F43B0D005C529E /* RCA11yModule.h */,
+				4987BF8D28F43B19005C529E /* RCA11yModule.mm */,
 			);
-			path = Mixins;
+			path = RCA11yModule;
 			sourceTree = "<group>";
 		};
-		497895F228C23D62004F293B /* KeyboardFocus */ = {
+		4987BF8F28F44100005C529E /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				497895F328C23D75004F293B /* KeyboardFocus.swift */,
-				497895F528C23D81004F293B /* KeyboardFocusManager.swift */,
+				497895E428C238E5004F293B /* RCA11yModule.mm */,
+				497895E628C23910004F293B /* RCA11yModule */,
 			);
-			path = KeyboardFocus;
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		4987BF9128F44267005C529E /* RCA11yFocusWrapperManager */ = {
+			isa = PBXGroup;
+			children = (
+				4987BF9528F442D9005C529E /* RCA11yFocusWrapper */,
+				4987BF9228F442B3005C529E /* RCA11yFocusWrapperManager.mm */,
+				4987BF9428F442BA005C529E /* RCA11yFocusWrapperManager.h */,
+			);
+			path = RCA11yFocusWrapperManager;
+			sourceTree = "<group>";
+		};
+		4987BF9528F442D9005C529E /* RCA11yFocusWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				49E3C8D428F6C6BA004014F7 /* FocusWrapper */,
+				4987BF9728F442F4005C529E /* RCA11yFocusWrapper.h */,
+				4987BF9828F442FE005C529E /* RCA11yFocusWrapper.mm */,
+			);
+			path = RCA11yFocusWrapper;
+			sourceTree = "<group>";
+		};
+		49E3C8D428F6C6BA004014F7 /* FocusWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				49E3C8D528F6C6D0004014F7 /* FocusWrapper.h */,
+				49E3C8D628F6C6DA004014F7 /* FocusWrapper.mm */,
+			);
+			path = FocusWrapper;
+			sourceTree = "<group>";
+		};
+		49EC35D228E5E51200307B60 /* RCA11yPaneViewManager */ = {
+			isa = PBXGroup;
+			children = (
+				49F6D63F28F49C1200EBAC12 /* RCA11yPaneView */,
+				49EC35D328E5E54600307B60 /* RCA11yPaneViewManager.mm */,
+			);
+			path = RCA11yPaneViewManager;
+			sourceTree = "<group>";
+		};
+		49F6D63F28F49C1200EBAC12 /* RCA11yPaneView */ = {
+			isa = PBXGroup;
+			children = (
+				49F6D64028F49C2000EBAC12 /* RCA11yPaneView.mm */,
+				49F6D64228F49C2A00EBAC12 /* RCA11yPaneView.h */,
+			);
+			path = RCA11yPaneView;
 			sourceTree = "<group>";
 		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				497895F128C23D4F004F293B /* Mixins */,
-				497895F028C23D36004F293B /* Modules */,
+				4987BF8A28F43AF8005C529E /* Modules */,
 				497895E828C239BE004F293B /* Components */,
 				F4FF95D5245B92E700C19C63 /* A11y-Bridging-Header.h */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				4987BF8F28F44100005C529E /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,14 +215,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				497895F628C23D82004F293B /* KeyboardFocusManager.swift in Sources */,
-				497895EF28C23A5B004F293B /* RCA11yFocusWrapperManager.swift in Sources */,
-				497895F428C23D75004F293B /* KeyboardFocus.swift in Sources */,
-				497895ED28C23A35004F293B /* RCA11yFocusWrapper.swift in Sources */,
-				497895E528C238E5004F293B /* RCA11yModule.m in Sources */,
-				497895E728C23910004F293B /* RCA11yModule.swift in Sources */,
-				4909A59628C3F09E004737E2 /* A11yOrderManager.swift in Sources */,
-				497895EB28C23A06004F293B /* RCA11yFocusWrapperManager.m in Sources */,
+				4987BF8E28F43B19005C529E /* RCA11yModule.mm in Sources */,
+				49F6D64128F49C2000EBAC12 /* RCA11yPaneView.mm in Sources */,
+				4987BF9928F442FE005C529E /* RCA11yFocusWrapper.mm in Sources */,
+				497895E528C238E5004F293B /* RCA11yModule.mm in Sources */,
+				497895E728C23910004F293B /* RCA11yModule in Sources */,
+				49EC35D428E5E54600307B60 /* RCA11yPaneViewManager.mm in Sources */,
+				4987BF9328F442B3005C529E /* RCA11yFocusWrapperManager.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

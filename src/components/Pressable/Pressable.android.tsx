@@ -26,10 +26,7 @@ export const Pressable = React.forwardRef<View, KeyboardFocusViewProps>(
         canBeFocused={canBeFocused}
         onFocusChange={onFocusChange}
       >
-        <RNPressable
-          // eslint-disable-next-line react/jsx-props-no-spreading
-          {...props}
-        />
+        <RNPressable {...props} />
       </KeyboardFocusView>
     );
   },

@@ -6,7 +6,6 @@ module.exports = {
     tsconfigRootDir: "./",
   },
   extends: [
-    "airbnb",
     "@react-native-community",
     "prettier",
     "plugin:@typescript-eslint/eslint-recommended",
