@@ -36,7 +36,6 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
         style={[style, fStyle]}
         canBeFocused={canBecomeFocused && canBeFocused}
         onFocusChange={onFocusChangeHandler}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
     );

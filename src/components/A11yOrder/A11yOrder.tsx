@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import React, { useId } from "react";
 import { View, LayoutChangeEvent } from "react-native";
 import type { A11yOrderProps } from "./A11yOrder.types";

@@ -59,6 +59,13 @@ using namespace facebook::react;
     return self;
 }
 
+- (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments {
+    if (self.myPreferredFocusedView == nil) {
+        return @[];
+    }
+    return @[self.myPreferredFocusedView];
+}
+
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
     const auto &oldViewProps = *std::static_pointer_cast<RCA11yFocusWrapperProps const>(_props);
@@ -72,9 +79,10 @@ using namespace facebook::react;
     
     [super updateProps:props oldProps:oldProps];
     
+    
     if(oldViewProps.canBeFocused != newViewProps.canBeFocused) {
         [_view setCanBeFocused: newViewProps.canBeFocused];
-        self.isAccessibilityElement = false;
+      //  self.isAccessibilityElement = false;
     }
     
 }

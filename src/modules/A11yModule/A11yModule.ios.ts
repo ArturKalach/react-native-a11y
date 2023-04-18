@@ -4,6 +4,7 @@ import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
 import type {
   A11yOrderInfo,
   IA11yModule,
+  RefObjType,
   StatusCallback,
 } from "./A11yModule.types";
 import * as RCA11yModule from "./RCA11yModule";
@@ -34,7 +35,7 @@ class A11yModuleIOSImpl implements IA11yModule {
     RCA11yModule.announceScreenChange(announcement);
   };
 
-  setA11yFocus = (ref: React.RefObject<React.Component<any, any>>) => {
+  setA11yFocus = (ref: RefObjType) => {
     const tag = findNodeHandle(ref.current);
     if (tag) {
       RCA11yModule.setAccessibilityFocus(tag);
@@ -47,7 +48,7 @@ class A11yModuleIOSImpl implements IA11yModule {
     }
   };
 
-  setKeyboardFocus = (ref: React.RefObject<React.Component>) => {
+  setKeyboardFocus = (ref: RefObjType) => {
     const tag = findNodeHandle(ref.current);
 
     if (
@@ -60,9 +61,7 @@ class A11yModuleIOSImpl implements IA11yModule {
     }
   };
 
-  focusFirstInteractiveElement = (
-    refToFocus?: React.RefObject<React.Component>,
-  ) => {
+  focusFirstInteractiveElement = (refToFocus?: RefObjType) => {
     if (refToFocus && refToFocus?.current) {
       this.setA11yFocus(refToFocus);
     } else {

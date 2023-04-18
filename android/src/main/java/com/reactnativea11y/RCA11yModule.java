@@ -65,4 +65,15 @@ public class RCA11yModule extends RCA11yModuleSpec{
   public void setA11yOrder(@NonNull ReadableArray reactTags, Double _tag) {
     module.setA11yOrder(reactTags);
   }
+
+  // Required for rn built in EventEmitter Calls.
+  @ReactMethod
+  public void addListener(String eventName) {
+
+  }
+
+  @ReactMethod
+  public void removeListeners(Integer count) {
+
+  }
 }

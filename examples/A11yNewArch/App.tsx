@@ -1,1 +1,1 @@
-export {Root as App} from './src';
+export { Root as App } from "./src";

@@ -2,3 +2,5 @@ lib
 .eslintrc.js
 babel.config.js
 metro.config.js
+bootstrap.js
+examples

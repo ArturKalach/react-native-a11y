@@ -24,10 +24,12 @@
     "target": "esnext",
   },
   "exclude": [
-    "lib"
+    "lib",
+    "examples"
   ],
   "include": [
     "src",
+    "types",
     "examples",
     "./src/types/declarations.d.ts",
   ]

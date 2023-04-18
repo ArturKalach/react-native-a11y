@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
-import {StyleSheet, Text, View, ViewStyle} from 'react-native';
-import {Pressable, FocusStyle, OnFocusChangeFn} from 'react-native-a11y';
+import React, { useState } from "react";
+import { StyleSheet, Text, View, ViewStyle } from "react-native";
+import { Pressable, FocusStyle, OnFocusChangeFn } from "react-native-a11y";
 
 type Props = {
   title?: string;
@@ -11,8 +11,9 @@ type Props = {
 };
 
 export const Button = React.forwardRef<View, Props>(
-  ({title, onPress, style, focusStyle, canBeFocused = true}, ref) => {
-    const fStyle = ({focused}: {focused: boolean}) => focused && styles.focus;
+  ({ title, onPress, style, focusStyle, canBeFocused = true }, ref) => {
+    const fStyle = ({ focused }: { focused: boolean }) =>
+      focused && styles.focus;
 
     const [focused, setFocusStatus] = useState(false);
 
@@ -28,8 +29,12 @@ export const Button = React.forwardRef<View, Props>(
           onPress={onPress}
           style={[styles.container]}
           focusStyle={focusStyle || fStyle}
-          ref={ref}>
-          <Text style={[styles.font, focused && styles.focusedFont]}>
+          ref={ref}
+        >
+          <Text
+            accessible={false}
+            style={[styles.font, focused && styles.focusedFont]}
+          >
             {title}
           </Text>
         </Pressable>
@@ -41,17 +46,17 @@ export const Button = React.forwardRef<View, Props>(
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    borderColor: '#111',
+    borderColor: "#111",
     borderRadius: 50,
-    width: '100%',
+    width: "100%",
     maxHeight: 48,
   },
-  font: {fontSize: 18, fontWeight: 'bold', color: '#111'},
+  font: { fontSize: 18, fontWeight: "bold", color: "#111" },
   focus: {
-    backgroundColor: '#aaa',
-    borderColor: '#eee',
+    backgroundColor: "#aaa",
+    borderColor: "#eee",
   },
   focusedFont: {
-    color: '#fff',
+    color: "#fff",
   },
 });

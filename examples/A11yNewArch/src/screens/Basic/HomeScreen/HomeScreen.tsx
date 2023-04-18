@@ -1,8 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
-import React from 'react';
-import {Text, StyleSheet} from 'react-native';
-import {A11Y_ORDER, DrawerNavigation} from '../../../navigation';
-import {NavBar, Screen} from '../../../components';
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Text, StyleSheet } from "react-native";
+import { A11Y_ORDER, DrawerNavigation } from "../../../navigation";
+import { NavBar, Screen } from "../../../components";
 
 export const HomeScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
@@ -29,7 +29,7 @@ export const HomeScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  title: {fontSize: 25, fontWeight: 'bold', marginBottom: 10},
-  line: {fontSize: 20, marginBottom: 5},
-  lastLine: {fontSize: 20, marginBottom: 10},
+  title: { fontSize: 25, fontWeight: "bold", marginBottom: 10 },
+  line: { fontSize: 20, marginBottom: 5 },
+  lastLine: { fontSize: 20, marginBottom: 10 },
 });
