@@ -62,7 +62,25 @@ Add to the  `MainActivity.java` lines:
 
 ```
 
-4. Add provider to root of your app:
+4. iOS only
+Link keyboard(Game) binary with libraries
+
+- Open xcode
+- Select folder in the project bar
+- Select target project
+- Select `Build Phases`
+- Expand `Link Binary With Libraries`
+- Press plus icon
+- You can search for `Game`
+- Select `GameController.framework`, `GameKit.framework`, `GameplayKit.framework`
+
+See screenshot below:
+<img src="/.github/images/ios-link-binary-with-libraries.png" height="500" />
+
+Hope that we will found solution for work around, or create separate library for work with keyboard. 
+
+
+5. Add provider to root of your app:
 
 ```
 watch: examples/A11ySample/App.tsx
