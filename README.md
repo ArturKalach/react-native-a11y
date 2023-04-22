@@ -21,10 +21,19 @@ A11y is important, there are a lot of reasons to support and be compliant with i
 There are can be other reasons, customer requirements, laws and requirements for specific groups of apps, 
 remote control, etc. Based on this you can find a lot of advantages and benefits to supporting A11y.
 
-**_NOTE:_**   
-0.67.* - checked only, old architecture.
-Unfortunately, the new architecture is not supported yet, we plan to do it asap. Not all applications can switch architecture to the new one, there are a lot of problems with migration, usually with external libs, this library was developed on 0.67.* and it was decided to start with it. We plan to update the library to support 0.68.* - 0.70.* and also check the old versions for working.
----
+## Versioning 
+| React Native version       | Android       | iOS       | New arch  |
+| ------------- | ------------- | --------- | --------- |
+| 0.71.7        | Supported     | Supported | Supported |
+| 0.70.9        | Supported     | Supported | Supported |
+| 0.69.9        | Supported     | Supported | Not supported |
+| 0.68.2        | Supported     | Supported | Not supported |
+| 0.67.2        | Supported     | Supported | X             |
+| 0.66.1        | Supported     | Supported | X             |
+| 0.65.1        | Supported     | X         | X             |
+| 0.64.2        | Supported     | X         | X             |
+| <0.63.4       | X             | X         | X             |
+
 ## Installation
 This library is not finished yer and currently on alfa stage. We will be glad to issues, questions, and help.
 
