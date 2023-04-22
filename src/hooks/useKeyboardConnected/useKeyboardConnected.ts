@@ -6,7 +6,6 @@ export const useKeyboardConnected = () => {
 
   useEffect(() => {
     A11yModule.isKeyboardConnected().then(setState);
-
     return A11yModule.keyboardStatusListener(
       ({ status }: { status: boolean }) => setState(status),
     );

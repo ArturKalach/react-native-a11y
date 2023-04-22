@@ -30,7 +30,6 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
         style={[style, fStyle]}
         canBeFocused={canBecomeFocused && canBeFocused}
         ref={ref}
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       >
         {withView ? <View accessible>{children}</View> : children}
