@@ -1,7 +1,6 @@
 package com.reactnativea11y.services;
 
 
-
 import static android.content.res.Configuration.HARDKEYBOARDHIDDEN_NO;
 import static android.content.res.Configuration.KEYBOARD_NOKEYS;
 import static android.content.res.Configuration.KEYBOARD_UNDEFINED;
@@ -19,7 +18,6 @@ import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.UIManager;
 import com.facebook.react.uimanager.IllegalViewOperationException;
-import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.common.ViewUtil;

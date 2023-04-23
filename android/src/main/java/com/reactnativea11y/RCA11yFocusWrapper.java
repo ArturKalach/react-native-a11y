@@ -5,8 +5,6 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import androidx.annotation.Nullable;
 
-
-
 public class RCA11yFocusWrapper extends ViewGroup {
 
   @Override
