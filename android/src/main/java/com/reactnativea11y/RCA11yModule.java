@@ -8,7 +8,6 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
-import com.reactnativea11y.services.KeyboardService;
 
 public class RCA11yModule extends RCA11yModuleSpec{
   public static final String NAME = "RCA11yModule";

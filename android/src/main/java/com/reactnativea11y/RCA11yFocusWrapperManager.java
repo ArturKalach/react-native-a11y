@@ -4,7 +4,6 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import androidx.annotation.Nullable;
 
 import com.facebook.react.bridge.ReactContext;
@@ -17,10 +16,6 @@ import java.util.Map;
 import com.facebook.react.uimanager.UIManagerHelper;
 import com.reactnativea11y.events.EnterPressEvent;
 import com.reactnativea11y.events.FocusChangeEvent;
-
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Map;
 
 public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWrapperManagerSpec<RCA11yFocusWrapper> {
 
