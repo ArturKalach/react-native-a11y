@@ -272,7 +272,7 @@ PODS:
   - React-jsinspector (0.67.4)
   - React-logger (0.67.4):
     - glog
-  - react-native-a11y (0.2.1):
+  - react-native-a11y (0.3.1):
     - React-Core
   - react-native-safe-area-context (4.3.3):
     - RCT-Folly
@@ -349,7 +349,7 @@ PODS:
     - React-Core
   - RNReanimated (1.13.4):
     - React-Core
-  - RNScreens (3.17.0):
+  - RNScreens (3.20.0):
     - React-Core
     - React-RCTImage
   - Yoga (1.14.0)
@@ -398,7 +398,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
-  - react-native-a11y (from `../../..`)
+  - react-native-a11y (from `../node_modules/react-native-a11y`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -470,7 +470,7 @@ EXTERNAL SOURCES:
   React-logger:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-a11y:
-    :path: "../../.."
+    :path: "../node_modules/react-native-a11y"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   React-perflogger:
@@ -537,7 +537,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: cbdf37cebdc4f5d8b3d0bf5ccaa6147fd9de9f3d
   React-jsinspector: f4775ea9118cbe1f72b834f0f842baa7a99508d8
   React-logger: a1f028f6d8639a3f364ef80419e5e862e1115250
-  react-native-a11y: 28bd0c47ebfe8439456d769c2b76dedcf92bf8b1
+  react-native-a11y: dda284270f68cdb5b2540ff37844cdbfd1120a86
   react-native-safe-area-context: b456e1c40ec86f5593d58b275bd0e9603169daca
   React-perflogger: 0afaf2f01a47fd0fc368a93bfbb5bd3b26db6e7f
   React-RCTActionSheet: 59f35c4029e0b532fc42114241a06e170b7431a2
@@ -553,10 +553,10 @@ SPEC CHECKSUMS:
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
   RNGestureHandler: 28ad20bf02257791f7f137b31beef34b9549f54b
   RNReanimated: c1b56d030d1616239861534d9adb531f8cffab68
-  RNScreens: 0df01424e9e0ed7827200d6ed1087ddd06c493f9
+  RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 0fa44356d19c9e0c9ca939fa7f346a39758617e1
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
