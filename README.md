@@ -30,12 +30,15 @@ remote control, etc. Based on this you can find a lot of advantages and benefits
 | 0.68.2        | Supported     | Supported | Not supported |
 | 0.67.2        | Supported     | Supported | X             |
 | 0.66.1        | Supported     | Supported | X             |
-| 0.65.1        | Supported     | Supported in "0.3.0-android.2" | X             |
-| 0.64.2        | Supported     | Supported in "0.3.0-android.2" | X             |
+| 0.65.1        | "0.3.0-android.2"     | Supported (use "0.3.0-android.2" to support android) | X             |
+| 0.64.2        | "0.3.0-android.2"     | Supported (use "0.3.0-android.2" to support android) | X             |
 | <0.63.4       | X             | X         | X             |
 
+ReactNative (0.65*, 0.64.*) has different API for Android, if you have these version you can use 
+ "0.3.0-android.2". Version  "0.3.0-android.2" supports iOS.
+
 ## Installation
-This library is not finished yer and currently on alfa stage. We will be glad to issues, questions, and help.
+This library is not finished yer and currently on beta stage. We will be glad to issues, questions, and help.
 
 1. Download package with npm or yarn
 
