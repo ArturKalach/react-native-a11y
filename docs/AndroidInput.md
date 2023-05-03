@@ -202,8 +202,9 @@ We need to add our new package to `packages` list.
 ```
 
 You can compare results with my results in:
-`react-native-a11y/examples/A11ySample/android/app/src/main/java/com/a11ysample/textinput` for the old arch
-`react-native-a11y/examples/A11yNewArch/android/app/src/main/java/com/a11ynewarch/textinput` for the new arch
+`react-native-a11y/examples/A11ySample/android/app/src/main/java/com/a11ysample/textinput` for the old arch [link](./examples/A11ySample/android/app/src/main/java/com/a11ysample/textinput)
+
+`react-native-a11y/examples/A11yNewArch/android/app/src/main/java/com/a11ynewarch/textinput` for the new arch [link](./examples/A11yNewArch/android/app/src/main/java/com/a11ynewarch/textinput)
 
 
 Thats all, you can build and try to focus your inputs with keyboard
