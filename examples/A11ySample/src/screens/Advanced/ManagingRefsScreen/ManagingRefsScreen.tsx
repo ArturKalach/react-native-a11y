@@ -8,12 +8,13 @@ import {
   useDynamicFocusOrder,
 } from "react-native-a11y";
 
-import { DrawerNavigation, DYNAMIC_ORDER } from "../../../navigation";
+import { ANDROID_INPUT, DrawerNavigation, DYNAMIC_ORDER } from "../../../navigation";
 import { NavBar, ReaderExample, Screen } from "../../../components";
 
 export const ManagingRefsScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
   const goBack = () => navigation.navigate(DYNAMIC_ORDER);
+  const goNext = () => navigation.navigate(ANDROID_INPUT);
 
   const { a11yOrder, registerOrder, setOrder } = useDynamicFocusOrder();
   const [firstRef, firstRefCallback] = useCombinedRef<Text>(registerOrder(0));
@@ -40,7 +41,7 @@ export const ManagingRefsScreen = () => {
           </Text>
         </A11yOrder>
       </ReaderExample>
-      <NavBar back={goBack} />
+      <NavBar back={goBack} next={goNext} />
     </Screen>
   );
 };

@@ -6,4 +6,4 @@ export {
   KeyboardFocusScreen,
   DynamicOrderScreen,
 } from "./Basic";
-export { ManagingRefsScreen } from "./Advanced";
+export { ManagingRefsScreen, AndroidTextInputFocus } from "./Advanced";
