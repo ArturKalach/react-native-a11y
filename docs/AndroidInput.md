@@ -201,7 +201,7 @@ We need to add our new package to `packages` list.
     }
 ```
 
-You can compare results with my results in:
+You can compare results with mine here:
 
 `react-native-a11y/examples/A11ySample/android/app/src/main/java/com/a11ysample/textinput` for the old arch [link](../examples/A11ySample/android/app/src/main/java/com/a11ysample/textinput)
 </br>
