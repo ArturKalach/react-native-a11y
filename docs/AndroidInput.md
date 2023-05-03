@@ -9,7 +9,7 @@ We are going to fix this issue from native side, and fix will be applied globall
 
 
 Example of result:
-<img src="../github/images/android-input/android-example.gif" height="500" />|
+<img src="../.github/images/ios-reader.gif" height="500" />|
 
 
 1. First of all we are going to create our own `ReactEditText` implementation extending origin `ReactEditText`.
