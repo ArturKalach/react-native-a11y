@@ -10,6 +10,7 @@ import {
   DynamicOrderScreen,
   ManagingRefsScreen,
   StatusScreen,
+  AndroidTextInputFocus
 } from "./screens";
 import * as Nav from "./navigation";
 import { DrawerContent, Header } from "./components";
@@ -61,6 +62,11 @@ export const Root = () => {
             options={{ title: "Ref management" }}
             name={Nav.REF_MANAGEMENT}
             component={ManagingRefsScreen}
+          />
+          <Drawer.Screen
+            options={{ title: "Android Input keyboard focus" }}
+            name={Nav.ANDROID_INPUT}
+            component={AndroidTextInputFocus}
           />
         </Drawer.Navigator>
       </NavigationContainer>
