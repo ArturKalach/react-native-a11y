@@ -8,7 +8,7 @@ You can override the native logic of the input component on android to fix this 
 We are going to fix this issue from native side, and fix will be applied globally for the whole app.
 
 
-Example of result:
+Example of result: </br>
 <img src="../.github/images/ios-reader.gif" height="500" />|
 
 
