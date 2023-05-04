@@ -1,5 +1,7 @@
 # Support keyboard focus for input on Android
 
+Last update: 04.05.2023
+
 ReactNative has a problem with supporting keyboard focus on Android
 https://github.com/facebook/react-native/issues/31820
 
@@ -18,45 +20,13 @@ Example of result: </br>
 
 import android.content.Context;
 import android.graphics.Rect;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 
 import com.facebook.react.views.textinput.ReactEditText;
 
 public class RCTEditText extends ReactEditText {
-  static final int ENTER_KEY_CODE = KeyEvent.KEYCODE_ENTER;
-  static final int MULTILINE_TYPE = EditorInfo.TYPE_TEXT_FLAG_MULTI_LINE;
-
   public RCTEditText(Context context) {
     super(context);
-  }
-
-  private boolean isKeyHandled(int keyCode) {
-    boolean isMultiline = (this.getInputType() & MULTILINE_TYPE) == 0;
-    return keyCode != ENTER_KEY_CODE
-      || !isMultiline
-      // Remove line base on RN version
-      // Use for new version of rn >0.70.* (maybe >0.68.*)
-      || !this.shouldBlurOnReturn();
-      // Use for old version of rn <0.68*
-      || !this.getBlurOnSubmit();
-  }
-
-  @Override
-  public boolean onKeyDown(int keyCode, KeyEvent event) {
-    if (this.isKeyHandled(keyCode)) {
-      return super.onKeyDown(keyCode, event);
-    }
-    return false;
-  }
-
-  @Override
-  public boolean onKeyUp(int keyCode, KeyEvent event) {
-    if (this.isKeyHandled(keyCode)) {
-      return super.onKeyUp(keyCode, event);
-    }
-    return false;
   }
 
   @Override
@@ -67,20 +37,6 @@ public class RCTEditText extends ReactEditText {
     return super.requestFocus(direction, previouslyFocusedRect);
   }
 }
-
-
-```
-
-Because of new versions of RN and that they change API we need to use "specific" version of blur in `isKeyHandled` function:
-For new version we should use
-```
-    this.shouldBlurOnReturn();
-```
-
-For old versions 
-
-```
-   this.getBlurOnSubmit();
 ```
 
 2. Create new `ReactTextInputManager` based on origin `ReactTextInputManager`
