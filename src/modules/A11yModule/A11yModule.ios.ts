@@ -24,7 +24,7 @@ class A11yModuleIOSImpl implements IA11yModule {
       KEYBOARD_STATUS_EVENT,
       callback,
     );
-    return eventListener.remove;
+    return () => eventListener.remove();
   };
 
   announceForAccessibility = (announcement: string) => {

@@ -162,14 +162,6 @@ RCT_EXPORT_METHOD(
     }
 }
 
-- (void)calendarEventReminderReceived:(NSNotification *)notification
-{
-    NSString *eventName = notification.userInfo[@"name"];
-    if (hasListeners) {
-        [self sendEventWithName:@"EventReminder" body:@{@"name": eventName}];
-    }
-}
-
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params

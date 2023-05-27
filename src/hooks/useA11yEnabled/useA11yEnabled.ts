@@ -10,7 +10,7 @@ export const useA11yEnabled = () => {
       a11yConfig.a11yEventName,
       setState,
     );
-    return listener.remove;
+    return () => listener.remove();
   }, []);
 
   return state;
