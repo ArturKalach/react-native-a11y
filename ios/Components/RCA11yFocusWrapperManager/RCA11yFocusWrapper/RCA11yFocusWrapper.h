@@ -29,12 +29,17 @@ NS_ASSUME_NONNULL_END
 #import <UIKit/UIAccessibilityContainer.h>
 
 #import <React/RCTView.h>
+#import "KeyboardKeyPressHandler/KeyboardKeyPressHandler.h"
 
-@interface RCA11yFocusWrapper : RCTView
+@interface RCA11yFocusWrapper : RCTView {
+    KeyboardKeyPressHandler* _keyboardKeyPressHandler;
+}
 
 @property BOOL canBeFocused;
 @property UIView* myPreferredFocusedView;
 @property (nonatomic, copy) RCTBubblingEventBlock onFocusChange;
+@property (nonatomic, copy) RCTBubblingEventBlock onKeyUpPress;
+@property (nonatomic, copy) RCTBubblingEventBlock onKeyDownPress;
 
 @end
 

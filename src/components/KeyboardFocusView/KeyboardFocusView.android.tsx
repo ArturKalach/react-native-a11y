@@ -14,6 +14,8 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
       children,
       style,
       withView = true,
+      onKeyUpPress,
+      onKeyDownPress,
       ...props
     },
     ref,
@@ -30,6 +32,8 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
         style={[style, fStyle]}
         canBeFocused={canBecomeFocused && canBeFocused}
         ref={ref}
+        onKeyUpPress={onKeyUpPress}
+        onKeyDownPress={onKeyDownPress}
         {...props}
       >
         {withView ? <View accessible>{children}</View> : children}

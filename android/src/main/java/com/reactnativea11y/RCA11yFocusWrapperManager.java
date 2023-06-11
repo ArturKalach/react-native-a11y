@@ -10,16 +10,17 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
-import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.bridge.Arguments;
 import java.util.Map;
 import com.facebook.react.uimanager.UIManagerHelper;
-import com.reactnativea11y.events.EnterPressEvent;
 import com.reactnativea11y.events.FocusChangeEvent;
+import com.reactnativea11y.events.KeyPressDownEvent;
+import com.reactnativea11y.events.KeyPressUpEvent;
+import com.reactnativea11y.services.KeyboardKeyPressHandler;
 
 public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWrapperManagerSpec<RCA11yFocusWrapper> {
 
   public static final String NAME = "RCA11yFocusWrapper";
+  private KeyboardKeyPressHandler keyboardKeyPressHandler;
 
   @Override
   public String getName() {
@@ -28,7 +29,24 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
 
   @Override
   public RCA11yFocusWrapper createViewInstance(ThemedReactContext context) {
+    this.keyboardKeyPressHandler = new KeyboardKeyPressHandler();
     return new RCA11yFocusWrapper(context);
+  }
+
+
+  private void onKeyPressHandler(RCA11yFocusWrapper viewGroup, int keyCode, KeyEvent keyEvent, ThemedReactContext reactContext) {
+    KeyboardKeyPressHandler.PressInfo pressInfo = keyboardKeyPressHandler.getEventsFromKeyPress(keyCode,keyEvent);
+
+    if(pressInfo.firePressDownEvent) {
+      KeyPressDownEvent keyPressDownEvent = new KeyPressDownEvent(viewGroup.getId(), keyCode, keyEvent);
+      UIManagerHelper.getEventDispatcherForReactTag((ReactContext) reactContext, viewGroup.getId()).dispatchEvent(keyPressDownEvent);
+    }
+
+    if(pressInfo.firePressUpEvent) {
+      KeyPressUpEvent keyPressUpEvent = new KeyPressUpEvent(viewGroup.getId(), keyCode, keyEvent, pressInfo.isLongPress);
+      UIManagerHelper.getEventDispatcherForReactTag((ReactContext) reactContext, viewGroup.getId()).dispatchEvent(keyPressUpEvent);
+    }
+
   }
 
   @Override
@@ -38,31 +56,13 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
       public void onChildViewAdded(View parent, View child) {
         child.setOnFocusChangeListener(
           (v, hasFocus) -> {
-            WritableMap eventPayload = Arguments.createMap();
-            eventPayload.putBoolean("isFocused", hasFocus);
-            FocusChangeEvent event = new FocusChangeEvent(viewGroup.getId(), eventPayload);
+            FocusChangeEvent event = new FocusChangeEvent(viewGroup.getId(), hasFocus);
             UIManagerHelper.getEventDispatcherForReactTag((ReactContext) reactContext, v.getId()).dispatchEvent(event);
           });
-        child.setOnKeyListener(new View.OnKeyListener() {
-          @Override
-          public boolean onKey(View v, int keyCode, KeyEvent keyEvent) {
-            if (keyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-              switch (keyCode) {
-                case KeyEvent.KEYCODE_ENTER:
-                  WritableMap eventPayload = Arguments.createMap();
-                  eventPayload.putBoolean("isEnterPress", true);
-                  eventPayload.putBoolean("isAltPressed", keyEvent.isAltPressed());
-                  eventPayload.putBoolean("isShiftPressed", keyEvent.isShiftPressed());
-                  EnterPressEvent event = new EnterPressEvent(viewGroup.getId(), eventPayload);
-                  UIManagerHelper.getEventDispatcherForReactTag((ReactContext) reactContext, v.getId()).dispatchEvent(event);
-                  return false;
-                default:
-                  return false;
-              }
 
-            }
-            return false;
-          }
+        child.setOnKeyListener((View v, int keyCode, KeyEvent keyEvent) -> {
+          onKeyPressHandler(viewGroup, keyCode, keyEvent, reactContext);
+          return false;
         });
       }
 
@@ -81,9 +81,12 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
     if (export == null) {
       export = MapBuilder.newHashMap();
     }
-    // Default events but adding them here explicitly for clarity
+
     export.put(FocusChangeEvent.EVENT_NAME, MapBuilder.of("registrationName", "onFocusChange"));
-    export.put(EnterPressEvent.EVENT_NAME, MapBuilder.of("registrationName", "onEnterPress"));
+    export.put(KeyPressUpEvent.EVENT_NAME, MapBuilder.of("registrationName", "onKeyUpPress"));
+    export.put(KeyPressDownEvent.EVENT_NAME, MapBuilder.of("registrationName", "onKeyDownPress"));
+
+
     return export;
   }
 
