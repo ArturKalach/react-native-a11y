@@ -155,8 +155,8 @@ RCT_EXPORT_METHOD(
                   rejecter:(RCTPromiseRejectBlock)reject
                   ) {
     if (@available(iOS 14.0, *)) {
-        bool value = [[GCKeyboard coalescedKeyboard] isEqual: [NSNull null]];
-        resolve(value ? @(NO) : @(YES));
+        bool isConnected = [GCKeyboard coalescedKeyboard] != nil;
+        resolve(isConnected ? @(YES) : @(NO));
     } else {
         reject(@"ios version is not supported", @"version less than 14.0", nil);
     }
@@ -164,7 +164,7 @@ RCT_EXPORT_METHOD(
 
 #ifdef RCT_NEW_ARCH_ENABLED
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
-    (const facebook::react::ObjCTurboModule::InitParams &)params
+(const facebook::react::ObjCTurboModule::InitParams &)params
 {
     return std::make_shared<facebook::react::NativeA11yModuleSpecJSI>(params);
 }
