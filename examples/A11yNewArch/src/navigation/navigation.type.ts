@@ -10,6 +10,7 @@ export type DrawerParamList = {
   [Names.DYNAMIC_ORDER]: undefined;
   [Names.REF_MANAGEMENT]: undefined;
   [Names.ANDROID_INPUT]: undefined;
+  [Names.KEYBOARD_ON_PRESS]: undefined;
 };
 
 export type DrawerNavigation = DrawerNavigationProp<DrawerParamList>;

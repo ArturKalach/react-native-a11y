@@ -4,16 +4,20 @@ import { useMemo, useState, useRef, useImperativeHandle } from "react";
 import { GestureResponderEvent, PressableProps, View } from "react-native";
 
 // @ts-ignore: import from origin pressable
+// eslint-disable-next-line import/no-unresolved
 import { normalizeRect } from "react-native/Libraries/StyleSheet/Rect";
 // @ts-ignore: import from origin pressable
+// eslint-disable-next-line import/no-unresolved
 import usePressability from "react-native/Libraries/Pressability/usePressability";
 // @ts-ignore: import from origin pressable
+// eslint-disable-next-line import/no-unresolved
 import useAndroidRippleForView from "react-native/Libraries/Components/Pressable/useAndroidRippleForView";
 
 import {
   KeyboardFocusView,
   KeyboardFocusViewProps,
 } from "../KeyboardFocusView";
+import { OnKeyPressFn } from "../KeyboardFocusView";
 
 export type SyntheticEvent<T> = {
   bubbles?: boolean;
@@ -90,7 +94,13 @@ type Props = PressableProps &
   NAProps &
   KeyboardFocusViewProps & {
     unstable_pressDelay?: number;
+    delayHoverIn: unknown;
+    delayHoverOut: unknown;
+    onHoverIn: unknown;
+    onHoverOut: unknown;
   };
+
+const IOS_SPACE_KEY_CODE = 44;
 
 export const Pressable = React.memo(
   React.forwardRef<View, Props>((props: Props, forwardedRef) => {
@@ -232,12 +242,27 @@ export const Pressable = React.memo(
       ],
     );
     const eventHandlers = usePressability(config);
+
+    const onKeyUpPress = React.useCallback<OnKeyPressFn>(
+      e => {
+        if (e.nativeEvent.keyCode === IOS_SPACE_KEY_CODE) {
+          if (e.nativeEvent.isLongPress) {
+            onLongPress?.(e);
+          } else {
+            onPress?.(e);
+          }
+        }
+      },
+      [onLongPress, onPress],
+    );
+
     return (
       <KeyboardFocusView
         {...restPropsWithDefaults}
         {...eventHandlers}
         canBeFocused={canBeFocused}
         onFocusChange={onFocusChange}
+        onKeyUpPress={onKeyUpPress}
         ref={viewRef}
         style={typeof style === "function" ? style({ pressed }) : style}
         collapsable={false}

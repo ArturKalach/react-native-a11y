@@ -12,14 +12,19 @@
 
 #import <UIKit/UIKit.h>
 #import <UIKit/UIAccessibilityContainer.h>
-
 #import <React/RCTView.h>
 
-@interface FocusWrapper : RCTView
+#import "KeyboardKeyPressHandler.h"
+
+@interface FocusWrapper : RCTView {
+    KeyboardKeyPressHandler* _keyboardKeyPressHandler;
+}
 
 @property BOOL canBeFocused;
 @property UIView* myPreferredFocusedView;
 @property (nonatomic, copy) RCTBubblingEventBlock onFocusChange;
+@property (nonatomic, copy) RCTBubblingEventBlock onKeyDownPress;
+@property (nonatomic, copy) RCTBubblingEventBlock onKeyUpPress;
 
 @end
 

@@ -258,12 +258,32 @@ You also can find a new `A11yOrder` component it's just shorts for `<View {...a1
 
 ### KeyboardFocusView
 
-`KeyboardFocusView` is view based component, has additional props and provide possibility to make component focusable by a keyboard
+`KeyboardFocusView` is view based component, has additional props and provide possibility to make component focusable by a keyboard.
+Additionally, you can handle pressing events from keyboard. This system can help to handle `Enter` press or long press on `spacebar`.
 
 | Props         | Description   |
 | ------------- | ------------- |
 | onFocusChange?| Event to handle focus change, `(e: event.nativeEvent.isFocused) => void` |
 | canBeFocused? | `boolean` default true, describe whether component can be focused by keyboard |
+| onKeyDownPress? | Event to handle a keyboard key down event, `(e: OnKeyPress) => void` |
+| onKeyUpPress? | Event to handle a keyboard key up event`(e: OnKeyPress) => void` |
+
+Where `OnKeyPress` is:
+```
+type OnKeyPress = NativeSyntheticEvent<{
+  keyCode: number;
+  isLongPress: boolean;
+  isAltPressed: boolean;
+  isShiftPressed: boolean;
+  isCtrlPressed: boolean;
+  isCapsLockOn: boolean;
+  hasNoModifiers: boolean;
+}>;
+```
+
+
+#### Note:
+Latest iOS versions has a `Commands` for a11y support, which override keyboard key presses. If you open `Accessibility` -> `Keyboards` -> `Full Keyboard Access` ->  `Commands`, you can find that `Spacebar` key id assigned to the `Activate` command. Because of this, all your `spacebar` presses will be ignored.
 
 
 #### Examples
