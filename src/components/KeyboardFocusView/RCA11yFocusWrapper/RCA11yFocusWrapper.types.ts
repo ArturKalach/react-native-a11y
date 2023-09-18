@@ -4,20 +4,22 @@ export type KeyboardFocusEvent = NativeSyntheticEvent<{
   isFocused: boolean;
 }>;
 
-export type OnEnterPressEvent = NativeSyntheticEvent<{
-  isShiftPressed: boolean;
+export type OnKeyPress = NativeSyntheticEvent<{
+  keyCode: number;
+  isLongPress: boolean;
   isAltPressed: boolean;
-  isEnterPress: boolean;
+  isShiftPressed: boolean;
+  isCtrlPressed: boolean;
+  isCapsLockOn: boolean;
+  hasNoModifiers: boolean;
 }>;
 
+export type OnKeyPressFn = (e: OnKeyPress) => void;
 export type OnFocusChangeFn = (e: KeyboardFocusEvent) => void;
-export type OnEnterPressFn = (e: OnEnterPressEvent) => void;
 
 export type FocusWrapperProps = ViewProps & {
   onFocusChange?: OnFocusChangeFn;
+  onKeyUpPress: OnKeyPressFn;
+  onKeyDownPress: OnKeyPressFn;
   canBeFocused?: boolean;
-  /**
-   * @platform android
-   */
-  onEnterPress?: OnEnterPressFn;
 };

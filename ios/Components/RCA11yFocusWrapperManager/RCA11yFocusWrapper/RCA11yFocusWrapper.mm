@@ -9,6 +9,8 @@
 #import "RCA11yFocusWrapper.h"
 #import <UIKit/UIKit.h>
 #import <React/RCTViewManager.h>
+#import <React/RCTLog.h>
+#import "KeyboardKeyPressHandler/KeyboardKeyPressHandler.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 
@@ -53,6 +55,40 @@ using namespace facebook::react;
                 viewEventEmitter->onFocusChange(data);
             };
         };
+        
+        _view.onKeyDownPress = [self](NSDictionary* dictionary) {
+            if (_eventEmitter) {
+                auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
+                facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyDownPress data = {
+                    .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
+                    .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
+                    .isAltPressed = [[dictionary valueForKey:@"isAltPressed"] boolValue],
+                    .isShiftPressed = [[dictionary valueForKey:@"isShiftPressed"] boolValue],
+                    .isCtrlPressed = [[dictionary valueForKey:@"isCtrlPressed"] boolValue],
+                    .isCapsLockOn = [[dictionary valueForKey:@"isCapsLockOn"] boolValue],
+                    .hasNoModifiers = [[dictionary valueForKey:@"hasNoModifiers"] boolValue],
+                };
+                viewEventEmitter->onKeyDownPress(data);
+            };
+        };
+        
+        
+        _view.onKeyUpPress = [self](NSDictionary* dictionary) {
+            if (_eventEmitter) {
+                auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
+                facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyUpPress data = {
+                    .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
+                    .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
+                    .isAltPressed = [[dictionary valueForKey:@"isAltPressed"] boolValue],
+                    .isShiftPressed = [[dictionary valueForKey:@"isShiftPressed"] boolValue],
+                    .isCtrlPressed = [[dictionary valueForKey:@"isCtrlPressed"] boolValue],
+                    .isCapsLockOn = [[dictionary valueForKey:@"isCapsLockOn"] boolValue],
+                    .hasNoModifiers = [[dictionary valueForKey:@"hasNoModifiers"] boolValue],
+                };
+                viewEventEmitter->onKeyUpPress(data);
+            };
+        };
+        
         self.contentView = _view;
     }
     
@@ -82,7 +118,6 @@ using namespace facebook::react;
     
     if(oldViewProps.canBeFocused != newViewProps.canBeFocused) {
         [_view setCanBeFocused: newViewProps.canBeFocused];
-      //  self.isAccessibilityElement = false;
     }
     
 }
@@ -98,6 +133,32 @@ Class<RCTComponentViewProtocol> RCA11yFocusWrapperCls(void)
 #else
 
 @implementation RCA11yFocusWrapper
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        _keyboardKeyPressHandler = [[KeyboardKeyPressHandler alloc] init];
+    }
+    
+    return self;
+    
+}
+
+- (void)pressesBegan:(NSSet<UIPress *> *)presses
+           withEvent:(UIPressesEvent *)event {
+    NSDictionary *eventInfo = [_keyboardKeyPressHandler actionDownHandler:presses withEvent:event];
+    if(self.onKeyDownPress) {
+        self.onKeyDownPress(eventInfo);
+    }
+}
+
+- (void)pressesEnded:(NSSet<UIPress *> *)presses
+           withEvent:(UIPressesEvent *)event {
+    NSDictionary *eventInfo = [_keyboardKeyPressHandler actionUpHandler:presses withEvent:event];
+    if(self.onKeyUpPress) {
+        self.onKeyUpPress(eventInfo);
+    }
+}
 
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments {
     if (self.myPreferredFocusedView == nil) {
