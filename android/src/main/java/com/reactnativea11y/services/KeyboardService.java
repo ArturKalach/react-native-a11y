@@ -21,6 +21,7 @@ import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.common.ViewUtil;
+import com.reactnativea11y.RCA11yUIManagerHelper;
 
 import static com.facebook.react.uimanager.common.UIManagerType.FABRIC;
 
@@ -62,19 +63,9 @@ public class KeyboardService implements LifecycleEventListener {
 
     activity.runOnUiThread(() -> {
       try {
-        int uiManagerType = ViewUtil.getUIManagerType(tag);
-        if (uiManagerType == FABRIC) {
-          UIManager fabricUIManager =
-            UIManagerHelper.getUIManager(context, uiManagerType);
-          if (fabricUIManager != null) {
-            View view = fabricUIManager.resolveView(tag);
-            view.requestFocus();
-          }
-        } else {
-          UIManager uiManager = context.getNativeModule(UIManagerModule.class);
-          View view = uiManager.resolveView(tag);
-          view.requestFocus();
-        }
+        UIManager uiManager = RCA11yUIManagerHelper.getNativeModule(context, tag);
+        View view = uiManager.resolveView(tag);
+        view.requestFocus();
       } catch (IllegalViewOperationException error) {
         Log.e("KEYBOARD_FOCUS_ERROR", error.getMessage());
       }

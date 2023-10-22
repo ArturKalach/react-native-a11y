@@ -22,6 +22,7 @@ import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.facebook.react.uimanager.UIManagerHelper;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.common.ViewUtil;
+import com.reactnativea11y.RCA11yUIManagerHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,14 +78,9 @@ public class A11yReader {
     }
 
     activity.runOnUiThread(() -> {
-      UIManager manager = null;
       try {
-        int uiManagerType = ViewUtil.getUIManagerType(reactTags.getInt(0));
-        if (uiManagerType == FABRIC) {
-          manager = UIManagerHelper.getUIManager(context, uiManagerType);
-        } else {
-          manager = context.getNativeModule(UIManagerModule.class);
-        }
+        UIManager manager = RCA11yUIManagerHelper.getNativeModule(context, reactTags.getInt(0));
+
         final ArrayList<View> views = new ArrayList<>();
         for (int i = 0; i < length; i++) {
           try {
