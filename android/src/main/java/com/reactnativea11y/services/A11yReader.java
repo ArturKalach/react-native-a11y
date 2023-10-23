@@ -79,12 +79,11 @@ public class A11yReader {
 
     activity.runOnUiThread(() -> {
       try {
-        UIManager manager = RCA11yUIManagerHelper.getNativeModule(context, reactTags.getInt(0));
-
+        RCA11yUIManagerHelper uiHelper = new RCA11yUIManagerHelper(context);
         final ArrayList<View> views = new ArrayList<>();
         for (int i = 0; i < length; i++) {
           try {
-            views.add(manager.resolveView(reactTags.getInt(i)));
+            views.add(uiHelper.resolveView(reactTags.getInt(i)));
           } catch (IllegalViewOperationException error) {
             Log.e("ERROR", error.getMessage());
           }
