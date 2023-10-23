@@ -10,6 +10,15 @@
 
 @implementation FocusWrapper
 
+- (instancetype)init {
+  self = [super init];
+  if (self) {
+      _keyboardKeyPressHandler = [[KeyboardKeyPressHandler alloc] init];
+  }
+  return self;
+}
+
+
 - (NSArray<id<UIFocusEnvironment>> *)preferredFocusEnvironments {
     if (self.myPreferredFocusedView == nil) {
         return @[];
@@ -33,12 +42,22 @@
     }
 }
 
-//- (void)didUpdateReactSubviews
-//{
-//    [super didUpdateReactSubviews];
-//    if (@available(iOS 14.0, *)) {
-//        self.focusGroupIdentifier =  [NSString stringWithFormat:@"app.group.%@", self.reactTag];
-//    }
-//}
+
+- (void)pressesBegan:(NSSet<UIPress *> *)presses
+           withEvent:(UIPressesEvent *)event {
+    NSDictionary *eventInfo = [_keyboardKeyPressHandler actionDownHandler:presses withEvent:event];
+    if(self.onKeyDownPress) {
+        self.onKeyDownPress(eventInfo);
+    }
+}
+
+- (void)pressesEnded:(NSSet<UIPress *> *)presses
+           withEvent:(UIPressesEvent *)event {
+    NSDictionary *eventInfo = [_keyboardKeyPressHandler actionUpHandler:presses withEvent:event];
+    if(self.onKeyUpPress) {
+        self.onKeyUpPress(eventInfo);
+    }
+}
+
 
 @end

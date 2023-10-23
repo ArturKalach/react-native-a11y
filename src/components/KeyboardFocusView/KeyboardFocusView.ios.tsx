@@ -9,7 +9,15 @@ import type { KeyboardFocusViewProps } from "./KeyboardFocusView.types";
 
 export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
   (
-    { onFocusChange, style, focusStyle, canBeFocused = true, ...props },
+    {
+      onFocusChange,
+      style,
+      focusStyle,
+      canBeFocused = true,
+      onKeyUpPress,
+      onKeyDownPress,
+      ...props
+    },
     ref,
   ) => {
     const canBecomeFocused = useCanBeFocused();
@@ -35,6 +43,8 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
         ref={ref}
         style={[style, fStyle]}
         canBeFocused={canBecomeFocused && canBeFocused}
+        onKeyUpPress={onKeyUpPress}
+        onKeyDownPress={onKeyDownPress}
         onFocusChange={onFocusChangeHandler}
         {...props}
       />

@@ -1,12 +1,16 @@
 package com.a11ynewarch;
 
+import android.content.Intent;
+import android.content.res.Configuration;
+
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 public class MainActivity extends ReactActivity {
-
+  private final String ON_CONFIGURATION_CHANGED = "onConfigurationChanged";
+  private final String NEW_CONFIG = "newConfig";
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.
@@ -31,5 +35,13 @@ public class MainActivity extends ReactActivity {
         // If you opted-in for the New Architecture, we enable Concurrent React (i.e. React 18).
         DefaultNewArchitectureEntryPoint.getConcurrentReactEnabled() // concurrentRootEnabled
         );
+  }
+
+  @Override
+  public void onConfigurationChanged(Configuration newConfig) {
+    super.onConfigurationChanged(newConfig);
+    final Intent intent = new Intent(ON_CONFIGURATION_CHANGED);
+    intent.putExtra(NEW_CONFIG, newConfig);
+    this.sendBroadcast(intent);
   }
 }

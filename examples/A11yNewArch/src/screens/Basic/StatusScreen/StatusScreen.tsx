@@ -6,12 +6,12 @@ import { NavBar } from "../../../components";
 import {
   DYNAMIC_ORDER,
   DrawerNavigation,
-  KEYBOARD_FOCUS,
+  KEYBOARD_ON_PRESS,
 } from "../../../navigation";
 
 export const StatusScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
-  const goBack = () => navigation.navigate(KEYBOARD_FOCUS);
+  const goBack = () => navigation.navigate(KEYBOARD_ON_PRESS);
   const goNext = () => navigation.navigate(DYNAMIC_ORDER);
 
   const isKeyboardConnected = useKeyboardStatus();

@@ -6,6 +6,7 @@ This is a React Native A11y Library with following main features
 - 🤖 Reader features: Focus, Order, Reader </br>
 - ⌨️ Keyboard features: Focus </br>
 - 🙌 Others features soon </br>
+- ⚡️ The New Arch support </br>
 
 | iOS reader    | Android reader |
 | ------------- | -------------- |
@@ -20,22 +21,6 @@ A11y is important, there are a lot of reasons to support and be compliant with i
 
 There are can be other reasons, customer requirements, laws and requirements for specific groups of apps, 
 remote control, etc. Based on this you can find a lot of advantages and benefits to supporting A11y.
-
-## Versioning 
-| React Native version       | Android       | iOS       | New arch  |
-| ------------- | ------------- | --------- | --------- |
-| 0.71.7        | Supported     | Supported | Supported |
-| 0.70.9        | Supported     | Supported | Supported |
-| 0.69.9        | Supported     | Supported | Not supported |
-| 0.68.2        | Supported     | Supported | Not supported |
-| 0.67.2        | Supported     | Supported | X             |
-| 0.66.1        | Supported     | Supported | X             |
-| 0.65.1        | "0.3.0-android.2"     | Supported (use "0.3.0-android.2" to support android) | X             |
-| 0.64.2        | "0.3.0-android.2"     | Supported (use "0.3.0-android.2" to support android) | X             |
-| <0.63.4       | X             | X         | X             |
-
-ReactNative (0.65*, 0.64.*) has different API for Android, if you have these version you can use 
- "0.3.0-android.2". Version  "0.3.0-android.2" supports iOS.
 
 ## Installation
 This library is not finished yer and currently on beta stage. We will be glad to issues, questions, and help.
@@ -258,12 +243,32 @@ You also can find a new `A11yOrder` component it's just shorts for `<View {...a1
 
 ### KeyboardFocusView
 
-`KeyboardFocusView` is view based component, has additional props and provide possibility to make component focusable by a keyboard
+`KeyboardFocusView` is view based component, has additional props and provide possibility to make component focusable by a keyboard.
+Additionally, you can handle pressing events from keyboard. This system can help to handle `Enter` press or long press on `spacebar`.
 
 | Props         | Description   |
 | ------------- | ------------- |
 | onFocusChange?| Event to handle focus change, `(e: event.nativeEvent.isFocused) => void` |
 | canBeFocused? | `boolean` default true, describe whether component can be focused by keyboard |
+| onKeyDownPress? | Event to handle a keyboard key down event, `(e: OnKeyPress) => void` |
+| onKeyUpPress? | Event to handle a keyboard key up event`(e: OnKeyPress) => void` |
+
+Where `OnKeyPress` is:
+```
+type OnKeyPress = NativeSyntheticEvent<{
+  keyCode: number;
+  isLongPress: boolean;
+  isAltPressed: boolean;
+  isShiftPressed: boolean;
+  isCtrlPressed: boolean;
+  isCapsLockOn: boolean;
+  hasNoModifiers: boolean;
+}>;
+```
+
+
+#### Note:
+Latest iOS versions has a `Commands` for a11y support, which override keyboard key presses. If you open `Accessibility` -> `Keyboards` -> `Full Keyboard Access` ->  `Commands`, you can find that `Spacebar` key id assigned to the `Activate` command. Because of this, all your `spacebar` presses will be ignored.
 
 
 #### Examples
@@ -368,6 +373,19 @@ Example: </br>
 - Add tests
 - Migrate to the new architecture
 - Check React Navigation for A11y and make examples 
+
+## ReactNative old versions supporting 
+The library provides default support for RN versions starting from v0.66.1 and up to v0.72.*.
+
+To enable support for versions 0.64.* and 0.65.*, add `legacyVer=true` in your `gradle.properties` file
+```
+// root/android/gradle.properties
+
+legacyVer=true
+``` 
+
+If for some reason you need support for older versions, feel free to create an issue.
+
 
 ## Problems
 
