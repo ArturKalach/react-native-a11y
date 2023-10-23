@@ -63,8 +63,8 @@ public class KeyboardService implements LifecycleEventListener {
 
     activity.runOnUiThread(() -> {
       try {
-        UIManager uiManager = RCA11yUIManagerHelper.getNativeModule(context, tag);
-        View view = uiManager.resolveView(tag);
+        RCA11yUIManagerHelper uiHelper = new RCA11yUIManagerHelper(context);
+        View view = uiHelper.resolveView(tag);
         view.requestFocus();
       } catch (IllegalViewOperationException error) {
         Log.e("KEYBOARD_FOCUS_ERROR", error.getMessage());
