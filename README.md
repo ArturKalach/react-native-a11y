@@ -359,6 +359,15 @@ const App = () => {
 ```
 
 
+## Android input
+
+There are an issue with focusing by keyboard input on Android https://github.com/facebook/react-native/issues/31820 </br>
+You can find a fix in [docs](./docs/AndroidInput.md)
+
+Example: </br>
+<img src="./.github/images/android-input/android-example.gif" height="500" />|
+
+
 ## Roadmap 
 - Add more examples, update Readme
 - Add tests

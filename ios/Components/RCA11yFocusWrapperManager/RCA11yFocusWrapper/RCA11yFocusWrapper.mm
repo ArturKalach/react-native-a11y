@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <React/RCTViewManager.h>
 #import <React/RCTLog.h>
-#import "KeyboardKeyPressHandler/KeyboardKeyPressHandler.h"
+#import "KeyboardKeyPressHandler.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 

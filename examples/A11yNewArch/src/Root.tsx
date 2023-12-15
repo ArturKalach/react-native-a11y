@@ -68,6 +68,11 @@ export const Root = () => {
             name={Nav.REF_MANAGEMENT}
             component={ManagingRefsScreen}
           />
+          <Drawer.Screen
+            options={{ title: "Android Input keyboard focus" }}
+            name={Nav.ANDROID_INPUT}
+            component={AndroidTextInputFocus}
+          />
         </Drawer.Navigator>
       </NavigationContainer>
     </A11yProvider>

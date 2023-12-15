@@ -5551,6 +5551,11 @@ react-is@^17.0.1, react-is@^17.0.2:
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
   integrity sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==
 
+react-native-a11y@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-a11y/-/react-native-a11y-0.3.1.tgz#3f89df90e232f74771a72e422942f08f41d95c94"
+  integrity sha512-NViByySBVpoZGvBuMXqTX71GEWlT2knuiFVecJ0G0GDz37zAfsUCxpEbTMIS+jHKe67zIuXBNBVIU65/ghse8A==
+
 react-native-animatable@1.3.3:
   version "1.3.3"
   resolved "https://registry.npmjs.org/react-native-animatable/-/react-native-animatable-1.3.3.tgz"
