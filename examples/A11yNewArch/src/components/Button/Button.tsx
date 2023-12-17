@@ -8,10 +8,11 @@ type Props = {
   style?: ViewStyle;
   canBeFocused?: boolean;
   focusStyle?: FocusStyle;
+  accessible?: boolean;
 };
 
 export const Button = React.forwardRef<View, Props>(
-  ({ title, onPress, style, focusStyle, canBeFocused = true }, ref) => {
+  ({ title, onPress, style, focusStyle, canBeFocused = true, accessible = true }, ref) => {
     const fStyle = ({ focused }: { focused: boolean }) =>
       focused && styles.focus;
 
@@ -27,9 +28,10 @@ export const Button = React.forwardRef<View, Props>(
           onFocusChange={onFocusChangeHandler}
           canBeFocused={canBeFocused}
           onPress={onPress}
-          style={[styles.container]}
+          style={styles.container}
           focusStyle={focusStyle || fStyle}
           ref={ref}
+          accessible={accessible}
         >
           <Text
             accessible={false}
@@ -48,10 +50,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "#111",
     borderRadius: 50,
-    width: "100%",
-    maxHeight: 48,
+    minWidth: 100,
   },
-  font: { fontSize: 18, fontWeight: "bold", color: "#111" },
+  font: { fontSize: 18, textAlign:'center', fontWeight: "bold", color: "#111" },
   focus: {
     backgroundColor: "#aaa",
     borderColor: "#eee",

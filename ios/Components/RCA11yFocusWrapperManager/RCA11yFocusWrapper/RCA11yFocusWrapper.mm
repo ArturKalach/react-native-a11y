@@ -122,6 +122,10 @@ using namespace facebook::react;
     
 }
 
+- (BOOL)canBecomeFocused {
+    return NO;
+}
+
 Class<RCTComponentViewProtocol> RCA11yFocusWrapperCls(void)
 {
     return RCA11yFocusWrapper.class;
