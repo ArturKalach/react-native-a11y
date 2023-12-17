@@ -101,6 +101,7 @@ type Props = PressableProps &
   };
 
 const IOS_SPACE_KEY_CODE = 44;
+const ANDROID_SPACE_KEY_CODE = 62;
 
 export const Pressable = React.memo(
   React.forwardRef<View, Props>((props: Props, forwardedRef) => {
@@ -245,7 +246,10 @@ export const Pressable = React.memo(
 
     const onKeyUpPress = React.useCallback<OnKeyPressFn>(
       e => {
-        if (e.nativeEvent.keyCode === IOS_SPACE_KEY_CODE) {
+        if (
+          e.nativeEvent.keyCode === IOS_SPACE_KEY_CODE ||
+          e.nativeEvent.keyCode === ANDROID_SPACE_KEY_CODE
+        ) {
           if (e.nativeEvent.isLongPress) {
             onLongPress?.(e);
           } else {
