@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 import type { HostComponent, ViewProps } from "react-native";
 import codegenNativeComponent from "react-native/Libraries/Utilities/codegenNativeComponent";
 import {
@@ -17,6 +18,8 @@ export type EnterPress = Readonly<{
 
 export type KeyPress = Readonly<{
   keyCode: Int32;
+  unicode: Int32;
+  unicodeChar: string;
   isLongPress: boolean;
   isAltPressed: boolean;
   isShiftPressed: boolean;
