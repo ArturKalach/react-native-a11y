@@ -1,7 +1,12 @@
 /* eslint-disable complexity */
 import * as React from "react";
 import { useMemo, useState, useRef, useImperativeHandle } from "react";
-import { GestureResponderEvent, PressableProps, View } from "react-native";
+import {
+  GestureResponderEvent,
+  Platform,
+  PressableProps,
+  View,
+} from "react-native";
 
 // @ts-ignore: import from origin pressable
 // eslint-disable-next-line import/no-unresolved
@@ -100,8 +105,11 @@ type Props = PressableProps &
     onHoverOut: unknown;
   };
 
-const IOS_SPACE_KEY_CODE = 44;
-const ANDROID_SPACE_KEY_CODE = 62;
+const SPACE_KEY_CODE = Platform.select({
+  ios: 44,
+  android: 62,
+  default: 0,
+});
 
 export const Pressable = React.memo(
   React.forwardRef<View, Props>((props: Props, forwardedRef) => {
@@ -246,10 +254,7 @@ export const Pressable = React.memo(
 
     const onKeyUpPress = React.useCallback<OnKeyPressFn>(
       e => {
-        if (
-          e.nativeEvent.keyCode === IOS_SPACE_KEY_CODE ||
-          e.nativeEvent.keyCode === ANDROID_SPACE_KEY_CODE
-        ) {
+        if (e.nativeEvent.keyCode === SPACE_KEY_CODE) {
           if (e.nativeEvent.isLongPress) {
             onLongPress?.(e);
           } else {
