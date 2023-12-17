@@ -86,13 +86,14 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
     export.put(KeyPressUpEvent.EVENT_NAME, MapBuilder.of("registrationName", "onKeyUpPress"));
     export.put(KeyPressDownEvent.EVENT_NAME, MapBuilder.of("registrationName", "onKeyDownPress"));
 
-
     return export;
   }
 
   @Override
   @ReactProp(name = "canBeFocused", defaultBoolean = true)
   public void setCanBeFocused(RCA11yFocusWrapper wrapper, boolean canBeFocused) {
+    wrapper.setClickable(canBeFocused);
+    wrapper.setFocusable(canBeFocused);
     wrapper.setDescendantFocusability(
       canBeFocused ?
         wrapper.FOCUS_AFTER_DESCENDANTS
