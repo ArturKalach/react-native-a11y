@@ -71,10 +71,10 @@ using namespace facebook::react;
         
         _view.onKeyDownPress = [self](NSDictionary* dictionary) {
             if (_eventEmitter) {
-                auto viewEventEmitter = std::static_pointer_cast<ExternalKeyboardViewEventEmitter const>(_eventEmitter);
+                auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
                 
                 std::string unicodeChar = convertNSStringToStdString([dictionary valueForKey:@"unicodeChar"]);
-                facebook::react::ExternalKeyboardViewEventEmitter::OnKeyDownPress data = {
+                facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyDownPress data = {
                     .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
                     .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
                     .unicode = [[dictionary valueForKey:@"unicode"] intValue],
@@ -93,9 +93,9 @@ using namespace facebook::react;
         
         _view.onKeyUpPress = [self](NSDictionary* dictionary) {
             if (_eventEmitter) {
-                auto viewEventEmitter = std::static_pointer_cast<ExternalKeyboardViewEventEmitter const>(_eventEmitter);
+                auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
                 std::string unicodeChar = convertNSStringToStdString([dictionary valueForKey:@"unicodeChar"]);
-                facebook::react::ExternalKeyboardViewEventEmitter::OnKeyUpPress data = {
+                facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyUpPress data = {
                     .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
                     .unicode = [[dictionary valueForKey:@"unicode"] intValue],
                     .unicodeChar = unicodeChar,
