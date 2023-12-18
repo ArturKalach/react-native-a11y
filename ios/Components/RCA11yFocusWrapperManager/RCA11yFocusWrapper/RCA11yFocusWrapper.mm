@@ -72,7 +72,6 @@ using namespace facebook::react;
         _view.onKeyDownPress = [self](NSDictionary* dictionary) {
             if (_eventEmitter) {
                 auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
-                
                 std::string unicodeChar = convertNSStringToStdString([dictionary valueForKey:@"unicodeChar"]);
                 facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyDownPress data = {
                     .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
