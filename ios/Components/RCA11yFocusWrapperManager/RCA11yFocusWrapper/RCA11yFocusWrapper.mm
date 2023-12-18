@@ -23,6 +23,19 @@
 
 #import "RCTFabricComponentsPlugins.h"
 
+std::string convertNSStringToStdString(NSString * _Nullable nsString) {
+    if (nsString == nil) {
+        return "";
+    }
+
+    const char *utf8String = [nsString UTF8String];
+    if (utf8String != NULL) {
+        return std::string(utf8String);
+    } else {
+        return "";
+    }
+}
+
 using namespace facebook::react;
 
 @interface RCA11yFocusWrapper () <RCTRCA11yFocusWrapperViewProtocol>
@@ -58,9 +71,14 @@ using namespace facebook::react;
         
         _view.onKeyDownPress = [self](NSDictionary* dictionary) {
             if (_eventEmitter) {
-                auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
-                facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyDownPress data = {
+                auto viewEventEmitter = std::static_pointer_cast<ExternalKeyboardViewEventEmitter const>(_eventEmitter);
+                
+                std::string unicodeChar = convertNSStringToStdString([dictionary valueForKey:@"unicodeChar"]);
+                facebook::react::ExternalKeyboardViewEventEmitter::OnKeyDownPress data = {
                     .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
+                    .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
+                    .unicode = [[dictionary valueForKey:@"unicode"] intValue],
+                    .unicodeChar = unicodeChar,
                     .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
                     .isAltPressed = [[dictionary valueForKey:@"isAltPressed"] boolValue],
                     .isShiftPressed = [[dictionary valueForKey:@"isShiftPressed"] boolValue],
@@ -75,9 +93,12 @@ using namespace facebook::react;
         
         _view.onKeyUpPress = [self](NSDictionary* dictionary) {
             if (_eventEmitter) {
-                auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
-                facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyUpPress data = {
+                auto viewEventEmitter = std::static_pointer_cast<ExternalKeyboardViewEventEmitter const>(_eventEmitter);
+                std::string unicodeChar = convertNSStringToStdString([dictionary valueForKey:@"unicodeChar"]);
+                facebook::react::ExternalKeyboardViewEventEmitter::OnKeyUpPress data = {
                     .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
+                    .unicode = [[dictionary valueForKey:@"unicode"] intValue],
+                    .unicodeChar = unicodeChar,
                     .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
                     .isAltPressed = [[dictionary valueForKey:@"isAltPressed"] boolValue],
                     .isShiftPressed = [[dictionary valueForKey:@"isShiftPressed"] boolValue],
@@ -120,10 +141,6 @@ using namespace facebook::react;
         [_view setCanBeFocused: newViewProps.canBeFocused];
     }
     
-}
-
-- (BOOL)canBecomeFocused {
-    return NO;
 }
 
 Class<RCTComponentViewProtocol> RCA11yFocusWrapperCls(void)
