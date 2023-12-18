@@ -12,7 +12,7 @@ public class KeyPressUpEvent extends Event<KeyPressUpEvent> {
 
   public static String EVENT_NAME = "topOnKeyUpPress";
 
-  public KeyPressUpEvent(int id, int keyCode, KeyEvent keyEvent, boolean isLongPress) {
+ public KeyPressUpEvent(int id, int keyCode, KeyEvent keyEvent, boolean isLongPress) {
     super(id);
 
     int unicode = keyEvent.getUnicodeChar();
@@ -22,6 +22,7 @@ public class KeyPressUpEvent extends Event<KeyPressUpEvent> {
     eventPayload.putString("unicodeChar", String.valueOf((char)unicode));
     eventPayload.putBoolean("isAltPressed", keyEvent.isAltPressed());
     eventPayload.putBoolean("isShiftPressed", keyEvent.isShiftPressed());
+    eventPayload.putBoolean("isLongPress", isLongPress);
     eventPayload.putBoolean("isCtrlPressed", keyEvent.isCtrlPressed());
     eventPayload.putBoolean("isCapsLockOn", keyEvent.isCapsLockOn());
     eventPayload.putBoolean("hasNoModifiers", keyEvent.hasNoModifiers());
