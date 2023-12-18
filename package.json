@@ -1,6 +1,6 @@
 {
   "name": "react-native-a11y",
-  "version": "0.4.3-rc",
+  "version": "0.4.3-rc1",
   "description": "Improvements of a11y for ReactNative, this library improve work with reader and keyboard focus and reader in general.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
