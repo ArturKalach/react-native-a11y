@@ -123,6 +123,10 @@ using namespace facebook::react;
     return @[self.myPreferredFocusedView];
 }
 
+- (BOOL)canBecomeFocused {
+    return NO;
+}
+
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
     const auto &oldViewProps = *std::static_pointer_cast<RCA11yFocusWrapperProps const>(_props);
