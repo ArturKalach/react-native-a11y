@@ -79,7 +79,19 @@ public class KeyboardService implements LifecycleEventListener {
     if (activity == null) {
       return;
     }
-    activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED));
+
+    /**
+     * Starting with Android 14, apps and services that target Android 14 and use context-registered
+     * receivers are required to specify a flag to indicate whether or not the receiver should be
+     * exported to all other apps on the device: either RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED
+     * <a href="https://developer.android.com/about/versions/14/behavior-changes-14#runtime-receivers-exported"/>
+     */
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
+    if (Build.VERSION.SDK_INT >= 34 && context.getApplicationInfo().targetSdkVersion >= 34) {
+      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED), context.RECEIVER_NOT_EXPORTED)
+    } else {
+      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED))
+    }
   }
 
   @Override
