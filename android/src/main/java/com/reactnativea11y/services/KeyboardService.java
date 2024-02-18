@@ -5,6 +5,7 @@ import static android.content.res.Configuration.HARDKEYBOARDHIDDEN_NO;
 import static android.content.res.Configuration.KEYBOARD_NOKEYS;
 import static android.content.res.Configuration.KEYBOARD_UNDEFINED;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -13,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.View;
+import android.os.Build;
 
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -73,13 +75,25 @@ public class KeyboardService implements LifecycleEventListener {
   }
 
   @Override
+  @SuppressLint("UnspecifiedRegisterReceiverFlag")
   public void onHostResume() {
     final Activity activity = context.getCurrentActivity();
 
     if (activity == null) {
       return;
     }
-    activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED));
+
+    /**
+     * Starting with Android 14, apps and services that target Android 14 and use context-registered
+     * receivers are required to specify a flag to indicate whether or not the receiver should be
+     * exported to all other apps on the device: either RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED
+     * <a href="https://developer.android.com/about/versions/14/behavior-changes-14#runtime-receivers-exported"/>
+     */
+    if (Build.VERSION.SDK_INT >= 34 && context.getApplicationInfo().targetSdkVersion >= 34) {
+      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED), Context.RECEIVER_NOT_EXPORTED);
+    } else {
+      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED));
+    }
   }
 
   @Override
