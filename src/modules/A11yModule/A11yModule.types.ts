@@ -24,7 +24,7 @@ export interface IA11yModule {
   currentFocusedTag?: number;
 
   isKeyboardConnected: () => Promise<boolean>;
-  keyboardStatusListener: (callback: StatusCallback) => void;
+  keyboardStatusListener: (callback: StatusCallback) => () => void;
   announceForAccessibility: (announcement: string) => void;
   announceScreenChange: (announcement: string) => void;
   setA11yFocus: (ref: RefObjType) => void;
