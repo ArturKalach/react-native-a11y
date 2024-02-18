@@ -9,27 +9,34 @@
 #ifndef RCA11yFocusWrapper_h
 #define RCA11yFocusWrapper_h
 
+#import "KeyboardKeyPressHandler.h"
+#import <UIKit/UIKit.h>
+
 #ifdef RCT_NEW_ARCH_ENABLED
 #import <React/RCTViewComponentView.h>
-#import <UIKit/UIKit.h>
+
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface RCA11yFocusWrapper : RCTViewComponentView
+@interface RCA11yFocusWrapper : RCTViewComponentView {
+    KeyboardKeyPressHandler* _keyboardKeyPressHandler;
+}
 @property BOOL canBeFocused;
 @property UIView* myPreferredFocusedView;
+
+- (void)onFocusChange:(BOOL)isFocused;
+- (void)onKeyDownPress:(NSDictionary*)dictionary;
+- (void)onKeyUpPress:(NSDictionary*)dictionary;
+
 @end
 
 NS_ASSUME_NONNULL_END
 
 #else
 
-#import <UIKit/UIKit.h>
 #import <UIKit/UIAccessibilityContainer.h>
-
 #import <React/RCTView.h>
-#import "KeyboardKeyPressHandler.h"
 
 @interface RCA11yFocusWrapper : RCTView {
     KeyboardKeyPressHandler* _keyboardKeyPressHandler;
