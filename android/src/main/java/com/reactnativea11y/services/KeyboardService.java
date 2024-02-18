@@ -18,11 +18,7 @@ import android.os.Build;
 
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
-import com.facebook.react.bridge.UIManager;
 import com.facebook.react.uimanager.IllegalViewOperationException;
-import com.facebook.react.uimanager.UIManagerHelper;
-import com.facebook.react.uimanager.UIManagerModule;
-import com.facebook.react.uimanager.common.ViewUtil;
 import com.reactnativea11y.RCA11yUIManagerHelper;
 
 import static com.facebook.react.uimanager.common.UIManagerType.FABRIC;
@@ -90,7 +86,8 @@ public class KeyboardService implements LifecycleEventListener {
      * <a href="https://developer.android.com/about/versions/14/behavior-changes-14#runtime-receivers-exported"/>
      */
     if (Build.VERSION.SDK_INT >= 34 && context.getApplicationInfo().targetSdkVersion >= 34) {
-      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED), Context.RECEIVER_NOT_EXPORTED);
+      final int RECEIVER_NOT_EXPORTED = 4; // Same to Context.RECEIVER_NOT_EXPORTED but it allows to build with older SDK
+      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED), RECEIVER_NOT_EXPORTED);
     } else {
       activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED));
     }
