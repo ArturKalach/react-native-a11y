@@ -92,15 +92,9 @@ using namespace facebook::react;
         
         _view.onKeyUpPress = [self](NSDictionary* dictionary) {
             if (_eventEmitter) {
-<<<<<<< HEAD
                 auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusWrapperEventEmitter const>(_eventEmitter);
                 std::string unicodeChar = convertNSStringToStdString([dictionary valueForKey:@"unicodeChar"]);
                 facebook::react::RCA11yFocusWrapperEventEmitter::OnKeyUpPress data = {
-=======
-                auto viewEventEmitter = std::static_pointer_cast<ExternalKeyboardViewEventEmitter const>(_eventEmitter);
-                std::string unicodeChar = convertNSStringToStdString([dictionary valueForKey:@"unicodeChar"]);
-                facebook::react::ExternalKeyboardViewEventEmitter::OnKeyUpPress data = {
->>>>>>> 80c5803 (fix: fix unicode (#56))
                     .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
                     .unicode = [[dictionary valueForKey:@"unicode"] intValue],
                     .unicodeChar = unicodeChar,
