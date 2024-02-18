@@ -656,7 +656,7 @@ PODS:
   - React-jsinspector (0.71.6)
   - React-logger (0.71.6):
     - glog
-  - react-native-a11y (0.4.2):
+  - react-native-a11y (0.4.3):
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
@@ -833,7 +833,7 @@ PODS:
     - React-Codegen
     - React-RCTFabric
     - ReactCommon/turbomodule/core
-  - SocketRocket (0.6.0)
+  - SocketRocket (0.6.1)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -1051,7 +1051,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 7894956638ff3e00819dd3f9f6f4a84da38f2409
   React-jsinspector: d5ce2ef3eb8fd30c28389d0bc577918c70821bd6
   React-logger: 9332c3e7b4ef007a0211c0a9868253aac3e1da82
-  react-native-a11y: fb9c6d5a388938690ab159bf2deeed2dfb60479b
+  react-native-a11y: 4a5e2a2426aa820de8a404a9a8b8a0425cac5842
   react-native-safe-area-context: 0dfc8e3a7d5ff115d100bafe4269d64a2c0a1456
   React-perflogger: 43392072a5b867a504e2b4857606f8fc5a403d7f
   React-RCTActionSheet: c7b67c125bebeda9fb19fc7b200d85cb9d6899c4
@@ -1071,10 +1071,10 @@ SPEC CHECKSUMS:
   RNGestureHandler: 9d2ebd17a9fef618d9720e3d95ff5e6607acf8d4
   RNReanimated: b38271c7b72560b7f9c3d0bf531faa8feb4da93a
   RNScreens: 4666ca0a74ee229b2332c5d22d2a8b81ba9202be
-  SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
+  SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: ba09b6b11e6139e3df8229238aa794205ca6a02a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 425304915d2e9f4aa4a1dac8cdffe4690acf1d37
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.15.2
