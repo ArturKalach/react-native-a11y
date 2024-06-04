@@ -12,12 +12,13 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import java.util.Map;
 import com.facebook.react.uimanager.UIManagerHelper;
+import com.facebook.react.views.view.ReactViewGroup;
 import com.reactnativea11y.events.FocusChangeEvent;
 import com.reactnativea11y.events.KeyPressDownEvent;
 import com.reactnativea11y.events.KeyPressUpEvent;
 import com.reactnativea11y.services.KeyboardKeyPressHandler;
 
-public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWrapperManagerSpec<RCA11yFocusWrapper> {
+public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWrapperManagerSpec<ReactViewGroup> {
 
   public static final String NAME = "RCA11yFocusWrapper";
   private KeyboardKeyPressHandler keyboardKeyPressHandler;
@@ -28,13 +29,14 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
   }
 
   @Override
-  public RCA11yFocusWrapper createViewInstance(ThemedReactContext context) {
+  public ReactViewGroup createViewInstance(ThemedReactContext context) {
+
     this.keyboardKeyPressHandler = new KeyboardKeyPressHandler();
-    return new RCA11yFocusWrapper(context);
+    return super.createViewInstance(context);
   }
 
 
-  private void onKeyPressHandler(RCA11yFocusWrapper viewGroup, int keyCode, KeyEvent keyEvent, ThemedReactContext reactContext) {
+  private void onKeyPressHandler(ReactViewGroup viewGroup, int keyCode, KeyEvent keyEvent, ThemedReactContext reactContext) {
     KeyboardKeyPressHandler.PressInfo pressInfo = keyboardKeyPressHandler.getEventsFromKeyPress(keyCode,keyEvent);
 
     if(pressInfo.firePressDownEvent) {
@@ -50,7 +52,7 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
   }
 
   @Override
-  protected void addEventEmitters(final ThemedReactContext reactContext, RCA11yFocusWrapper viewGroup) {
+  protected void addEventEmitters(final ThemedReactContext reactContext, ReactViewGroup viewGroup) {
     viewGroup.setOnHierarchyChangeListener(new ViewGroup.OnHierarchyChangeListener() {
       @Override
       public void onChildViewAdded(View parent, View child) {
@@ -72,8 +74,6 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
     });
   }
 
-
-
   @Nullable
   @Override
   public Map<String, Object> getExportedCustomDirectEventTypeConstants() {
@@ -91,7 +91,7 @@ public class RCA11yFocusWrapperManager extends com.reactnativea11y.RCA11yFocusWr
 
   @Override
   @ReactProp(name = "canBeFocused", defaultBoolean = true)
-  public void setCanBeFocused(RCA11yFocusWrapper wrapper, boolean canBeFocused) {
+  public void setCanBeFocused(ReactViewGroup wrapper, boolean canBeFocused) {
     wrapper.setClickable(canBeFocused);
     wrapper.setFocusable(canBeFocused);
     wrapper.setDescendantFocusability(
