@@ -12,7 +12,17 @@ type Props = {
 };
 
 export const Button = React.forwardRef<View, Props>(
-  ({ title, onPress, style, focusStyle, canBeFocused = true, accessible = true }, ref) => {
+  (
+    {
+      title,
+      onPress,
+      style,
+      focusStyle,
+      canBeFocused = true,
+      accessible = true,
+    },
+    ref,
+  ) => {
     const fStyle = ({ focused }: { focused: boolean }) =>
       focused && styles.focus;
 
@@ -49,10 +59,16 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     borderColor: "#111",
+    borderWidth: 2,
     borderRadius: 50,
     minWidth: 100,
   },
-  font: { fontSize: 18, textAlign:'center', fontWeight: "bold", color: "#111" },
+  font: {
+    fontSize: 18,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: "#111",
+  },
   focus: {
     backgroundColor: "#aaa",
     borderColor: "#eee",
