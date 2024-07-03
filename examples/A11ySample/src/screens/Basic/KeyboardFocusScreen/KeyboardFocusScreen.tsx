@@ -5,14 +5,14 @@ import { A11yModule, KeyboardProvider } from "react-native-a11y";
 import { KeyboardExample, NavBar, Screen, Button } from "../../../components";
 import {
   DrawerNavigation,
-  KEYBOARD_ON_PRESS,
   READER_FOCUS,
+  TEXT_INPUT,
 } from "../../../navigation";
 
 export const KeyboardFocusScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
-  const goNext = () => navigation.navigate(KEYBOARD_ON_PRESS);
   const goBack = () => navigation.navigate(READER_FOCUS);
+  const goNext = () => navigation.navigate(TEXT_INPUT);
 
   const ref1 = useRef(null);
   const ref2 = useRef(null);

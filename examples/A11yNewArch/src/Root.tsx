@@ -10,8 +10,8 @@ import {
   DynamicOrderScreen,
   ManagingRefsScreen,
   StatusScreen,
-  AndroidTextInputFocus,
-  KeyboardOnPressScreen
+  TextInputFocus,
+  KeyboardOnPressScreen,
 } from "./screens";
 import * as Nav from "./navigation";
 import { DrawerContent, Header } from "./components";
@@ -50,9 +50,14 @@ export const Root = () => {
             component={KeyboardFocusScreen}
           />
           <Drawer.Screen
-              options={{ title: "Keyboard on press" }}
-              name={Nav.KEYBOARD_ON_PRESS}
-              component={KeyboardOnPressScreen}
+            options={{ title: "TextInput keyboard focus" }}
+            name={Nav.TEXT_INPUT}
+            component={TextInputFocus}
+          />
+          <Drawer.Screen
+            options={{ title: "Keyboard on press" }}
+            name={Nav.KEYBOARD_ON_PRESS}
+            component={KeyboardOnPressScreen}
           />
           <Drawer.Screen
             options={{ title: "Status" }}
@@ -68,11 +73,6 @@ export const Root = () => {
             options={{ title: "Ref management" }}
             name={Nav.REF_MANAGEMENT}
             component={ManagingRefsScreen}
-          />
-          <Drawer.Screen
-            options={{ title: "Android Input keyboard focus" }}
-            name={Nav.ANDROID_INPUT}
-            component={AndroidTextInputFocus}
           />
         </Drawer.Navigator>
       </NavigationContainer>

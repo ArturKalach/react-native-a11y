@@ -3,8 +3,6 @@ package com.reactnativea11y.services;
 import android.os.Build;
 import android.view.KeyEvent;
 
-import com.reactnativea11y.RCA11yFocusWrapper;
-
 import java.util.HashMap;
 
 public class KeyboardKeyPressHandler {

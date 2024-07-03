@@ -6,4 +6,4 @@ export const KEYBOARD_FOCUS = "KeyboardFocus";
 export const KEYBOARD_ON_PRESS = "KeyboardOnPress";
 export const DYNAMIC_ORDER = "DynamicOrder";
 export const REF_MANAGEMENT = "RefManagement";
-export const ANDROID_INPUT = 'AndroidInput';
+export const TEXT_INPUT = "TextInput";
