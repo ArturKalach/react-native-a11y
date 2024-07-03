@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Text, StyleSheet, Switch } from "react-native";
+import { Text, StyleSheet, Switch, Platform } from "react-native";
 import { KeyboardFocusTextInput } from "react-native-a11y";
 import {
   DrawerNavigation,
@@ -17,8 +17,8 @@ export const TextInputFocus = () => {
   const [inputValue0, setInputValue0] = useState("First");
   const [inputValue1, setInputValue1] = useState("Second");
   const [inputValue2, setInputValue2] = useState("Third");
-  const [isAutoFocus, setIsAutoFocus] = useState(false);
-  const [isAutoBlur, setIsAutoBlur] = useState(false);
+  const [isAutoFocus, setIsAutoFocus] = useState(Platform.OS === "android");
+  const [isAutoBlur, setIsAutoBlur] = useState(Platform.OS === "android");
 
   return (
     <Screen>
