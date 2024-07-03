@@ -9,6 +9,8 @@ import type {
 } from "./A11yModule.types";
 import * as RCA11yModule from "./RCA11yModule";
 
+const GC_FRAMEWORK_LINKING_ERROR = `GC_FRAMEWORK_LINKING_ERROR`;
+
 class A11yModuleIOSImpl implements IA11yModule {
   private _currentFocusedTag: number | null = null;
 
@@ -16,7 +18,14 @@ class A11yModuleIOSImpl implements IA11yModule {
     this._currentFocusedTag = value;
   }
 
-  isKeyboardConnected = RCA11yModule.isKeyboardConnected;
+  isKeyboardConnected = () =>
+    RCA11yModule.isKeyboardConnected().catch(e => {
+      if (e.code === GC_FRAMEWORK_LINKING_ERROR) {
+        console.error(e.message);
+      }
+
+      return true;
+    });
 
   keyboardStatusListener = (callback: StatusCallback) => {
     const eventEmitter = new NativeEventEmitter(RCA11yModule.RCA11y);

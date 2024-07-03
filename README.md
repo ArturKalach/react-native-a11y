@@ -37,30 +37,10 @@ yarn add react-native-a11y
 2. Install pods
    cd ios && pod install
 
-3. Android only
+3. iOS only
+   > **_NOTE:_** If you don't plan to use the isKeyboardConnected or keyboardStatusListener functionality, you can skip this step. Linking the GameController framework is optional but required for the proper functioning of isKeyboardConnected and keyboardStatusListener.
 
-Add to the `MainActivity.java` lines:
-
-```
-  //android/app/src/main/java/com/project-name/MainActivity.java
-
-  ...
-  import android.content.Intent;
-  import android.content.res.Configuration;
-  ...
-
-  @Override
-  public void onConfigurationChanged(Configuration newConfig) {
-    super.onConfigurationChanged(newConfig);
-    Intent intent = new Intent("onConfigurationChanged");
-    intent.putExtra("newConfig", newConfig);
-    this.sendBroadcast(intent);
-  }
-
-```
-
-4. iOS only
-   Link keyboard(Game) binary with libraries
+Link keyboard(Game) binary with libraries
 
 - Open xcode
 - Select folder in the project bar
@@ -69,12 +49,19 @@ Add to the `MainActivity.java` lines:
 - Expand `Link Binary With Libraries`
 - Press plus icon
 - You can search for `Game`
-- Select `GameController.framework`, `GameKit.framework`, `GameplayKit.framework`
+- Select `GameController.framework`
 
-See screenshot below:
-<img src="/.github/images/ios-link-binary-with-libraries.png" height="500" />
+<details>
+  <summary>Xcode screenshot</summary>
+  <img src="/.github/images/ios-link-binary-with-libraries.png" height="500" />
+</details>
 
-Hope that we will found solution for work around, or create separate library for work with keyboard.
+<details>
+  <summary>Why linking is needed</summary>
+
+Unfortunately, the GameController framework is the only viable solution to obtain information about the keyboard and its connection. While there are other potential solutions, they are mostly workarounds and could be rejected by the App Store review process.
+
+</details>
 
 5. Add provider to root of your app:
 
