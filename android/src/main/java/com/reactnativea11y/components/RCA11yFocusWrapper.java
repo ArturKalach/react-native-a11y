@@ -1,4 +1,4 @@
-package com.reactnativea11y;
+package com.reactnativea11y.components;
 
 import android.content.Context;
 import android.util.AttributeSet;

@@ -3,16 +3,16 @@ import React, { useRef } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import { A11yModule } from "react-native-a11y";
 import {
-  A11Y_ORDER,
-  DrawerNavigation,
   KEYBOARD_FOCUS,
+  DrawerNavigation,
+  A11Y_ORDER,
 } from "../../../navigation";
 import { NavBar, ReaderExample, Screen } from "../../../components";
 
 export const ReaderFocusScreen = () => {
   const navigation = useNavigation<DrawerNavigation>();
-  const goNext = () => navigation.navigate(KEYBOARD_FOCUS);
   const goBack = () => navigation.navigate(A11Y_ORDER);
+  const goNext = () => navigation.navigate(KEYBOARD_FOCUS);
 
   const ref1 = useRef(null);
   const ref2 = useRef(null);

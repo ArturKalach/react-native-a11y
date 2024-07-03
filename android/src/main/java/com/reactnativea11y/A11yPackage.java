@@ -13,6 +13,8 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.module.model.ReactModuleInfoProvider;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.module.model.ReactModuleInfo;
+import com.reactnativea11y.components.RCA11yFocusWrapperManager;
+import com.reactnativea11y.components.RCA11yTextInputWrapperManager;
 
 public class A11yPackage extends TurboReactPackage {
 
@@ -50,6 +52,7 @@ public class A11yPackage extends TurboReactPackage {
   public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
     List<ViewManager> viewManagers = new ArrayList<>();
     viewManagers.add(new RCA11yFocusWrapperManager());
+    viewManagers.add(new RCA11yTextInputWrapperManager());
     return viewManagers;
   }
 }

@@ -22,19 +22,6 @@
 
 #import "RCTFabricComponentsPlugins.h"
 
-std::string convertNSStringToStdString(NSString * _Nullable nsString) {
-    if (nsString == nil) {
-        return "";
-    }
-
-    const char *utf8String = [nsString UTF8String];
-    if (utf8String != NULL) {
-        return std::string(utf8String);
-    } else {
-        return "";
-    }
-}
-
 using namespace facebook::react;
 
 @interface RCA11yFocusWrapper () <RCTRCA11yFocusWrapperViewProtocol>

@@ -2,7 +2,6 @@ package com.a11ynewarch;
 
 import android.app.Application;
 
-import com.a11ynewarch.textinput.RCTEditTextPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
@@ -26,7 +25,6 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
-          packages.add(new RCTEditTextPackage());
 
           return packages;
         }
