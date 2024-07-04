@@ -5,6 +5,7 @@ const A11yKeyboardContext = React.createContext<boolean>(false);
 
 export const useKeyboardStatus = () => useContext(A11yKeyboardContext);
 
+//ToDo get rid of unnecessary provider
 export const A11yStatusKeyboard: React.FC<PropsWithChildren<{}>> = ({
   children,
 }) => {
