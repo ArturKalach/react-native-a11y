@@ -58,8 +58,11 @@ NSString * const EVENT_PROP = @"status";
 {
     if(self = [super init]) {
         if (@available(iOS 14.0, *)) {
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasConnected:) name: GCKeyboardDidConnectNotification object:nil];
-            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasDisconnected:) name: GCKeyboardDidDisconnectNotification object:nil];
+            Class GCKeyboardClass = NSClassFromString(@"GCKeyboard");
+            if(GCKeyboardClass != nil) {
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasConnected:) name: @"GCKeyboardDidConnectNotification" object:nil];
+                [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWasDisconnected:) name: @"GCKeyboardDidDisconnectNotification" object:nil];
+            }
         }
     }
     
@@ -155,10 +158,15 @@ RCT_EXPORT_METHOD(
                   rejecter:(RCTPromiseRejectBlock)reject
                   ) {
     if (@available(iOS 14.0, *)) {
-        bool isConnected = [GCKeyboard coalescedKeyboard] != nil;
-        resolve(isConnected ? @(YES) : @(NO));
+        Class GCKeyboardClass = NSClassFromString(@"GCKeyboard");
+        if (GCKeyboardClass != nil) {
+            bool isConnected = [GCKeyboardClass coalescedKeyboard] != nil;
+            resolve(isConnected ? @(YES) : @(NO));
+        } else {
+            reject(@"GC_FRAMEWORK_LINKING_ERROR", @"The GameController framework is not linked. Please verify the iOS section in the react-native-a11y Readme.md", nil);
+        }
     } else {
-        reject(@"ios version is not supported", @"version less than 14.0", nil);
+        reject(@"IOS_VERSION_IS_NOT_SUPPORTED", @"iOS version less than 14.0", nil);
     }
 }
 

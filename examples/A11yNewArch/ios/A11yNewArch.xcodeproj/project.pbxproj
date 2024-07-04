@@ -12,9 +12,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		4964D85229EB05CF00763A78 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4964D84F29EB05CF00763A78 /* GameKit.framework */; };
-		4964D85329EB05CF00763A78 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4964D85029EB05CF00763A78 /* GameController.framework */; };
-		4964D85429EB05CF00763A78 /* GameplayKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4964D85129EB05CF00763A78 /* GameplayKit.framework */; };
+		498762232C3606B900F21B93 /* GameController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 498762222C3606B900F21B93 /* GameController.framework */; };
 		7699B88040F8A987B510C191 /* libPods-A11yNewArch-A11yNewArchTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-A11yNewArch-A11yNewArchTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -42,9 +40,7 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-A11yNewArch-A11yNewArchTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-A11yNewArch-A11yNewArchTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-A11yNewArch.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A11yNewArch.debug.xcconfig"; path = "Target Support Files/Pods-A11yNewArch/Pods-A11yNewArch.debug.xcconfig"; sourceTree = "<group>"; };
 		4964D84D29EB048500763A78 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		4964D84F29EB05CF00763A78 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		4964D85029EB05CF00763A78 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
-		4964D85129EB05CF00763A78 /* GameplayKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameplayKit.framework; path = System/Library/Frameworks/GameplayKit.framework; sourceTree = SDKROOT; };
+		498762222C3606B900F21B93 /* GameController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameController.framework; path = System/Library/Frameworks/GameController.framework; sourceTree = SDKROOT; };
 		49EF121329EB11160090208C /* libReact-hermes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-hermes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5709B34CF0A7D63546082F79 /* Pods-A11yNewArch.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A11yNewArch.release.xcconfig"; path = "Target Support Files/Pods-A11yNewArch/Pods-A11yNewArch.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-A11yNewArch-A11yNewArchTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-A11yNewArch-A11yNewArchTests.debug.xcconfig"; path = "Target Support Files/Pods-A11yNewArch-A11yNewArchTests/Pods-A11yNewArch-A11yNewArchTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -67,9 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4964D85229EB05CF00763A78 /* GameKit.framework in Frameworks */,
-				4964D85329EB05CF00763A78 /* GameController.framework in Frameworks */,
-				4964D85429EB05CF00763A78 /* GameplayKit.framework in Frameworks */,
+				498762232C3606B900F21B93 /* GameController.framework in Frameworks */,
 				0C80B921A6F3F58F76C31292 /* libPods-A11yNewArch.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -110,10 +104,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				498762222C3606B900F21B93 /* GameController.framework */,
 				49EF121329EB11160090208C /* libReact-hermes.a */,
-				4964D85029EB05CF00763A78 /* GameController.framework */,
-				4964D84F29EB05CF00763A78 /* GameKit.framework */,
-				4964D85129EB05CF00763A78 /* GameplayKit.framework */,
 				4964D84D29EB048500763A78 /* CoreData.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				5DCACB8F33CDC322A6C60F78 /* libPods-A11yNewArch.a */,

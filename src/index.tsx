@@ -4,6 +4,7 @@ export {
   PaneView,
   A11yOrder,
   Pressable,
+  KeyboardFocusTextInput,
   FocusStyle,
   OnFocusChangeFn,
 } from "./components";

@@ -14,21 +14,16 @@ import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.util.Log;
 import android.view.View;
-import android.os.Build;
 
 import com.facebook.react.bridge.LifecycleEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.IllegalViewOperationException;
 import com.reactnativea11y.RCA11yUIManagerHelper;
 
-import static com.facebook.react.uimanager.common.UIManagerType.FABRIC;
-
 public class KeyboardService implements LifecycleEventListener {
-  private final String NEW_CONFIG = "newConfig";
-  private final String ON_CONFIGURATION_CHANGED = "onConfigurationChanged";
-
   private final ReactApplicationContext context;
   private final BroadcastReceiver receiver;
+  private boolean isBroadcastRegistered = false;
 
   public boolean isKeyboardConnected() {
     final int keyboard = context.getResources().getConfiguration().keyboard;
@@ -38,11 +33,14 @@ public class KeyboardService implements LifecycleEventListener {
   public KeyboardService(ReactApplicationContext context) {
     this.context = context;
     context.addLifecycleEventListener(this);
+
     receiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
-        final Configuration newConfig = intent.getParcelableExtra(NEW_CONFIG);
-        keyboardChanged(newConfig.hardKeyboardHidden == HARDKEYBOARDHIDDEN_NO);
+        if (Intent.ACTION_CONFIGURATION_CHANGED.equals(intent.getAction())) {
+          Configuration newConfig = context.getResources().getConfiguration();
+          keyboardChanged(newConfig.hardKeyboardHidden == HARDKEYBOARDHIDDEN_NO);
+        }
       }
     };
     keyboardChanged(isKeyboardConnected());
@@ -70,37 +68,38 @@ public class KeyboardService implements LifecycleEventListener {
     });
   }
 
-  @Override
-  @SuppressLint("UnspecifiedRegisterReceiverFlag")
-  public void onHostResume() {
+
+  private void registerBroadcast() {
+    if (isBroadcastRegistered) return;
+    isBroadcastRegistered = true;
     final Activity activity = context.getCurrentActivity();
 
-    if (activity == null) {
-      return;
-    }
-
-    /**
-     * Starting with Android 14, apps and services that target Android 14 and use context-registered
-     * receivers are required to specify a flag to indicate whether or not the receiver should be
-     * exported to all other apps on the device: either RECEIVER_EXPORTED or RECEIVER_NOT_EXPORTED
-     * <a href="https://developer.android.com/about/versions/14/behavior-changes-14#runtime-receivers-exported"/>
-     */
-    if (Build.VERSION.SDK_INT >= 34 && context.getApplicationInfo().targetSdkVersion >= 34) {
-      final int RECEIVER_NOT_EXPORTED = 4; // Same to Context.RECEIVER_NOT_EXPORTED but it allows to build with older SDK
-      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED), RECEIVER_NOT_EXPORTED);
-    } else {
-      activity.registerReceiver(receiver, new IntentFilter(ON_CONFIGURATION_CHANGED));
+    if (activity != null) {
+      activity.registerReceiver(receiver, new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED));
     }
   }
 
-  @Override
-  public void onHostPause() {
+  private void unregisterBroadcast() {
+    if (!isBroadcastRegistered) return;
+    isBroadcastRegistered = false;
+
     final Activity activity = context.getCurrentActivity();
     if (activity == null) return;
     try {
       activity.unregisterReceiver(receiver);
     } catch (java.lang.IllegalArgumentException e) {
     }
+  }
+
+  @Override
+  @SuppressLint("UnspecifiedRegisterReceiverFlag")
+  public void onHostResume() {
+    registerBroadcast();
+  }
+
+  @Override
+  public void onHostPause() {
+    unregisterBroadcast();
   }
 
   @Override

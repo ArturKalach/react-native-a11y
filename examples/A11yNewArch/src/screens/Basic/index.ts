@@ -4,4 +4,5 @@ export { KeyboardFocusScreen } from "./KeyboardFocusScreen";
 export { ReaderFocusScreen } from "./ReaderFocusScreen";
 export { StatusScreen } from "./StatusScreen";
 export { DynamicOrderScreen } from "./DynamicOrderScreen";
-export { KeyboardOnPressScreen } from './KeyboardOnPressScreen'
+export { KeyboardOnPressScreen } from "./KeyboardOnPressScreen";
+export { TextInputFocus } from "./TextInputFocus";
