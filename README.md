@@ -424,7 +424,7 @@ I really appreciate the work and solutions provided by [Andrii Koval](https://gi
 
 Many thanks to the contributors: [Boaz Poolman](https://github.com/boazpoolman), [YOEL311 Yoel Naki](https://github.com/YOEL311)
 
-And of course, thanks to the issue reporters: [Leonardo Guarnieri de Bastiani](https://github.com/leobastiani), [David](https://github.com/deggertsen), [Summer Knight](https://github.com/ckknight),[Rick Vellinga](https://github.com/RickVellingaa)
+And of course, thanks to the issue reporters: [Leonardo Guarnieri de Bastiani](https://github.com/leobastiani), [David](https://github.com/deggertsen), [Summer Knight](https://github.com/ckknight),[Rick Vellinga](https://github.com/RickVellingaa), [joonmanji](https://github.com/joonmanji)
 
 ## License
 
