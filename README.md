@@ -422,7 +422,7 @@ Any type of contribution is highly appreciated. Feel free to create PRs, raise i
 
 I really appreciate the work and solutions provided by [Andrii Koval](https://github.com/ZioVio), [Michail Chavkin](https://github.com/mchavkin), [Dzmitry Khamitsevich](https://github.com/bulletxenus). I think there was not this library without them, I also want to thank [Aliaksei Kisel](https://github.com/ziginsider) and [Herman Tseranevich](https://github.com/lollegend) for help with publishing and reviewing.
 
-Many thanks to the contributors: [Boaz Poolman](https://github.com/boazpoolman), [YOEL311 Yoel Naki](https://github.com/YOEL311)
+Many thanks to the contributors: [Boaz Poolman](https://github.com/boazpoolman), [YOEL311 Yoel Naki](https://github.com/YOEL311), [joonmanji](https://github.com/joonmanji)
 
 And of course, thanks to the issue reporters: [Leonardo Guarnieri de Bastiani](https://github.com/leobastiani), [David](https://github.com/deggertsen), [Summer Knight](https://github.com/ckknight),[Rick Vellinga](https://github.com/RickVellingaa)
 
