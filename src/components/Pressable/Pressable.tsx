@@ -99,10 +99,10 @@ type Props = PressableProps &
   NAProps &
   KeyboardFocusViewProps & {
     unstable_pressDelay?: number;
-    delayHoverIn: unknown;
-    delayHoverOut: unknown;
-    onHoverIn: unknown;
-    onHoverOut: unknown;
+    delayHoverIn?: unknown;
+    delayHoverOut?: unknown;
+    onHoverIn?: unknown;
+    onHoverOut?: unknown;
   };
 
 const SPACE_KEY_CODE = Platform.select({
