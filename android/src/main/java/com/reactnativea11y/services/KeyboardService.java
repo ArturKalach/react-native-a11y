@@ -37,9 +37,15 @@ public class KeyboardService implements LifecycleEventListener {
     receiver = new BroadcastReceiver() {
       @Override
       public void onReceive(Context context, Intent intent) {
-        if (Intent.ACTION_CONFIGURATION_CHANGED.equals(intent.getAction())) {
-          Configuration newConfig = context.getResources().getConfiguration();
-          keyboardChanged(newConfig.hardKeyboardHidden == HARDKEYBOARDHIDDEN_NO);
+        try {
+          if (Intent.ACTION_CONFIGURATION_CHANGED.equals(intent.getAction())) {
+            Configuration newConfig = context.getResources().getConfiguration();
+            if (newConfig != null) {
+              keyboardChanged(newConfig.hardKeyboardHidden == HARDKEYBOARDHIDDEN_NO);
+            }
+          }
+        } catch (Exception e) {
+          Log.e("RNA11y", "Unexpected broadcast error");
         }
       }
     };
