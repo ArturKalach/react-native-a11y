@@ -79,8 +79,8 @@ export type PressEvent = ResponderSyntheticEvent<{
 type CombinedPressEvent = GestureResponderEvent | PressEvent;
 
 type NAProps = {
-  onPressOut: (event: CombinedPressEvent) => void;
-  onPressIn: (event: CombinedPressEvent) => void;
+  onPressOut?: (event: CombinedPressEvent) => void;
+  onPressIn?: (event: CombinedPressEvent) => void;
   "aria-live"?: "polite" | "assertive" | "off";
   "aria-busy"?: boolean;
   "aria-checked"?: boolean;

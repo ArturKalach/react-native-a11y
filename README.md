@@ -1,6 +1,16 @@
 # React Native A11y
 
-This is a React Native A11y Library with following main features
+# 🚧 🚧 🚧
+
+### Unfortunately, the library is outdated and uses deprecated APIs. It requires a lot of work to be done.
+
+In spite of that, there are separate repositories you can use to achieve similar functionality:
+- [react-native-a11y-order](https://www.npmjs.com/package/react-native-a11y-order) - for screen reader order control
+- [react-native-external-keyboard](https://www.npmjs.com/package/react-native-external-keyboard) - for using and implementing keyboard features
+- [react-native-is-keyboard-connected](https://www.npmjs.com/package/react-native-is-keyboard-connected) - for listening to keyboard connection
+- [react-native-a11y-container](https://www.npmjs.com/package/react-native-a11y-container) - represents `UIAccessibilityContainer`
+
+# 🚧 🚧 🚧
 
 - 🤖 Reader features: Focus, Order, Reader </br>
 - ⌨️ Keyboard features: Focus </br>
