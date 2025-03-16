@@ -9,7 +9,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 public class FocusChangeEvent extends Event<FocusChangeEvent> {
   public WritableMap mExtraData;
 
-  public static String EVENT_NAME = "topOnFocusChange";
+  public static String EVENT_NAME = "topFocusChange";
 
   public FocusChangeEvent(int id, Boolean hasFocus) {
     super(id);
