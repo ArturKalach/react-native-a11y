@@ -44,9 +44,9 @@ NS_ASSUME_NONNULL_END
 
 @property BOOL canBeFocused;
 @property UIView* myPreferredFocusedView;
-@property (nonatomic, copy) RCTBubblingEventBlock onFocusChange;
-@property (nonatomic, copy) RCTBubblingEventBlock onKeyUpPress;
-@property (nonatomic, copy) RCTBubblingEventBlock onKeyDownPress;
+@property (nonatomic, copy) RCTDirectEventBlock onFocusChange;
+@property (nonatomic, copy) RCTDirectEventBlock onKeyUpPress;
+@property (nonatomic, copy) RCTDirectEventBlock onKeyDownPress;
 
 @end
 
