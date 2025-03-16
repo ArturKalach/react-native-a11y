@@ -2,7 +2,7 @@
 import type { HostComponent, ViewProps } from "react-native";
 import codegenNativeComponent from "react-native/Libraries/Utilities/codegenNativeComponent";
 import {
-  BubblingEventHandler,
+  DirectEventHandler,
   Int32,
 } from "react-native/Libraries/Types/CodegenTypes";
 
@@ -29,9 +29,9 @@ export type KeyPress = Readonly<{
 }>;
 
 export interface NativeProps extends ViewProps {
-  onFocusChange?: BubblingEventHandler<FocusChange>;
-  onKeyUpPress?: BubblingEventHandler<KeyPress>;
-  onKeyDownPress?: BubblingEventHandler<KeyPress>;
+  onFocusChange?: DirectEventHandler<FocusChange>;
+  onKeyUpPress?: DirectEventHandler<KeyPress>;
+  onKeyDownPress?: DirectEventHandler<KeyPress>;
   canBeFocused?: boolean;
 }
 

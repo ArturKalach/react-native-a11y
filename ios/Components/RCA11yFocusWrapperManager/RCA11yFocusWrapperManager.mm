@@ -18,9 +18,9 @@ RCT_EXPORT_MODULE(RCA11yFocusWrapper)
     return [[RCA11yFocusWrapper alloc] init];
 }
 
-RCT_EXPORT_VIEW_PROPERTY(onFocusChange, RCTBubblingEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(onKeyUpPress, RCTBubblingEventBlock)
-RCT_EXPORT_VIEW_PROPERTY(onKeyDownPress, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onFocusChange, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onKeyUpPress, RCTDirectEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onKeyDownPress, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(myPreferredFocusedView, UIView)
 
 RCT_CUSTOM_VIEW_PROPERTY(canBeFocused, BOOL, RCA11yFocusWrapper)
