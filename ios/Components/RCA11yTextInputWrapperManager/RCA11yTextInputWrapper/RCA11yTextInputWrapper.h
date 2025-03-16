@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_END
 @property BOOL canBeFocused;
 @property int focusType;
 @property int blurType;
-@property (nonatomic, copy) RCTBubblingEventBlock onFocusChange;
+@property (nonatomic, copy) RCTDirectEventBlock onFocusChange;
 
 @end
 
