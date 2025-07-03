@@ -31,7 +31,7 @@ class A11yAndroidImpl implements IA11yModule {
     return () => eventListener.remove();
   };
 
-  setKeyboardFocus(ref: React.RefObject<React.Component>) {
+  setKeyboardFocus(ref: React.RefObject<React.Component | null>) {
     const tag = findNodeHandle(ref.current);
     if (tag) {
       InteractionManager.runAfterInteractions(() => {
@@ -48,7 +48,7 @@ class A11yAndroidImpl implements IA11yModule {
 
   setPreferredKeyboardFocus = noop;
 
-  setA11yFocus(ref: React.RefObject<React.Component>) {
+  setA11yFocus(ref: React.RefObject<React.Component | null>) {
     const tag = findNodeHandle(ref.current);
     if (tag) {
       AccessibilityInfo.setAccessibilityFocus(tag);
