@@ -21,7 +21,7 @@ RCT_EXPORT_MODULE(RCA11yTextInputWrapper)
     return [[RCA11yTextInputWrapper alloc] init];
 }
 
-RCT_EXPORT_VIEW_PROPERTY(onFocusChange, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onFocusChange, RCTDirectEventBlock)
 
 RCT_CUSTOM_VIEW_PROPERTY(canBeFocused, BOOL, RCA11yTextInputWrapper)
 {
