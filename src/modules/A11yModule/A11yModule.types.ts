@@ -18,7 +18,7 @@ export type A11yNativeModule = {
 
 export type StatusCallback = (e: { status: boolean }) => void;
 
-export type RefObjType = RefObject<React.Component<{}, {}, unknown>>;
+export type RefObjType = RefObject<React.Component<{}, {}, unknown> | null>;
 
 export interface IA11yModule {
   currentFocusedTag?: number;
