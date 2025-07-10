@@ -1,3 +1,6 @@
-export { KeyboardFocusView } from "./KeyboardFocusView";
-export { OnFocusChangeFn, OnKeyPressFn } from "./RCA11yFocusWrapper";
-export { KeyboardFocusViewProps, FocusStyle } from "./KeyboardFocusView.types";
+export { KeyboardFocusView } from './KeyboardFocusView';
+export type { OnFocusChangeFn, OnKeyPressFn } from './RCA11yFocusWrapper';
+export type {
+  KeyboardFocusViewProps,
+  FocusStyle,
+} from './KeyboardFocusView.types';

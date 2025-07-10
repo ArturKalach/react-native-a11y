@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useContext } from "react";
+import React, { type PropsWithChildren, useContext } from 'react';
 
 type Props = { value?: boolean };
 

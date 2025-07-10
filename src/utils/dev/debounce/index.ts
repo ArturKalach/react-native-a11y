@@ -1,1 +1,1 @@
-export { debounce } from "./debounce";
+export { debounce } from './debounce';

@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, useContext } from "react";
-import { useA11yEnabled } from "../../hooks";
+import React, { type PropsWithChildren, useContext } from 'react';
+import { useA11yEnabled } from '../../hooks';
 
 const A11yStatusContext = React.createContext<boolean>(false);
 

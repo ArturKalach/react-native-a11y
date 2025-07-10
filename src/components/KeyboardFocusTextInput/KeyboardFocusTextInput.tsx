@@ -1,8 +1,13 @@
-import React from "react";
-import { TextInput, TextInputProps, StyleProp, ViewStyle } from "react-native";
+import React from 'react';
+import {
+  TextInput,
+  type TextInputProps,
+  type StyleProp,
+  type ViewStyle,
+} from 'react-native';
 
-import TextInputWrapperNative from "../../nativeSpecs/A11yTextInputWrapperNativeComponent";
-import type { OnFocusChangeFn } from "./KeyboardFocusTextInput.types";
+import TextInputWrapperNative from '../../nativeSpecs/A11yTextInputWrapperNativeComponent';
+import type { OnFocusChangeFn } from './KeyboardFocusTextInput.types';
 
 const focusMap = {
   default: 0,
@@ -29,13 +34,13 @@ export const KeyboardFocusTextInput = React.forwardRef<
 >(
   (
     {
-      focusType = "default",
-      blurType = "default",
+      focusType = 'default',
+      blurType = 'default',
       containerStyle,
       onFocusChange,
       ...props
     },
-    ref,
+    ref
   ) => (
     <TextInputWrapperNative
       onFocusChange={onFocusChange}
@@ -46,5 +51,5 @@ export const KeyboardFocusTextInput = React.forwardRef<
     >
       <TextInput blurOnSubmit={false} {...props} />
     </TextInputWrapperNative>
-  ),
+  )
 );

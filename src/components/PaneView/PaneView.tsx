@@ -1,12 +1,12 @@
-import React, { PropsWithChildren } from "react";
+import React, { type PropsWithChildren } from 'react';
 import {
   Platform,
   requireNativeComponent,
-  ViewProps,
+  type ViewProps,
   StyleSheet,
-} from "react-native";
+} from 'react-native';
 
-const AndroidPaneView = requireNativeComponent<ViewProps>("RCA11yPaneView");
+const AndroidPaneView = requireNativeComponent<ViewProps>('RCA11yPaneView');
 
 export const PaneView: React.FC<PropsWithChildren<{}>> = ({ children }) =>
   Platform.select({

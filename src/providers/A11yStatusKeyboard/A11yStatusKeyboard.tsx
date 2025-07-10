@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, useContext } from "react";
-import { useKeyboardConnected } from "../../hooks";
+import React, { type PropsWithChildren, useContext } from 'react';
+import { useKeyboardConnected } from '../../hooks';
 
 const A11yKeyboardContext = React.createContext<boolean>(false);
 

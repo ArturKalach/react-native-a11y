@@ -1,6 +1,6 @@
-import React, { useId } from "react";
-import { View, LayoutChangeEvent } from "react-native";
-import type { A11yOrderProps } from "./A11yOrder.types";
+import React, { useId } from 'react';
+import { View, type LayoutChangeEvent } from 'react-native';
+import type { A11yOrderProps } from './A11yOrder.types';
 
 export const A11yOrder: React.FC<A11yOrderProps> = ({
   a11yOrder,
@@ -12,7 +12,7 @@ export const A11yOrder: React.FC<A11yOrderProps> = ({
     a11yOrder.onLayout();
   };
 
-  const id = useId?.() || "mock_id"; // ToDo: use native component with tag to nativeTag
+  const id = useId?.() || 'mock_id'; // ToDo: use native component with tag to nativeTag
 
   return (
     <View
