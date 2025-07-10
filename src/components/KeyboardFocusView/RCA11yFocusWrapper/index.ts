@@ -1,10 +1,9 @@
 export const NativeFocusWrapper =
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  require("../../../nativeSpecs/A11yFocusWrapperNativeComponent").default;
+  require('../../../nativeSpecs/A11yFocusWrapperNativeComponent').default;
 
-export {
+export type {
   FocusWrapperProps,
   OnFocusChangeFn,
   OnKeyPressFn,
   OnKeyPress,
-} from "./RCA11yFocusWrapper.types";
+} from './RCA11yFocusWrapper.types';

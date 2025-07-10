@@ -1,8 +1,8 @@
-import { useRef, useCallback, RefObject, useMemo } from "react";
-import { View } from "react-native";
+import { useRef, useCallback, type RefObject, useMemo } from 'react';
+import { View } from 'react-native';
 
-import { A11yModule } from "../../../modules";
-import { debounce } from "../../../utils";
+import { A11yModule } from '../../../modules';
+import { debounce } from '../../../utils';
 
 const SECONDS_PER_FRAME = 16;
 const COUNT_OF_FRAMES = 1;
@@ -24,7 +24,7 @@ export const useA11yOrderManager = <T>(orderRef: RefObject<View>) => {
 
   const debounceOrder = useMemo(
     () => debounce(setOrder, DEBOUNCE_DELAY),
-    [setOrder],
+    [setOrder]
   );
 
   const registerOrderRef = useCallback(
@@ -33,7 +33,7 @@ export const useA11yOrderManager = <T>(orderRef: RefObject<View>) => {
         refWasUpdated.current = true;
         registeredRefs.current[order] = ref;
       },
-    [],
+    []
   );
 
   const updateRefList = useCallback(() => {
@@ -42,7 +42,7 @@ export const useA11yOrderManager = <T>(orderRef: RefObject<View>) => {
     }
 
     refWasUpdated.current = false;
-    currentRef.current = registeredRefs.current.filter(v => v);
+    currentRef.current = registeredRefs.current.filter((v) => v);
 
     debounceOrder();
   }, [debounceOrder]);

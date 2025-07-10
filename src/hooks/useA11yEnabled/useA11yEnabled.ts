@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { AccessibilityInfo } from "react-native";
-import { a11yConfig } from "../../configs";
+import { useEffect, useState } from 'react';
+import { AccessibilityInfo } from 'react-native';
+import { a11yConfig } from '../../configs';
 
 export const useA11yEnabled = () => {
   const [state, setState] = useState(false);
@@ -8,7 +8,7 @@ export const useA11yEnabled = () => {
     AccessibilityInfo.isScreenReaderEnabled().then(setState);
     const listener = AccessibilityInfo.addEventListener(
       a11yConfig.a11yEventName,
-      setState,
+      setState
     );
     return () => listener.remove();
   }, []);

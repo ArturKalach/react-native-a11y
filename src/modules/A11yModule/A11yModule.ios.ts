@@ -1,13 +1,13 @@
-import { findNodeHandle, NativeEventEmitter } from "react-native";
-import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
+import { findNodeHandle, NativeEventEmitter } from 'react-native';
+import { KEYBOARD_STATUS_EVENT } from './A11yModule.conts';
 
 import type {
   A11yOrderInfo,
   IA11yModule,
   RefObjType,
   StatusCallback,
-} from "./A11yModule.types";
-import * as RCA11yModule from "./RCA11yModule";
+} from './A11yModule.types';
+import * as RCA11yModule from './RCA11yModule';
 
 const GC_FRAMEWORK_LINKING_ERROR = `GC_FRAMEWORK_LINKING_ERROR`;
 
@@ -19,7 +19,7 @@ class A11yModuleIOSImpl implements IA11yModule {
   }
 
   isKeyboardConnected = () =>
-    RCA11yModule.isKeyboardConnected().catch(e => {
+    RCA11yModule.isKeyboardConnected().catch((e) => {
       if (e.code === GC_FRAMEWORK_LINKING_ERROR) {
         console.error(e.message);
       }
@@ -31,7 +31,7 @@ class A11yModuleIOSImpl implements IA11yModule {
     const eventEmitter = new NativeEventEmitter(RCA11yModule.RCA11y);
     const eventListener = eventEmitter.addListener(
       KEYBOARD_STATUS_EVENT,
-      callback,
+      callback
     );
     return () => eventListener.remove();
   };
@@ -74,19 +74,19 @@ class A11yModuleIOSImpl implements IA11yModule {
     if (refToFocus && refToFocus?.current) {
       this.setA11yFocus(refToFocus);
     } else {
-      this.announceScreenChange("");
+      this.announceScreenChange('');
     }
   };
 
   setA11yElementsOrder = <T>({ tag, views }: A11yOrderInfo<T>) => {
     if (!tag) return;
 
-    const targetView = findNodeHandle(tag.current as React.Component);
+    const targetView = findNodeHandle(tag.current as React.Component<any, any>);
     if (!targetView) return;
 
     const tags = views
-      .map(view => findNodeHandle(view as React.Component))
-      .filter(view => Boolean(view)) as number[];
+      .map((view) => findNodeHandle(view as React.Component<any, any>))
+      .filter((view) => Boolean(view)) as number[];
 
     RCA11yModule?.setA11yOrder?.(tags, targetView);
   };

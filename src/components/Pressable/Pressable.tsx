@@ -1,28 +1,24 @@
-/* eslint-disable complexity */
-import * as React from "react";
-import { useMemo, useState, useRef, useImperativeHandle } from "react";
+import * as React from 'react';
+import { useMemo, useState, useRef, useImperativeHandle } from 'react';
 import {
-  GestureResponderEvent,
+  type GestureResponderEvent,
   Platform,
-  PressableProps,
+  type PressableProps,
   View,
-} from "react-native";
+} from 'react-native';
 
 // @ts-ignore: import from origin pressable
-// eslint-disable-next-line import/no-unresolved
-import { normalizeRect } from "react-native/Libraries/StyleSheet/Rect";
+import { normalizeRect } from 'react-native/Libraries/StyleSheet/Rect';
 // @ts-ignore: import from origin pressable
-// eslint-disable-next-line import/no-unresolved
-import usePressability from "react-native/Libraries/Pressability/usePressability";
+import usePressability from 'react-native/Libraries/Pressability/usePressability';
 // @ts-ignore: import from origin pressable
-// eslint-disable-next-line import/no-unresolved
-import useAndroidRippleForView from "react-native/Libraries/Components/Pressable/useAndroidRippleForView";
+import useAndroidRippleForView from 'react-native/Libraries/Components/Pressable/useAndroidRippleForView';
 
 import {
   KeyboardFocusView,
-  KeyboardFocusViewProps,
-} from "../KeyboardFocusView";
-import { OnKeyPressFn } from "../KeyboardFocusView";
+  type KeyboardFocusViewProps,
+} from '../KeyboardFocusView';
+import { type OnKeyPressFn } from '../KeyboardFocusView';
 
 export type SyntheticEvent<T> = {
   bubbles?: boolean;
@@ -79,20 +75,20 @@ export type PressEvent = ResponderSyntheticEvent<{
 type CombinedPressEvent = GestureResponderEvent | PressEvent;
 
 type NAProps = {
-  onPressOut?: (event: CombinedPressEvent) => void;
-  onPressIn?: (event: CombinedPressEvent) => void;
-  "aria-live"?: "polite" | "assertive" | "off";
-  "aria-busy"?: boolean;
-  "aria-checked"?: boolean;
-  "aria-disabled"?: boolean;
-  "aria-expanded"?: boolean;
-  "aria-label"?: string;
-  "aria-selected"?: boolean;
-  "aria-valuemax"?: number;
-  "aria-valuemin"?: number;
-  "aria-valuenow"?: number;
-  "aria-modal"?: boolean;
-  "aria-valuetext"?: string;
+  'onPressOut'?: (event: CombinedPressEvent) => void;
+  'onPressIn'?: (event: CombinedPressEvent) => void;
+  'aria-live'?: 'polite' | 'assertive' | 'off';
+  'aria-busy'?: boolean;
+  'aria-checked'?: boolean;
+  'aria-disabled'?: boolean;
+  'aria-expanded'?: boolean;
+  'aria-label'?: string;
+  'aria-selected'?: boolean;
+  'aria-valuemax'?: number;
+  'aria-valuemin'?: number;
+  'aria-valuenow'?: number;
+  'aria-modal'?: boolean;
+  'aria-valuetext'?: string;
 };
 
 type Props = PressableProps &
@@ -115,15 +111,15 @@ export const Pressable = React.memo(
   React.forwardRef<View, Props>((props: Props, forwardedRef) => {
     const {
       accessibilityState,
-      "aria-live": ariaLive,
+      'aria-live': ariaLive,
       android_disableSound,
       android_ripple,
-      "aria-busy": ariaBusy,
-      "aria-checked": ariaChecked,
-      "aria-disabled": ariaDisabled,
-      "aria-expanded": ariaExpanded,
-      "aria-label": ariaLabel,
-      "aria-selected": ariaSelected,
+      'aria-busy': ariaBusy,
+      'aria-checked': ariaChecked,
+      'aria-disabled': ariaDisabled,
+      'aria-expanded': ariaExpanded,
+      'aria-label': ariaLabel,
+      'aria-selected': ariaSelected,
       cancelable,
       children,
       delayHoverIn,
@@ -153,7 +149,7 @@ export const Pressable = React.memo(
 
     const android_rippleConfig = useAndroidRippleForView(
       android_ripple,
-      viewRef,
+      viewRef
     );
 
     const [pressed, setPressed] = usePressState(testOnly_pressed === true);
@@ -172,14 +168,14 @@ export const Pressable = React.memo(
         : _accessibilityState;
 
     const accessibilityValue = {
-      max: props["aria-valuemax"] ?? props.accessibilityValue?.max,
-      min: props["aria-valuemin"] ?? props.accessibilityValue?.min,
-      now: props["aria-valuenow"] ?? props.accessibilityValue?.now,
-      text: props["aria-valuetext"] ?? props.accessibilityValue?.text,
+      max: props['aria-valuemax'] ?? props.accessibilityValue?.max,
+      min: props['aria-valuemin'] ?? props.accessibilityValue?.min,
+      now: props['aria-valuenow'] ?? props.accessibilityValue?.now,
+      text: props['aria-valuetext'] ?? props.accessibilityValue?.text,
     };
 
     const accessibilityLiveRegion =
-      ariaLive === "off" ? "none" : ariaLive ?? props.accessibilityLiveRegion;
+      ariaLive === 'off' ? 'none' : (ariaLive ?? props.accessibilityLiveRegion);
 
     const accessibilityLabel = ariaLabel ?? props.accessibilityLabel;
     const restPropsWithDefaults = {
@@ -188,7 +184,7 @@ export const Pressable = React.memo(
       accessibilityState: _accessibilityState,
       accessibilityValue,
       accessibilityViewIsModal:
-        restProps["aria-modal"] ?? restProps.accessibilityViewIsModal,
+        restProps['aria-modal'] ?? restProps.accessibilityViewIsModal,
       accessibilityLiveRegion,
       accessibilityLabel,
       focusable: focusable !== false,
@@ -248,12 +244,12 @@ export const Pressable = React.memo(
         pressRetentionOffset,
         setPressed,
         unstable_pressDelay,
-      ],
+      ]
     );
     const eventHandlers = usePressability(config);
 
     const onKeyUpPress = React.useCallback<OnKeyPressFn>(
-      e => {
+      (e) => {
         if (e.nativeEvent.keyCode === SPACE_KEY_CODE) {
           if (e.nativeEvent.isLongPress) {
             onLongPress?.(e);
@@ -262,7 +258,7 @@ export const Pressable = React.memo(
           }
         }
       },
-      [onLongPress, onPress],
+      [onLongPress, onPress]
     );
 
     return (
@@ -273,13 +269,13 @@ export const Pressable = React.memo(
         onFocusChange={onFocusChange}
         onKeyUpPress={onKeyUpPress}
         ref={viewRef}
-        style={typeof style === "function" ? style({ pressed }) : style}
+        style={typeof style === 'function' ? style({ pressed }) : style}
         collapsable={false}
       >
-        {typeof children === "function" ? children({ pressed }) : children}
+        {typeof children === 'function' ? children({ pressed }) : children}
       </KeyboardFocusView>
     );
-  }),
+  })
 );
 
 function usePressState(forcePressed: boolean): [boolean, (v: boolean) => void] {

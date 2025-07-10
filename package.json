@@ -1,6 +1,6 @@
 {
   "name": "react-native-a11y",
-  "version": "0.5.9",
+  "version": "0.6.0",
   "description": "Improvements of a11y for ReactNative, this library improve work with reader and keyboard focus and reader in general.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -13,13 +13,18 @@
     "android",
     "ios",
     "cpp",
-    "react-native-a11y.podspec",
+    "*.podspec",
     "!lib/typescript/example",
-    "!android/build",
     "!ios/build",
+    "!android/build",
+    "!android/gradle",
+    "!android/gradlew",
+    "!android/gradlew.bat",
+    "!android/local.properties",
     "!**/__tests__",
     "!**/__fixtures__",
-    "!**/__mocks__"
+    "!**/__mocks__",
+    "!**/.*"
   ],
   "scripts": {
     "test": "jest",
@@ -52,40 +57,29 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@arkweid/lefthook": "^0.7.7",
-    "@babel/eslint-parser": "^7.18.2",
     "@commitlint/config-conventional": "^17.0.2",
-    "@react-native-community/eslint-config": "^2.0.0",
-    "@release-it/conventional-changelog": "^5.0.0",
-    "@types/jest": "^28.1.2",
-    "@types/react": "~17.0.21",
-    "@types/react-native": "0.70.0",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@evilmartians/lefthook": "^1.5.0",
+    "@react-native-community/cli": "15.0.1",
+    "@react-native/eslint-config": "^0.73.1",
+    "@release-it/conventional-changelog": "^9.0.2",
+    "@types/jest": "^29.5.5",
+    "@types/react": "^18.2.44",
     "commitlint": "^17.0.2",
-    "eslint": "^7.14.0",
-    "eslint-config-airbnb": "^18.2.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-import-resolver-typescript": "^3.5.1",
-    "eslint-plugin-eslint-comments": "^3.2.0",
-    "eslint-plugin-flowtype": "^2.50.3",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-jest": "^27.0.4",
-    "eslint-plugin-prettier": "3.3.1",
-    "eslint-plugin-react-native": "^4.0.0",
-    "flowtype": "^2.0.0",
-    "jest": "^28.1.1",
-    "pod-install": "^0.1.0",
-    "prettier": "^2.0.5",
-    "react": "^17.0.2",
-    "react-native": "^0.60.*",
-    "react-native-builder-bob": "^0.18.3",
-    "release-it": "^15.0.0",
-    "typescript": "^4.8.3",
-    "typescript-eslint": "^0.0.1-alpha.0"
+    "del-cli": "^5.1.0",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "jest": "^29.7.0",
+    "prettier": "^3.0.3",
+    "react": "18.3.1",
+    "react-native": "0.76.5",
+    "react-native-builder-bob": "^0.20.4",
+    "release-it": "^17.10.0",
+    "turbo": "^1.10.7",
+    "typescript": "^5.2.2"
   },
   "resolutions": {
-    "@types/react": "^17.0.0"
+    "@types/react": "^18.2.44"
   },
   "peerDependencies": {
     "react": "*",
@@ -119,6 +113,37 @@
         "preset": "angular"
       }
     }
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@react-native",
+      "prettier"
+    ],
+    "rules": {
+      "react/react-in-jsx-scope": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "quoteProps": "consistent",
+          "singleQuote": true,
+          "tabWidth": 2,
+          "trailingComma": "es5",
+          "useTabs": false
+        }
+      ]
+    }
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "lib/"
+  ],
+  "prettier": {
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5",
+    "useTabs": false
   },
   "react-native-builder-bob": {
     "source": "src",

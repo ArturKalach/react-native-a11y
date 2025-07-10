@@ -1,5 +1,5 @@
-import { RefObject } from "react";
-import type { View } from "react-native";
+import type { RefObject } from 'react';
+import type { View } from 'react-native';
 
 export type A11yOrderInfo<T> = {
   tag?: RefObject<View>;
@@ -18,7 +18,7 @@ export type A11yNativeModule = {
 
 export type StatusCallback = (e: { status: boolean }) => void;
 
-export type RefObjType = RefObject<React.Component<{}, {}, unknown> | null>;
+export type RefObjType = RefObject<React.Component<any, any, any> | null>;
 
 export interface IA11yModule {
   currentFocusedTag?: number;

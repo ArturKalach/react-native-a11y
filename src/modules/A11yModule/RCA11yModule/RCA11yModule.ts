@@ -1,18 +1,16 @@
-import { NativeModules, Platform } from "react-native";
+import { NativeModules, Platform } from 'react-native';
 
 const LINKING_ERROR =
   `The package 'react-native-a11y' doesn't seem to be linked. Make sure: \n\n${Platform.select(
-    { ios: "- You have run 'pod install'\n", default: "" },
+    { ios: "- You have run 'pod install'\n", default: '' }
   )}- You rebuilt the app after installing the package\n` +
   `- You are not using Expo Go\n`;
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
 const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
 const RCA11yModule = isTurboModuleEnabled
-  ? // eslint-disable-next-line @typescript-eslint/no-var-requires
-    require("../../../nativeSpecs/NativeA11yModule").default
+  ? require('../../../nativeSpecs/NativeA11yModule').default
   : NativeModules.RCA11yModule;
 
 export const RCA11y =
@@ -23,7 +21,7 @@ export const RCA11y =
       get() {
         throw new Error(LINKING_ERROR);
       },
-    },
+    }
   );
 
 export function isA11yReaderEnabled(): Promise<boolean> {
@@ -52,7 +50,7 @@ export function setKeyboardFocus(nativeTag: number, _nextTag = 0): void {
 
 export function setPreferredKeyboardFocus(
   nativeTag: number,
-  nextTag: number,
+  nextTag: number
 ): void {
   RCA11y.setAccessibilityFocus(nativeTag, nextTag);
 }

@@ -1,5 +1,5 @@
-import type { TurboModule } from "react-native";
-import { TurboModuleRegistry } from "react-native";
+import type { TurboModule } from 'react-native';
+import { TurboModuleRegistry } from 'react-native';
 
 export interface Spec extends TurboModule {
   isA11yReaderEnabled: () => Promise<boolean>;
@@ -12,4 +12,4 @@ export interface Spec extends TurboModule {
   setA11yOrder: (tags: number[], nativeTag?: number) => void;
 }
 
-export default TurboModuleRegistry.get<Spec>("RCA11yModule");
+export default TurboModuleRegistry.get<Spec>('RCA11yModule');

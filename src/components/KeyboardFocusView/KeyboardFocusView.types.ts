@@ -1,5 +1,5 @@
-import type { GestureResponderEvent, StyleProp, ViewStyle } from "react-native";
-import type { FocusWrapperProps, OnKeyPress } from "./RCA11yFocusWrapper";
+import type { GestureResponderEvent, StyleProp, ViewStyle } from 'react-native';
+import type { FocusWrapperProps, OnKeyPress } from './RCA11yFocusWrapper';
 
 export type FocusStateCallbackType = {
   readonly focused: boolean;

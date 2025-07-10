@@ -1,8 +1,8 @@
-import { useRef, useLayoutEffect } from "react";
-import type { View } from "react-native";
+import { useRef, useLayoutEffect } from 'react';
+import type { View } from 'react-native';
 
-import { useA11yOrderManager } from "../dev";
-import type { UseDynamicFocusOrder } from "./useDynamicFocusOrder.types";
+import { useA11yOrderManager } from '../dev';
+import type { UseDynamicFocusOrder } from './useDynamicFocusOrder.types';
 
 export const useDynamicFocusOrder = <T>(): UseDynamicFocusOrder<T> => {
   const a11yOrderRef = useRef<View>(null);

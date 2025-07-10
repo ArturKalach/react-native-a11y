@@ -1,1 +1,1 @@
-export { useA11yEnabled } from "./useA11yEnabled";
+export { useA11yEnabled } from './useA11yEnabled';

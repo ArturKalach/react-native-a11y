@@ -1,1 +1,1 @@
-export const KEYBOARD_STATUS_EVENT = "keyboardStatus";
+export const KEYBOARD_STATUS_EVENT = 'keyboardStatus';

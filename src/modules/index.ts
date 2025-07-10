@@ -1,1 +1,1 @@
-export { A11yModule } from "./A11yModule";
+export { A11yModule } from './A11yModule';
