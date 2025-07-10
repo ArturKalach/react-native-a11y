@@ -1,5 +1,5 @@
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import type { ViewProps } from 'react-native';
+import type { HostComponent, ViewProps } from 'react-native';
 import type {
   DirectEventHandler,
   Int32,
@@ -9,8 +9,10 @@ export type FocusChange = Readonly<{
   isFocused: boolean;
 }>;
 
+export type OnTextFocusChange = DirectEventHandler<FocusChange>;
+
 export interface A11yTextInputWrapperNativeComponent extends ViewProps {
-  onFocusChange?: DirectEventHandler<FocusChange>;
+  onFocusChange?: OnTextFocusChange;
   focusType?: Int32;
   blurType?: Int32;
   canBeFocused?: boolean;
@@ -18,4 +20,4 @@ export interface A11yTextInputWrapperNativeComponent extends ViewProps {
 
 export default codegenNativeComponent<A11yTextInputWrapperNativeComponent>(
   'RCA11yTextInputWrapper'
-);
+) as HostComponent<A11yTextInputWrapperNativeComponent>;

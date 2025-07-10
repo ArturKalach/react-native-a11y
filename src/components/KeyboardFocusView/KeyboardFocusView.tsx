@@ -1,3 +1,4 @@
+import React from 'react';
 import { View } from 'react-native';
 
 import type { KeyboardFocusViewProps } from './KeyboardFocusView.types';

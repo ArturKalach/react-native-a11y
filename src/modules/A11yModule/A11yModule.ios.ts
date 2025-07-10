@@ -1,3 +1,4 @@
+import React from 'react';
 import { findNodeHandle, NativeEventEmitter } from 'react-native';
 import { KEYBOARD_STATUS_EVENT } from './A11yModule.conts';
 
