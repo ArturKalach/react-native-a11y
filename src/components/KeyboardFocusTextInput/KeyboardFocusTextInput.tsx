@@ -6,8 +6,9 @@ import {
   type ViewStyle,
 } from 'react-native';
 
-import TextInputWrapperNative from '../../nativeSpecs/A11yTextInputWrapperNativeComponent';
-import type { OnFocusChangeFn } from './KeyboardFocusTextInput.types';
+import TextInputWrapperNative, {
+  type OnTextFocusChange,
+} from '../../nativeSpecs/A11yTextInputWrapperNativeComponent';
 
 const focusMap = {
   default: 0,
@@ -25,7 +26,7 @@ export type KeyboardFocusTextInputProps = TextInputProps & {
   focusType?: keyof typeof focusMap;
   blurType?: keyof typeof blurMap;
   containerStyle?: StyleProp<ViewStyle>;
-  onFocusChange?: OnFocusChangeFn;
+  onFocusChange?: OnTextFocusChange;
 };
 
 export const KeyboardFocusTextInput = React.forwardRef<
