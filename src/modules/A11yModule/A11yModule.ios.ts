@@ -13,12 +13,6 @@ import * as RCA11yModule from './RCA11yModule';
 const GC_FRAMEWORK_LINKING_ERROR = `GC_FRAMEWORK_LINKING_ERROR`;
 
 class A11yModuleIOSImpl implements IA11yModule {
-  private _currentFocusedTag: number | null = null;
-
-  set currentFocusedTag(value: number) {
-    this._currentFocusedTag = value;
-  }
-
   isKeyboardConnected = () =>
     RCA11yModule.isKeyboardConnected().catch((e) => {
       if (e.code === GC_FRAMEWORK_LINKING_ERROR) {
@@ -61,13 +55,8 @@ class A11yModuleIOSImpl implements IA11yModule {
   setKeyboardFocus = (ref: RefObjType) => {
     const tag = findNodeHandle(ref.current);
 
-    if (
-      this._currentFocusedTag &&
-      tag &&
-      Number.isInteger(this._currentFocusedTag) &&
-      Number.isInteger(tag)
-    ) {
-      RCA11yModule.setKeyboardFocus(this._currentFocusedTag, tag);
+    if (tag && Number.isInteger(tag)) {
+      RCA11yModule.setKeyboardFocus(tag);
     }
   };
 

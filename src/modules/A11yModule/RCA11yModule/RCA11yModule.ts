@@ -44,8 +44,8 @@ export function setAccessibilityFocus(nativeTag: number): void {
   RCA11y.setAccessibilityFocus(nativeTag);
 }
 
-export function setKeyboardFocus(nativeTag: number, _nextTag = 0): void {
-  RCA11y.setKeyboardFocus(nativeTag, _nextTag);
+export function setKeyboardFocus(nativeTag: number): void {
+  RCA11y.setKeyboardFocus(nativeTag);
 }
 
 export function setPreferredKeyboardFocus(
