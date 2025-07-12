@@ -5,22 +5,36 @@
  * @format
  */
 
+import { useRef } from 'react';
 import {
+  Button,
   StatusBar,
   StyleSheet,
-  Text,
   useColorScheme,
   View,
 } from 'react-native';
+import { A11yModule } from 'react-native-a11y';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
+  const ref = useRef(null);
+  const onPress = () => {
+    A11yModule.setKeyboardFocus(ref);
+  };
   return (
     <View style={styles.container}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>123431223</Text>
+        <View>
+          <Button title="Start" onPress={onPress} />
+        </View>
+        <View>
+          <Button title="Middle" onPress={onPress} />
+        </View>
+        <View>
+          <Button ref={ref} title="End" onPress={() => console.log('b')} />
+        </View>
       </View>
     </View>
   );
