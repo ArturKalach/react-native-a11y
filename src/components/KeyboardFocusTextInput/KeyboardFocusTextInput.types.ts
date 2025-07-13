@@ -1,6 +1,6 @@
-import { NativeSyntheticEvent } from "react-native";
+import type { NativeSyntheticEvent } from 'react-native';
 
-export type KeyboardFocusEvent = NativeSyntheticEvent<{
-  isFocused: boolean;
-}>;
+export type KeyboardFocusEvent = NativeSyntheticEvent<
+  Readonly<{ isFocused: boolean }>
+>;
 export type OnFocusChangeFn = (e: KeyboardFocusEvent) => void;

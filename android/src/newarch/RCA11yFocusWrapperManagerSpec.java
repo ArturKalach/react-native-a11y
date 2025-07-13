@@ -11,9 +11,4 @@ import com.facebook.soloader.SoLoader;
 
 
 public abstract class RCA11yFocusWrapperManagerSpec<T extends ReactViewGroup> extends ReactViewManager implements RCA11yFocusWrapperManagerInterface<T> {
-  static {
-    if (BuildConfig.CODEGEN_MODULE_REGISTRATION != null) {
-      SoLoader.loadLibrary(BuildConfig.CODEGEN_MODULE_REGISTRATION);
-    }
-  }
 }

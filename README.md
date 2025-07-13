@@ -1,5 +1,15 @@
 # React Native A11y
 
+## New Release Update
+- Updated setKeyboardFocus to remove limitations. The `setKeyboardFocus` method can now be used with any focusable element via `ref`.
+- Update and refactor example project with usage of `ReactNative 0.80.x`
+
+## Roadmap:
+- Update and refactor the `react-native-external-keyboard` package.
+- Update and refactor the `react-native-a11y-order` package.
+- Reuse and align functionality from `react-native-external-keyboard` and `react-native-a11y-order`
+
+
 # 🚧 🚧 🚧
 
 ### Unfortunately, the library is outdated and uses deprecated APIs. It requires a lot of work to be done.

@@ -1,9 +1,9 @@
-import React from "react";
-import { View } from "react-native";
-import { useFocusStyle } from "../../hooks";
-import { NativeFocusWrapper } from "./RCA11yFocusWrapper";
-import { useCanBeFocused } from "../../providers";
-import type { KeyboardFocusViewProps } from "./KeyboardFocusView.types";
+import React from 'react';
+import { View } from 'react-native';
+import { useFocusStyle } from '../../hooks';
+import NativeFocusWrapper from '../../nativeSpecs/A11yFocusWrapperNativeComponent';
+import { useCanBeFocused } from '../../providers';
+import type { KeyboardFocusViewProps } from './KeyboardFocusView.types';
 
 export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
   (
@@ -18,12 +18,12 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
       onKeyDownPress,
       ...props
     },
-    ref,
+    ref
   ) => {
     const canBecomeFocused = useCanBeFocused();
     const { fStyle, onFocusChangeHandler } = useFocusStyle(
       focusStyle,
-      onFocusChange,
+      onFocusChange
     );
 
     return (
@@ -39,5 +39,5 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
         {withView ? <View accessible>{children}</View> : children}
       </NativeFocusWrapper>
     );
-  },
+  }
 );

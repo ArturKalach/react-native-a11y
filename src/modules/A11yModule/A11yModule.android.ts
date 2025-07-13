@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 import {
   AccessibilityInfo,
   findNodeHandle,
   InteractionManager,
   NativeEventEmitter,
-} from "react-native";
+} from 'react-native';
 import type {
   A11yOrderInfo,
   IA11yModule,
   StatusCallback,
-} from "./A11yModule.types";
-import { noop } from "../../utils";
-import { KEYBOARD_STATUS_EVENT } from "./A11yModule.conts";
+} from './A11yModule.types';
+import { noop } from '../../utils';
+import { KEYBOARD_STATUS_EVENT } from './A11yModule.conts';
 
-import * as RCA11yModule from "./RCA11yModule";
+import * as RCA11yModule from './RCA11yModule';
 
 class A11yAndroidImpl implements IA11yModule {
   announceForAccessibility(announcement: string) {
@@ -26,7 +26,7 @@ class A11yAndroidImpl implements IA11yModule {
     const eventEmitter = new NativeEventEmitter();
     const eventListener = eventEmitter.addListener(
       KEYBOARD_STATUS_EVENT,
-      callback,
+      callback
     );
     return () => eventListener.remove();
   };
@@ -57,8 +57,8 @@ class A11yAndroidImpl implements IA11yModule {
 
   setA11yElementsOrder = <T>({ views }: A11yOrderInfo<T>) => {
     const tags = views
-      .map(view => findNodeHandle(view as React.Component))
-      .filter(view => Boolean(view));
+      .map((view) => findNodeHandle(view as React.Component))
+      .filter((view) => Boolean(view));
     RCA11yModule.setA11yOrder?.(tags as number[], 0);
   };
 }

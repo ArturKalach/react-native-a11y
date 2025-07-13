@@ -14,6 +14,7 @@
 #import "GameController/GCKeyboard.h"
 #import <React/RCTUIManager.h>
 #import "RCA11yModule.h"
+#import "UIViewController+RCA11y.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #import "RNA11ySpec/RNA11ySpec.h"
@@ -65,7 +66,7 @@ NSString * const EVENT_PROP = @"status";
             }
         }
     }
-    
+
     return self;
 }
 
@@ -98,35 +99,33 @@ RCT_EXPORT_METHOD(setAccessibilityFocus: (nonnull NSNumber *)nativeTag) {
     });
 }
 
-RCT_EXPORT_METHOD(
-                  setPreferredKeyboardFocus:(nonnull NSNumber *)itemId
-                  nextElementId:(nonnull NSNumber *)nextElementId
-                  ) {
+
+RCT_EXPORT_METHOD(setKeyboardFocus: (nonnull NSNumber *)nativeTag) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIView *field = [self.bridge.uiManager viewForReactTag:itemId];
-        UIView *nextFocusElement = [self.bridge.uiManager viewForReactTag:nextElementId];
-        if(field != nil && nextFocusElement != nil && [field isKindOfClass: [RCA11yFocusWrapper class]]) {
-            RCA11yFocusWrapper *v = (RCA11yFocusWrapper *)field;
-            v.myPreferredFocusedView = nextFocusElement;
-            [v setNeedsFocusUpdate];
-            [v updateFocusIfNeeded];
+        if(![nativeTag isEqual: [NSNull null]]) {
+            UIView *field = [self.bridge.uiManager viewForReactTag:nativeTag];
+            if(field != nil) {
+              UIViewController *controller = field.reactViewController;
+
+              if (controller != nil) {
+                controller.customFocusView = field;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                  [controller setNeedsFocusUpdate];
+                  [controller updateFocusIfNeeded];
+                });
+              }
+            }
         }
     });
 }
 
-RCT_EXPORT_METHOD(
-                  setKeyboardFocus:(nonnull NSNumber *)itemId
-                  nextElementId:(nonnull NSNumber *)nextElementId
-                  ) {
+RCT_EXPORT_METHOD(setPreferredKeyboardFocus:(nonnull NSNumber *)nativeTag) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        UIView *field = [self.bridge.uiManager viewForReactTag:itemId];
-        UIView *nextFocusElement = [self.bridge.uiManager viewForReactTag:nextElementId];
-        if(field != nil && nextFocusElement != nil && [field isKindOfClass: [RCA11yFocusWrapper class]]) {
-            RCA11yFocusWrapper *v = (RCA11yFocusWrapper *)field;
-            v.myPreferredFocusedView = nextFocusElement;
-            [v setNeedsFocusUpdate];
-            [v updateFocusIfNeeded];
-            v.myPreferredFocusedView = v;
+        if(![nativeTag isEqual: [NSNull null]]) {
+            UIView *field = [self.bridge.uiManager viewForReactTag:nativeTag];
+            if(field != nil) {
+              UIViewController *controller = field.reactViewController;
+            }
         }
     });
 }
@@ -141,7 +140,7 @@ RCT_EXPORT_METHOD(
             UIAccessibilityPostNotification(UIAccessibilityScreenChangedNotification, field); // ToDo, make this optional
         }
         NSMutableArray *fields = [NSMutableArray arrayWithCapacity:[elements count]];
-        
+
         [elements enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL * stop) {
             NSNumber *tag = (NSNumber *)obj;
             UIView *field = [self.bridge.uiManager viewForReactTag:tag];

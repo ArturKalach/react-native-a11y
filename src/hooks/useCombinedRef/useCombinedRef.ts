@@ -1,5 +1,11 @@
-import { useMemo, Ref, RefObject, RefCallback, useRef } from "react";
-import { combineRefs } from "../../utils";
+import {
+  useMemo,
+  type Ref,
+  type RefObject,
+  type RefCallback,
+  useRef,
+} from 'react';
+import { combineRefs } from '../../utils';
 
 export const useCombinedRef = <T>(
   ...refs: Ref<T>[]

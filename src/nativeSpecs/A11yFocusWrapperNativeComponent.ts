@@ -1,10 +1,9 @@
-/* eslint-disable import/no-unresolved */
-import type { HostComponent, ViewProps } from "react-native";
-import codegenNativeComponent from "react-native/Libraries/Utilities/codegenNativeComponent";
-import {
+import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+import type { HostComponent, ViewProps } from 'react-native';
+import type {
   DirectEventHandler,
   Int32,
-} from "react-native/Libraries/Types/CodegenTypes";
+} from 'react-native/Libraries/Types/CodegenTypes';
 
 export type FocusChange = Readonly<{
   isFocused: boolean;
@@ -36,5 +35,5 @@ export interface NativeProps extends ViewProps {
 }
 
 export default codegenNativeComponent<NativeProps>(
-  "RCA11yFocusWrapper",
+  'RCA11yFocusWrapper'
 ) as HostComponent<NativeProps>;

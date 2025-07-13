@@ -1,6 +1,6 @@
-import { AccessibilityChangeEventName } from "react-native";
+import type { AccessibilityChangeEventName } from 'react-native';
 
-const A11Y_DEPRECATED = "change";
+const A11Y_DEPRECATED = 'change';
 class A11yConfig {
   private a11yServiceChangeEvent: AccessibilityChangeEventName =
     A11Y_DEPRECATED;

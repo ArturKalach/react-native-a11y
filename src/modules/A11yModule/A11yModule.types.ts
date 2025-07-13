@@ -1,5 +1,6 @@
-import { RefObject } from "react";
-import type { View } from "react-native";
+import React from 'react';
+import type { RefObject } from 'react';
+import type { View } from 'react-native';
 
 export type A11yOrderInfo<T> = {
   tag?: RefObject<View>;
@@ -11,18 +12,16 @@ export type A11yNativeModule = {
   announceForAccessibility: (announcement: string) => void;
   announceScreenChange: (announcement: string) => void;
   setAccessibilityFocus: (nativeTag: number) => void;
-  setKeyboardFocus: (nativeTag: number, nextTag?: number) => void;
+  setKeyboardFocus: (nativeTag: number) => void;
   setPreferredKeyboardFocus: (nativeTag: number, nextTag: number) => void;
   setA11yOrder: (tags: number[], nativeTag?: number) => void;
 };
 
 export type StatusCallback = (e: { status: boolean }) => void;
 
-export type RefObjType = RefObject<React.Component<{}, {}, unknown> | null>;
+export type RefObjType = RefObject<React.Component | null>;
 
 export interface IA11yModule {
-  currentFocusedTag?: number;
-
   isKeyboardConnected: () => Promise<boolean>;
   keyboardStatusListener: (callback: StatusCallback) => () => void;
   announceForAccessibility: (announcement: string) => void;

@@ -1,1 +1,1 @@
-export { a11yConfig } from "./RNA11yConfig";
+export { a11yConfig } from './RNA11yConfig';

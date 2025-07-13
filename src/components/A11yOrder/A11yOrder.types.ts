@@ -1,4 +1,4 @@
-import type { ViewProps, View } from "react-native";
+import type { ViewProps, View } from 'react-native';
 
 export type A11yOrderProps = {
   a11yOrder: {

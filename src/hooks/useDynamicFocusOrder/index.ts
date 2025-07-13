@@ -1,2 +1,2 @@
-export { useDynamicFocusOrder } from "./useDynamicFocusOrder";
-export { UseDynamicFocusOrder } from "./useDynamicFocusOrder.types";
+export { useDynamicFocusOrder } from './useDynamicFocusOrder';
+export type { UseDynamicFocusOrder } from './useDynamicFocusOrder.types';
