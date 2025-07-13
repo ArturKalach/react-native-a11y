@@ -33,12 +33,12 @@ export const TextInputFocus = () => {
         <Text style={styles.line}>
           Use keyboard to navigate (tab/shift+tab)
         </Text>
-        <View style={{ flexDirection: 'row', padding: 10 }}>
-          <View style={{ flex: 1 }}>
+        <View style={styles.switchGroup}>
+          <View style={styles.switchBox}>
             <Text>Auto focus</Text>
             <Switch value={isAutoFocus} onValueChange={setIsAutoFocus} />
           </View>
-          <View style={{ flex: 1 }}>
+          <View style={styles.switchBox}>
             <Text>Auto blur</Text>
             <Switch value={isAutoBlur} onValueChange={setIsAutoBlur} />
           </View>
@@ -84,4 +84,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: 5,
   },
+  switchGroup: { flexDirection: 'row', padding: 10 },
+  switchBox: { flex: 1 },
 });
