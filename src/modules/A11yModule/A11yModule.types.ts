@@ -19,7 +19,7 @@ export type A11yNativeModule = {
 
 export type StatusCallback = (e: { status: boolean }) => void;
 
-export type RefObjType = RefObject<React.Component<any, any, any> | null>;
+export type RefObjType = RefObject<React.Component | null>;
 
 export interface IA11yModule {
   isKeyboardConnected: () => Promise<boolean>;
