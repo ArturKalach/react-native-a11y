@@ -1,5 +1,8 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+  createDrawerNavigator,
+  type DrawerHeaderProps,
+} from '@react-navigation/drawer';
 import { A11yProvider } from 'react-native-a11y';
 import {
   ReaderFocusScreen,
@@ -14,16 +17,22 @@ import {
 } from './screens';
 import * as Nav from './navigation';
 import { DrawerContent, Header } from './components';
+import { useCallback } from 'react';
 
 const Drawer = createDrawerNavigator<Nav.DrawerParamList>();
 
 export const Root = () => {
+  const screenHeader = useCallback(
+    (props: DrawerHeaderProps) => <Header {...props} />,
+    []
+  );
+
   return (
     <A11yProvider>
       <NavigationContainer>
         <Drawer.Navigator
           screenOptions={{
-            header: (props) => <Header {...props} />,
+            header: screenHeader,
           }}
           drawerContent={DrawerContent}
         >
