@@ -9,7 +9,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 
-public class RCA11yModule extends RCA11yModuleSpec{
+public class RCA11yModule extends com.reactnativea11y.RCA11yModuleSpec {
   public static final String NAME = "RCA11yModule";
   private RCA11yModuleImpl module;
 
@@ -50,13 +50,13 @@ public class RCA11yModule extends RCA11yModuleSpec{
   }
 
   @ReactMethod
-  public void setKeyboardFocus(double nativeTag, Double _nextTag) {
+  public void setKeyboardFocus(double nativeTag) {
     module.setKeyboardFocus((int)nativeTag);
   }
 
   @ReactMethod
-  public void setPreferredKeyboardFocus(double nativeTag, double nextTag) {
-    //stub
+  public void setPreferredKeyboardFocus(double nativeTag) {
+
   }
 
   @RequiresApi(api = Build.VERSION_CODES.N)

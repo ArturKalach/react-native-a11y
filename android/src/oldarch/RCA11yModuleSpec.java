@@ -17,8 +17,8 @@ abstract class RCA11yModuleSpec extends ReactContextBaseJavaModule {
   public abstract void announceForAccessibility(String announcement);
   public abstract void announceScreenChange(String screenName);
   public abstract void setAccessibilityFocus(double nativeTag);
-  public abstract void setKeyboardFocus(double nativeTag, Double nextTag);
-  public abstract void setPreferredKeyboardFocus(double nativeTag, double nextTag);
+  public abstract void setKeyboardFocus(double nativeTag);
+  public abstract void setPreferredKeyboardFocus(double nativeTag);
   public abstract void setA11yOrder(@NonNull ReadableArray reactTags, Double _tag);
 }
 
