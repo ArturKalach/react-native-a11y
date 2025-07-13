@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
 import { useFocusStyle } from '../../hooks';
-import { NativeFocusWrapper } from './RCA11yFocusWrapper';
+import NativeFocusWrapper from '../../nativeSpecs/A11yFocusWrapperNativeComponent';
 import { useCanBeFocused } from '../../providers';
 import type { KeyboardFocusViewProps } from './KeyboardFocusView.types';
 

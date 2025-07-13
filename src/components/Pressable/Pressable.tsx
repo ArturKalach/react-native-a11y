@@ -252,9 +252,9 @@ export const Pressable = React.memo(
       (e) => {
         if (e.nativeEvent.keyCode === SPACE_KEY_CODE) {
           if (e.nativeEvent.isLongPress) {
-            onLongPress?.(e);
+            onLongPress?.(e as unknown as GestureResponderEvent);
           } else {
-            onPress?.(e);
+            onPress?.(e as unknown as GestureResponderEvent);
           }
         }
       },

@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import type { View } from 'react-native';
 
 import { useCanBeFocused } from '../../providers';
-import { NativeFocusWrapper, type OnFocusChangeFn } from './RCA11yFocusWrapper';
+import NativeFocusWrapper from '../../nativeSpecs/A11yFocusWrapperNativeComponent';
 import { useFocusStyle } from '../../hooks';
 import type { KeyboardFocusViewProps } from './KeyboardFocusView.types';
 
@@ -21,14 +21,10 @@ export const KeyboardFocusView = React.forwardRef<View, KeyboardFocusViewProps>(
   ) => {
     const canBecomeFocused = useCanBeFocused();
 
-    const onFocus = useCallback<OnFocusChangeFn>(
-      (e) => {
-        onFocusChange?.(e);
-      },
-      [onFocusChange]
+    const { fStyle, onFocusChangeHandler } = useFocusStyle(
+      focusStyle,
+      onFocusChange
     );
-
-    const { fStyle, onFocusChangeHandler } = useFocusStyle(focusStyle, onFocus);
 
     return (
       <NativeFocusWrapper

@@ -6,7 +6,7 @@ export {
   Pressable,
   KeyboardFocusTextInput,
 } from './components';
-export type { FocusStyle, OnFocusChangeFn } from './components';
+export type { FocusStyle, OnFocusChangeFn, OnKeyPressFn } from './components';
 export { useFocusOrder, useDynamicFocusOrder, useCombinedRef } from './hooks';
 export {
   A11yProvider,
