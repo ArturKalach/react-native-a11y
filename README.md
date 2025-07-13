@@ -404,12 +404,6 @@ const App = () => {
 }
 ```
 
-## Roadmap
-
-- Add more examples, update Readme
-- Add tests
-- Check React Navigation for A11y and make examples
-
 ## ReactNative old versions supporting
 
 The library provides default support for RN versions starting from v0.66.1 and up to v0.72.\*.
