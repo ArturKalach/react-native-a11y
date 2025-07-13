@@ -130,23 +130,6 @@ RCT_EXPORT_METHOD(setPreferredKeyboardFocus:(nonnull NSNumber *)nativeTag) {
     });
 }
 
-// RCT_EXPORT_METHOD(
-//                   setKeyboardFocus:(nonnull NSNumber *)itemId
-//                   nextElementId:(nonnull NSNumber *)nextElementId
-//                   ) {
-//     dispatch_async(dispatch_get_main_queue(), ^{
-//         UIView *field = [self.bridge.uiManager viewForReactTag:itemId];
-//         UIView *nextFocusElement = [self.bridge.uiManager viewForReactTag:nextElementId];
-//         if(field != nil && nextFocusElement != nil && [field isKindOfClass: [RCA11yFocusWrapper class]]) {
-//             RCA11yFocusWrapper *v = (RCA11yFocusWrapper *)field;
-//             v.myPreferredFocusedView = nextFocusElement;
-//             [v setNeedsFocusUpdate];
-//             [v updateFocusIfNeeded];
-//             v.myPreferredFocusedView = v;
-//         }
-//     });
-// }
-
 RCT_EXPORT_METHOD(
                   setA11yOrder: (nonnull NSArray *)elements
                   node:(nonnull NSNumber *)node

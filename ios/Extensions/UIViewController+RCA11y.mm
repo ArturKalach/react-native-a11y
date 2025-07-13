@@ -4,42 +4,23 @@
 //
 //  Created by Artur Kalach on 11/07/2025.
 //
+#ifndef UIViewController_RNCEKVExternalKeyboard_h
 
 #import <Foundation/Foundation.h>
 
 #import "UIViewController+RCA11y.h"
 #import <objc/runtime.h>
 
-
-
-void SwizzleInstanceMethod(Class swizzleClass, SEL originalSelector, SEL swizzledSelector) {
-    Method originalMethod = class_getInstanceMethod(swizzleClass, originalSelector);
-    Method swizzledMethod = class_getInstanceMethod(swizzleClass, swizzledSelector);
-    BOOL didAddMethod = class_addMethod(swizzleClass,
-                                        originalSelector,
-                                        method_getImplementation(swizzledMethod),
-                                        method_getTypeEncoding(swizzledMethod));
-
-    if (didAddMethod) {
-        class_replaceMethod(swizzleClass,
-                            swizzledSelector,
-                            method_getImplementation(originalMethod),
-                            method_getTypeEncoding(originalMethod));
-    } else {
-        method_exchangeImplementations(originalMethod, swizzledMethod);
-    }
-}
-
-static char kCustomFocusViewKey;
+static char kRCA11yCustomFocusViewKey;
 
 @implementation UIViewController (RCA11yFocus)
 
 - (UIView *)customFocusView {
-    return objc_getAssociatedObject(self, &kCustomFocusViewKey);
+    return objc_getAssociatedObject(self, &kRCA11yCustomFocusViewKey);
 }
 
 - (void)setCustomFocusView:(UIView *)customFocusView {
-    objc_setAssociatedObject(self, &kCustomFocusViewKey, customFocusView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, &kRCA11yCustomFocusViewKey, customFocusView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 + (void)load
@@ -47,17 +28,15 @@ static char kCustomFocusViewKey;
     static dispatch_once_t once_token;
 
     dispatch_once(&once_token, ^{
-        SwizzleInstanceMethod([self class], @selector(viewDidAppear:), @selector(keyboardedViewDidAppear:));
-
         method_exchangeImplementations(
                                        class_getInstanceMethod(self, @selector(preferredFocusEnvironments)),
-                                       class_getInstanceMethod(self, @selector(keyboardedPreferredFocusEnvironments))
+                                       class_getInstanceMethod(self, @selector(rcaKeyboardedPreferredFocusEnvironments))
                                        );
     });
 }
 
-- (NSArray<id<UIFocusEnvironment>> *)keyboardedPreferredFocusEnvironments {
-    NSArray<id<UIFocusEnvironment>> *originalEnvironments = [self keyboardedPreferredFocusEnvironments];
+- (NSArray<id<UIFocusEnvironment>> *)rcaKeyboardedPreferredFocusEnvironments {
+    NSArray<id<UIFocusEnvironment>> *originalEnvironments = [self rcaKeyboardedPreferredFocusEnvironments];
 
     NSMutableArray *focusEnvironments = [originalEnvironments mutableCopy];
 
@@ -71,3 +50,5 @@ static char kCustomFocusViewKey;
 
 
 @end
+
+#endif
