@@ -91,11 +91,15 @@ public class A11yReader {
         for (int i = 0; i < views.size() - 1; i++) {
           final View currentView = views.get(i);
           final View nextView = views.get(i + 1);
-          currentView.setNextFocusForwardId(nextView.getId());
-          currentView.setAccessibilityTraversalBefore(nextView.getId());
+          if(nextView != null) {
+            currentView.setNextFocusForwardId(nextView.getId());
+            currentView.setAccessibilityTraversalBefore(nextView.getId());
+          }
         }
       } catch (IllegalViewOperationException error) {
         Log.e("KEYBOARD_FOCUS_ERROR", error.getMessage());
+      } catch (Exception e) {
+        Log.e("KEYBOARD_FOCUS_ERROR", e.getMessage());
       }
     });
 
