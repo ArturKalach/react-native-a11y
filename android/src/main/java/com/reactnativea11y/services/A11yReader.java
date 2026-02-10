@@ -98,6 +98,8 @@ public class A11yReader {
         }
       } catch (IllegalViewOperationException error) {
         Log.e("KEYBOARD_FOCUS_ERROR", error.getMessage());
+      } catch (Exception e) {
+        Log.e("KEYBOARD_FOCUS_ERROR", e.getMessage());
       }
     });
 
