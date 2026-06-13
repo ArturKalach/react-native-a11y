@@ -18,7 +18,7 @@ export const ManagingRefsScreen = () => {
   const { a11yOrder, registerOrder, setOrder } = useDynamicFocusOrder();
   const [firstRef, firstRefCallback] = useCombinedRef<Text>(registerOrder(0));
   const onLayoutHandler = useCallback(
-    () => A11yModule.setA11yFocus(firstRef),
+    () => A11yModule.setA11yFocus(firstRef as never),
     [firstRef]
   );
 
@@ -29,7 +29,7 @@ export const ManagingRefsScreen = () => {
     <Screen>
       <ReaderExample>
         <A11yOrder onLayout={onLayoutHandler} a11yOrder={a11yOrder}>
-          <Text style={styles.font} ref={firstRefCallback}>
+          <Text style={styles.font} ref={firstRefCallback as never}>
             First
           </Text>
           <Text style={styles.font} ref={registerOrder(2)}>
