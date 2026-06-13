@@ -21,13 +21,13 @@ export const A11yOrderScreen = () => {
     <Screen>
       <ReaderExample>
         <A11yOrder a11yOrder={a11yOrder}>
-          <Text style={styles.font} ref={refs[0]}>
+          <Text style={styles.font} ref={refs[0] as never}>
             First
           </Text>
-          <Text style={styles.font} ref={refs[2]}>
+          <Text style={styles.font} ref={refs[2] as never}>
             Third
           </Text>
-          <Text style={styles.font} ref={refs[1]}>
+          <Text style={styles.font} ref={refs[1] as never}>
             Second
           </Text>
         </A11yOrder>
