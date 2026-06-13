@@ -1,6 +1,6 @@
 {
   "name": "react-native-a11y",
-  "version": "0.7.0-rc",
+  "version": "0.7.0-rc1",
   "description": "Improvements of a11y for ReactNative, this library improve work with reader and keyboard focus and reader in general.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -67,7 +67,7 @@
     "@eslint/js": "^9.35.0",
     "@react-native/babel-preset": "0.83.4",
     "@react-native/eslint-config": "0.83.4",
-    "@release-it/conventional-changelog": "^10.0.1",
+    "@release-it/conventional-changelog": "^11.0.1",
     "@types/jest": "^29.5.14",
     "@types/react": "^18.3.30",
     "commitlint": "^19.8.1",
@@ -81,7 +81,7 @@
     "react": "18.3.1",
     "react-native": "0.76.5",
     "react-native-builder-bob": "^0.40.18",
-    "release-it": "^19.0.4",
+    "release-it": "^20.2.0",
     "turbo": "^2.5.6",
     "typescript": "^5.9.2"
   },
