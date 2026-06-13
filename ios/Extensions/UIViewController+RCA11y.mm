@@ -9,9 +9,16 @@
 #import <Foundation/Foundation.h>
 
 #import "UIViewController+RCA11y.h"
+#import "RCA11ySwizzleInstanceMethod.h"
 #import <objc/runtime.h>
 
 static char kRCA11yCustomFocusViewKey;
+
+static void RCA11yViewControllerSwizzle(void) {
+    RCA11ySwizzleInstanceMethod([UIViewController class],
+                                @selector(preferredFocusEnvironments),
+                                @selector(rcaKeyboardedPreferredFocusEnvironments));
+}
 
 @implementation UIViewController (RCA11yFocus)
 
@@ -23,17 +30,7 @@ static char kRCA11yCustomFocusViewKey;
     objc_setAssociatedObject(self, &kRCA11yCustomFocusViewKey, customFocusView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-+ (void)load
-{
-    static dispatch_once_t once_token;
-
-    dispatch_once(&once_token, ^{
-        method_exchangeImplementations(
-                                       class_getInstanceMethod(self, @selector(preferredFocusEnvironments)),
-                                       class_getInstanceMethod(self, @selector(rcaKeyboardedPreferredFocusEnvironments))
-                                       );
-    });
-}
+RCA11Y_INSTALL_SWIZZLES(RCA11yViewControllerSwizzle)
 
 - (NSArray<id<UIFocusEnvironment>> *)rcaKeyboardedPreferredFocusEnvironments {
     NSArray<id<UIFocusEnvironment>> *originalEnvironments = [self rcaKeyboardedPreferredFocusEnvironments];
