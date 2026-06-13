@@ -47,7 +47,7 @@ export const TextInputFocus = () => {
         <KeyboardFocusTextInput
           style={styles.textInput}
           value={inputValue0}
-          containerStyle={styles.textInputContainer}
+          containerStyle={styles.textInputContainer as {}}
           onChangeText={setInputValue0}
           focusType={isAutoFocus ? 'auto' : 'press'}
           blurType={isAutoBlur ? 'auto' : 'default'}
@@ -55,14 +55,14 @@ export const TextInputFocus = () => {
         <KeyboardFocusTextInput
           style={styles.textInput}
           value={inputValue1}
-          containerStyle={styles.textInputContainer}
+          containerStyle={styles.textInputContainer as {}}
           onChangeText={setInputValue1}
           focusType={isAutoFocus ? 'auto' : 'press'}
           blurType={isAutoBlur ? 'auto' : 'default'}
         />
         <KeyboardFocusTextInput
           style={styles.textInput}
-          containerStyle={styles.textInputContainer}
+          containerStyle={styles.textInputContainer as {}}
           value={inputValue2}
           onChangeText={setInputValue2}
           focusType={isAutoFocus ? 'auto' : 'press'}
