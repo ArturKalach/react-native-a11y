@@ -10,15 +10,15 @@
     "test": "jest"
   },
   "dependencies": {
-    "@react-navigation/drawer": "^7.5.3",
-    "@react-navigation/native": "^7.1.14",
+    "@react-navigation/drawer": "7.5.3",
+    "@react-navigation/native": "7.1.14",
     "@release-it/conventional-changelog": "11.0.1",
     "react": "18.3.1",
     "react-native": "0.76.5",
-    "react-native-gesture-handler": "^2.27.1",
-    "react-native-reanimated": "^3.18.0",
+    "react-native-gesture-handler": "2.27.1",
+    "react-native-reanimated": "3.16.0",
     "react-native-safe-area-context": "^5.5.2",
-    "react-native-screens": "^4.11.1",
+    "react-native-screens": "4.5.0",
     "release-it": "20.2.0"
   },
   "devDependencies": {
