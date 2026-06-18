@@ -2,62 +2,66 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Overview
+## ⚠️ Rework in progress — read this first
 
-`react-native-a11y` is a React Native native module library that improves accessibility (screen reader focus/order/announcements and external-keyboard focus) on iOS and Android. It targets the **New Architecture** (TurboModules + Fabric/Codegen) with old-architecture fallbacks. The JS API is published from `src/` and built into `lib/`; native code lives in `ios/` (Objective-C++ `.mm`) and `android/` (Java).
+`react-native-a11y` is being **rebuilt from scratch** by re-merging
+`react-native-a11y-order` + `react-native-external-keyboard` back into one
+self-contained package under a single `A11y.*` namespace. The 0.7.0
+implementation has been cleared (clean-slate); `src/`, `ios/`, `android/`
+currently hold a **compiling stub skeleton**, not working features.
 
-> The README marks the library as outdated/beta. Functionality is being split out into standalone packages (`react-native-a11y-order`, `react-native-external-keyboard`, `react-native-is-keyboard-connected`, `react-native-a11y-container`); the roadmap is to realign this package with those.
+- **Legacy 0.7.0 is preserved in git:** tag `legacy-0.7`, branch `legacy/0.7.0`.
+  Use it for reference, not as the base to extend.
+- **The plan and decisions live one level up** (`../`, the `a11y-loop` workspace):
+  - `REWORK_STEP_0.md` … `REWORK_STEP_5.md` — the staged plan (we are post-Step 0).
+  - `A11Y_REWORK_PLAN.md` — index + locked decisions + risks.
+  - `PACKAGES_SCOPE.md` — feature inventory of the three packages.
+  - `REWORK_API_MAP.md` — export map + native naming (`RCA11y*` / `com.reactnativea11y`).
+- **Do not follow pre-rework architecture notes** — the old `A11yModule` /
+  `RCA11yFocusWrapper` / per-platform module design is gone. Source of truth for
+  feature behavior is the two modern packages, ported in Steps 1–4.
+
+### Locked decisions (summary)
+Single `A11y.*` namespace; unified `A11y.View`/`Pressable`/`Input` (opt-in props);
+single `A11y.FocusTrap`/`A11y.FocusFrame` (SR + keyboard); one ordering engine via
+`orderType` (`auto|keyboard|screen-reader`); `focusTarget` (`self|child|subview`)
+for the focus-target axis; keep imperative `useFocusOrder`/`useDynamicFocusOrder`;
+native merged views but scoped modules; naming on `RCA11y*` / `com.reactnativea11y`;
+3 mutually-exclusive published packages; web best-effort View-mocked.
 
 ## Toolchain
 
 - **Yarn 4** (`yarn@4.11.0`) with workspaces; `example/` is the only workspace. Always use `yarn`, not `npm`.
-- **Node** pinned to `v22.20.0` (`.nvmrc`).
+- **Node** pinned to `v22.20.0` (`.nvmrc`). RN 0.76.5 / React 18.3.1.
 
 ## Commands
 
-Run from the repo root:
-
-- `yarn typecheck` — `tsc` (no emit; type-check only)
+- `yarn typecheck` — `tsc` (no emit)
 - `yarn lint` — ESLint over `**/*.{js,ts,tsx}`
 - `yarn test` — Jest (preset `react-native`)
-- Single test: `yarn test src/__tests__/index.test.tsx` or filter by name with `yarn test -t "name"`
-- `yarn prepare` — build the publishable `lib/` via `react-native-builder-bob` (commonjs + module + typescript). Run this when JS API changes need to be reflected in the built output.
+- `yarn prepare` — build `lib/` via `react-native-builder-bob` (commonjs + module + typescript)
 - `yarn clean` — remove `lib/` and native build dirs
+- `yarn example start` / `yarn example android` / `yarn example ios` — example app (`cd example/ios && pod install` first for iOS)
 
-Example app (RN dev app, drives the native code):
+**Pre-commit** (`lefthook.yml`): `eslint` on staged files, `tsc`, `commitlint`. Conventional Commits; releases via `release-it`.
 
-- `yarn example start` — Metro
-- `yarn example android` / `yarn example ios` — build & run (run `cd example/ios && pod install` first for iOS)
-- `turbo build:android` / `turbo build:ios` — Turbo tasks wrapping the native builds
+## Current structure (skeleton)
 
-**Pre-commit** (`lefthook.yml`): runs `eslint` on staged files, `tsc`, and `commitlint`. Commits must follow Conventional Commits (`@commitlint/config-conventional`); releases are cut with `release-it` from that history.
+```
+src/
+  index.tsx / index.web.ts   // A11y namespace + top-level exports (stubs)
+  components/                // A11yView, A11yPressable, A11yInput, A11yOrder,
+                             //   A11yIndex, A11yCard, A11yLock (Trap+Frame),
+                             //   A11yPaneTitle, A11yFocusGroup — createStubView stubs
+  modules/                   // A11yAnnounceModule, Keyboard (stubs)
+  hooks/ providers/ utils/ types/
+  context/ nativeSpecs/      // empty — populated in Steps 1–2
+ios/   RCA11yPlaceholder.h    // legacy cleared; RCA11y* impl in Step 4
+android/ .../A11yPackage.java  // stub ReactPackage (empty); impl in Step 3
+```
 
-## Architecture
-
-### Public API
-Everything is re-exported from [src/index.tsx](src/index.tsx): the `A11yModule` (core imperative API), components (`KeyboardFocusView`, `PaneView`, `A11yOrder`, `Pressable`, `KeyboardFocusTextInput`), hooks (`useFocusOrder`, `useDynamicFocusOrder`, `useCombinedRef`), providers (`A11yProvider`, `KeyboardProvider`, `useA11yStatus`, `useKeyboardStatus`), and `a11yConfig`.
-
-### Platform-split modules
-The core [src/modules/A11yModule/](src/modules/A11yModule/) uses React Native's platform file resolution:
-- `A11yModule.ts` — a typed stub (`{} as IA11yModule`) so the bundler always has a default; the real implementation is picked per platform.
-- `A11yModule.ios.ts` / `A11yModule.android.ts` — concrete `IA11yModule` implementations. They differ meaningfully: e.g. iOS uses native `setAccessibilityFocus`/preferred-keyboard-focus and a `GameController` framework check; Android falls back to RN's `AccessibilityInfo`, makes `setPreferredKeyboardFocus` a `noop`, and wraps keyboard focus in `InteractionManager`.
-
-When adding a method to the module, update **all** of: `A11yModule.types.ts` (`IA11yModule`), both `.ios`/`.android` impls, and the native bridge below.
-
-### Native bridge resolution
-[src/modules/A11yModule/RCA11yModule/RCA11yModule.ts](src/modules/A11yModule/RCA11yModule/RCA11yModule.ts) is the single boundary to native code. It picks the **TurboModule** spec ([src/nativeSpecs/NativeA11yModule.ts](src/nativeSpecs/NativeA11yModule.ts), registered as `RCA11yModule`) when `global.__turboModuleProxy` exists, otherwise `NativeModules.RCA11yModule`, and throws a linking-error proxy if neither is present. JS works with React refs and converts to native tags via `findNodeHandle` — callers pass refs, not tags.
-
-### Codegen
-`codegenConfig` in [package.json](package.json) (spec name `RNA11ySpec`, `jsSrcsDir: src/nativeSpecs`) generates native interfaces from [src/nativeSpecs/](src/nativeSpecs/):
-- `NativeA11yModule.ts` → the TurboModule
-- `*NativeComponent.ts` → Fabric host components: `RCA11yFocusWrapper`, `RCA11yPaneView`, `RCA11yTextInputWrapper`
-
-Native implementations of these live under `ios/Components/`, `ios/Modules/` and `android/src/main/java/com/reactnativea11y/`. Android keeps parallel `android/src/newarch/` and `android/src/oldarch/` spec shims selected at build time.
-
-### Providers
-[A11yProvider](src/providers/A11yProvider/A11yProvider.tsx) composes `A11yStatusProvider` → `A11yStatusKeyboard` → `KeyboardProvider`. Apps wrap their root in `A11yProvider`.
-
-### Conventions
-- Each unit is a folder with `Component.tsx` / `Component.types.ts` / `index.ts` barrel; platform variants use `.ios.tsx` / `.android.tsx`.
-- `dev/` subfolders (e.g. [src/hooks/dev/](src/hooks/dev/), [src/utils/dev/](src/utils/dev/)) hold internal helpers, not public API.
-- `a11yConfig` ([src/configs/RNA11yConfig.ts](src/configs/RNA11yConfig.ts)) is a singleton for overriding the accessibility change event name (the RN default `'change'` is deprecated).
+- Codegen: spec `RNA11ySpec`, `jsSrcsDir: src`, java package `com.reactnativea11y`,
+  gradle `react.libraryName = "A11y"`. `componentProvider`/`modulesProvider` are
+  empty until specs land in Step 2 (see `REWORK_API_MAP.md` for the target map).
+- Conventions: each component is a folder with an `index.tsx`; platform variants use
+  `.ios.tsx` / `.android.tsx` / `.web.tsx`.

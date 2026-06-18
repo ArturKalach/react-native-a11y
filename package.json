@@ -30,7 +30,7 @@
     "!**/docs"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-external-keyboard-example",
+    "example": "yarn workspace react-native-a11y-example",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "typecheck": "tsc",
@@ -113,15 +113,25 @@
   "codegenConfig": {
     "name": "RNA11ySpec",
     "type": "all",
-    "jsSrcsDir": "src/nativeSpecs",
+    "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.reactnativea11y"
     },
     "ios": {
       "componentProvider": {
-        "RCA11yFocusWrapper": "RCA11yFocusWrapper",
-        "RCA11yPaneView": "RCA11yPaneView",
-        "RCA11yTextInputWrapper": "RCA11yTextInputWrapper"
+        "A11yView": "RCA11yView",
+        "A11yLock": "RCA11yLockView",
+        "A11yOrder": "RCA11yOrderView",
+        "A11yCard": "RCA11yCardView",
+        "A11yPaneTitle": "RCA11yPaneTitleView",
+        "A11yFocusGroup": "RCA11yFocusGroup",
+        "A11yTextInputWrapper": "RCA11yTextInputWrapper"
+      },
+      "modulesProvider": {
+        "A11yAnnounceModule": "RCA11yAnnounceModule",
+        "A11yKeyboardModule": "RCA11yKeyboardModule",
+        "A11yKeyboardConnectedModule": "RCA11yKeyboardConnectedModule",
+        "A11yOrderModule": "RCA11yOrderModule"
       }
     }
   },

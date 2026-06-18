@@ -1,46 +1,62 @@
 # CLAUDE.md — Android
 
-This file provides guidance to Claude Code (claude.ai/code) when working with the Android native code in this directory. See the repo-root [CLAUDE.md](../CLAUDE.md) for JS/build/architecture context.
+Guidance for the Android native code. See the repo-root [CLAUDE.md](../CLAUDE.md)
+for the rework context and the workspace `REWORK_STEP_*.md` plan.
 
-## Layout
+> **Rebuilt in rework Step 3** by merging react-native-a11y-order + react-native-external-keyboard
+> into one `com.reactnativea11y` package. (The 0.7.0 `RCA11yModule`/`RCA11yFocusWrapper`
+> design is gone — preserved in git tag `legacy-0.7`.) **Not yet compiled** — expect a
+> compile-fix pass on the first `yarn example android`.
 
-All Java lives under the `com.reactnativea11y` package. There is no Kotlin despite the `A11y_kotlinVersion` property.
+## Layout (`src/main/java/com/reactnativea11y/`)
 
-- `src/main/java/com/reactnativea11y/` — the real implementation, identical across architectures.
-- `src/newarch/` and `src/oldarch/` — **arch-specific spec shims**, selected in [build.gradle](build.gradle) via `isNewArchitectureEnabled()`. Only one set is on the source path per build.
-- `generated/java` + `generated/jni` — Codegen output, added to the source path only on the new arch.
-- `src/main/AndroidManifest.xml` vs `AndroidManifestNew.xml` — the latter (without `package=`) is used when the AGP version supports `namespace` (≥ 7.3); the former is the fallback.
+- `utils/` — `A11yHelper`, `FocusHelper`, `ChoreographerUtils`, `FragmentUtils`, `ReactNativeVersionChecker`
+- `events/` — merged `EventHelper` + all event classes (SR + keyboard/key)
+- `linking/` — **unified order engine**: `A11yOrderLinking` + `A11yLinkingQueue`
+  (sets `nextFocusForward` **and** `accessibilityTraversalBefore`) + `WeakTreeMap` +
+  `FocusLinkObserver`(+`Singleton`) for `orderId` directional links
+- `core/` — the **linearized base hierarchy**: EK keyboard chain
+  (`ViewGroupBase → ViewOrderGroupBase → FocusHighlightBase → FocusableBase →
+  ViewFocusChangeBase → ViewFocusRequestBase → ViewKeyHandlerBase`) with the SR layer
+  `A11yScreenReaderView` re-parented onto its top (uses `getFirstChild()`)
+- `services/` — focus (`A11yFocusService`/`Delegate`/`Protocol`), order
+  (`A11yOrderService`), keyboard (`KeyboardFocusService`, `FocusMemoryService`,
+  `KeyboardService`, `KeyboardKeyPressHandler`); `delegates/FocusOrderDelegate`(+Host)
+- `modules/` — `A11yAnnounceModule` (Android stub; announcements go through RN
+  `AccessibilityInfo` in JS) + `A11yKeyboardModule` (`dismissKeyboard`)
+- `views/` — `A11yView` (**merged**: keyboard `dispatchKeyEvent` ⊕ SR order/focus),
+  `A11yLockView` (**merged** trap/frame), `A11yOrderView`, `A11yCardView`,
+  `A11yPaneTitle`, `A11yFocusGroup`, `A11yTextInputWrapper` — each with its manager
+- root: the 7 `*ManagerSpec` view-manager bases + the merged `A11yPackage`
 
-## The new/old arch split
+## Arch split (new/old) — only modules need it
 
-This is the single most important thing to get right when editing native code.
+- **View managers**: their `*ManagerSpec` bases live in `src/main/` and just
+  `extend ReactViewManager` with abstract `@ReactProp` setters. They do **not**
+  implement a codegen `ViewManagerWithGeneratedInterface`, so `getDelegate()` keeps
+  its default **reflection** path and props are set the same way on both arches.
+  No newarch/oldarch duplication for views.
+- **Modules**: `src/newarch/A11y{Announce,Keyboard}ModuleSpec` extend the codegen
+  `Native*Spec`; `src/oldarch/…` extend `ReactContextBaseJavaModule` with abstract
+  methods. The module impls in `modules/` extend whichever is on the path.
+- `BuildConfig.IS_NEW_ARCHITECTURE_ENABLED` flags `isTurboModule` in `A11yPackage`.
 
-- **Module specs**: `src/newarch/RCA11yModuleSpec.java` extends the Codegen-generated `NativeA11yModuleSpec` (an abstract TurboModule base). `src/oldarch/RCA11yModuleSpec.java` hand-declares the same abstract methods on top of `ReactContextBaseJavaModule`. [RCA11yModule.java](src/main/java/com/reactnativea11y/RCA11yModule.java) extends whichever `RCA11yModuleSpec` is on the path, so **its method signatures must match both shims**. When you add/change a native method, edit the JS TurboModule spec, the `oldarch` shim, and the `RCA11yModule` implementation together — the `newarch` shim is generated, so it tracks the JS spec automatically.
-- The same pattern applies to `RCA11yFocusWrapperManagerSpec` and `RCA11yTextInputWrapperManagerSpec`.
-- `BuildConfig.IS_NEW_ARCHITECTURE_ENABLED` is the runtime flag (used in `A11yPackage` to mark `isTurboModule`).
+## Unified order engine — the key merge
 
-> View managers (`RCA11yFocusWrapperManager`, `RCA11yTextInputWrapperManager`) are registered the **classic** way via `createViewManagers` in `A11yPackage` and run on both architectures — they are not Fabric-only. New-arch interop handles them.
+`A11yLinkingQueue` (index-based) always wires `setNextFocusForwardId` (keyboard) and
+also `setAccessibilityTraversalBefore` (screen reader). SR registers by `orderKey`,
+keyboard by `orderGroup` — independent keys in one `A11yOrderLinking`, so the shared
+`orderIndex` feeds both and each activates only when its key/group is present.
+Keyboard directional order (`orderId`/`orderLeft…`) uses `FocusLinkObserver`. The
+merged `A11yView` holds `orderType` (`auto|keyboard|screen-reader`).
 
-## Module wiring
+## Events
 
-- [A11yPackage.java](src/main/java/com/reactnativea11y/A11yPackage.java) is a `TurboReactPackage`: `getModule` returns `RCA11yModule`, `getReactModuleInfoProvider` advertises it, `createViewManagers` registers the two view managers. This is the entry point consumers register.
-- [RCA11yModule.java](src/main/java/com/reactnativea11y/RCA11yModule.java) is a thin `@ReactMethod` surface that delegates to [RCA11yModuleImpl.java](src/main/java/com/reactnativea11y/RCA11yModuleImpl.java). Several methods are deliberate **stubs** (`isA11yReaderEnabled` always resolves `true`; `announceForAccessibility`, `setAccessibilityFocus`, `setPreferredKeyboardFocus` are no-ops) because the JS Android impl routes those through RN's own `AccessibilityInfo` instead. Don't "fix" these without checking [../src/modules/A11yModule/A11yModule.android.ts](../src/modules/A11yModule/A11yModule.android.ts).
-- `RCA11yModuleImpl` owns the two services and bridges keyboard-status events to JS via `RCTDeviceEventEmitter` under the event name `keyboardStatus` (`KEYBOARD_STATUS_EVENT`), payload `{ status: boolean }`.
+All events extend `Event<>` and dispatch via `UIManagerHelper.getEventDispatcherForReactTag`
+(works on both arches). Managers expose JS names via `getExportedCustomDirectEventTypeConstants`.
 
-## Services (`services/`)
+## Build
 
-- **A11yReader** — screen-reader concerns. `announceScreenChange` sends a `TYPE_WINDOW_STATE_CHANGED` AccessibilityEvent; `setA11yOrder` chains views with `setAccessibilityTraversalBefore` / `setNextFocusForwardId` (API 24+, runs on the UI thread, needs ≥ 2 tags).
-- **KeyboardService** — physical-keyboard detection. Reads `Configuration.keyboard` for connection state and registers a `ACTION_CONFIGURATION_CHANGED` `BroadcastReceiver` (tied to host lifecycle via `LifecycleEventListener`) to emit changes. `setKeyboardFocus` resolves a view and calls `requestFocus()`.
-- **KeyboardKeyPressHandler** — translates raw `KeyEvent`s into press-down/press-up/long-press intents, deduping repeated key-down via internal maps. Used by `RCA11yFocusWrapperManager`.
-
-## Resolving React tags → Views
-
-Always go through `RCA11yUIManagerHelper.resolveView(tag)`. It branches on `ViewUtil.getUIManagerType(tag)`: `FABRIC` tags resolve via `UIManagerHelper.getUIManager`, others via the legacy `UIManagerModule`. This is why services depend on it rather than calling a UI manager directly — it keeps tag resolution arch-agnostic. View operations must run on the UI thread (`activity.runOnUiThread`).
-
-## Custom events (`events/`)
-
-`FocusChangeEvent` (`onFocusChange`), `KeyPressDownEvent` (`onKeyDownPress`), `KeyPressUpEvent` (`onKeyUpPress`) extend `Event<>` and are dispatched through `UIManagerHelper.getEventDispatcherForReactTag`. The manager exposes their JS prop names in `getExportedCustomDirectEventTypeConstants`. Adding a new event means: create the `Event` subclass, dispatch it, and register its `registrationName` in the manager.
-
-## Build config
-
-`gradle.properties` holds the defaults (`A11y_*`: minSdk 21, compile/target 31, ndk 21.4.x), each overridable by a root-project `ext` property of the same un-prefixed name. Java source/target is 1.8. Codegen library name is `A11y` with package `com.reactnativea11y` (set in `build.gradle` `react {}` and root `codegenConfig`). There is no standalone Gradle task here — the library is built as part of the example app or via the root `turbo build:android`.
+`gradle.properties` `A11y_*` defaults (minSdk 21, compile/target 31). Codegen
+`libraryName = "A11y"`, package `com.reactnativea11y` (build.gradle `react {}` +
+root `codegenConfig`). Built via the example app / `turbo build:android`.
