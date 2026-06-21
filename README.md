@@ -11,19 +11,6 @@ announcements (VoiceOver / TalkBack), physical (external) keyboard support, keyb
 status, and iOS accessibility containers, on iOS and Android. Everything ships under a single
 **`A11y.*`** namespace.
 
-It bundles the full feature set of four focused libraries into one self-contained package:
-
-| Bundled library | What it brings |
-| :-- | :-- |
-| [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order) | Screen reader focus **order** control & announcements |
-| [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard) | Using & implementing physical **keyboard** features |
-| [`react-native-is-keyboard-connected`](https://www.npmjs.com/package/react-native-is-keyboard-connected) | Listening for hardware **keyboard connection** |
-| [`react-native-a11y-container`](https://www.npmjs.com/package/react-native-a11y-container) | iOS `UIAccessibilityContainer` semantic grouping |
-
-Plus a built-in **optimistic values** workaround — an alternative to
-[`react-native-a11y-state-patch`](https://www.npmjs.com/package/react-native-a11y-state-patch) —
-that announces the predicted accessibility value the moment the user acts, instead of the stale one.
-
 - 🔢 **Screen reader focus order** — define the exact traversal sequence, independent of render order
 - 🃏 **Cards with inner buttons** — card action and nested controls, both accessible at once
 - 🔒 **Focus lock** — keep VoiceOver, TalkBack, *and* keyboard focus inside modals & overlays
@@ -36,6 +23,19 @@ that announces the predicted accessibility value the moment the user acts, inste
 - ✨ **Optimistic values** *(iOS)* — announce the predicted value the moment the user acts, not the stale one (a `react-native-a11y-state-patch` alternative)
 - 📡 **Runtime status hooks** — `useIsKeyboardConnected`, `useIsScreenReaderEnabled`
 - ⚡ New Architecture · Old Architecture · Bridgeless · Expo prebuild
+
+It bundles the full feature set of four focused libraries into one self-contained package:
+
+| Bundled library | What it brings |
+| :-- | :-- |
+| [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order) | Screen reader focus **order** control & announcements |
+| [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard) | Using & implementing physical **keyboard** features |
+| [`react-native-is-keyboard-connected`](https://www.npmjs.com/package/react-native-is-keyboard-connected) | Listening for hardware **keyboard connection** |
+| [`react-native-a11y-container`](https://www.npmjs.com/package/react-native-a11y-container) | iOS `UIAccessibilityContainer` semantic grouping |
+
+Plus a built-in **optimistic values** workaround — an alternative to
+[`react-native-a11y-state-patch`](https://www.npmjs.com/package/react-native-a11y-state-patch) —
+that announces the predicted accessibility value the moment the user acts, instead of the stale one.
 
 > [!IMPORTANT]
 > **This package re-merges the focused libraries into one.** `react-native-a11y` was
