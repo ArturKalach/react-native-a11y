@@ -190,10 +190,25 @@ migrate to the canonical names:
 | `K.Input` | `A11y.Input` | `K.Input` *(deprecated)* |
 | `Focus.Frame` | `A11y.FocusFrame` | `Focus.Frame` *(deprecated)* |
 | `Focus.Trap` | `A11y.FocusTrap` | `Focus.Trap` *(deprecated)* |
-| `KeyboardExtendedInput` / `KeyboardFocusTextInput` | `A11y.Input` | `KeyboardFocusTextInput` *(deprecated)* |
+| `KeyboardFocusView` / `KeyboardExtendedView` | `A11y.View` (+ own focus state) or `A11y.Pressable` | `A11yKeyboardFocusView` + both old names *(deprecated)* |
+| `BaseKeyboardView` / `ExternalKeyboardView` / `KeyboardExtendedBaseView` | `A11y.View` | all three names *(deprecated)* |
+| `KeyboardFocusGroup` | `A11y.FocusGroup` | `KeyboardFocusGroup` *(deprecated)* |
+| `KeyboardExtendedInput` / `KeyboardFocusTextInput` | `A11y.Input` | both names *(deprecated)* |
+| `KeyboardExtendedPressable` | `A11y.Pressable` | `KeyboardExtendedPressable` *(deprecated)* |
 | `withKeyboardFocus` | `withKeyboardFocus` | unchanged |
 | `KeyboardOrderFocusGroup` | `KeyboardOrderFocusGroup` | unchanged |
 | `Keyboard` | `Keyboard` | unchanged |
+
+> [!NOTE]
+> The standalone component names above are re-exported by `react-native-a11y` as
+> deprecated aliases, so most code compiles after just swapping the package name and
+> import path. `KeyboardFocusView` / `KeyboardExtendedView` keep their full behavior —
+> `focusStyle`, `onPress` / `onLongPress`, `triggerCodes`, and `useIsViewFocused` — via
+> the kept `A11yKeyboardFocusView` component (the others are thin aliases of `A11y.View`).
+> The bare `Pressable` / `TextInput` exports from `react-native-external-keyboard` are
+> **not** re-exported (they shadow React Native's own components) — switch those to
+> `A11y.Pressable` / `A11y.Input` (or `KeyboardExtendedPressable` /
+> `KeyboardExtendedInput`).
 
 ```tsx
 // Before

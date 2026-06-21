@@ -39,6 +39,7 @@ describe('react-native-a11y public API (Step 2)', () => {
       'PaneTitle',
       'ScreenChange',
       'FocusGroup',
+      'KeyboardFocusView',
     ];
     expect(Object.keys(A11y).sort()).toEqual(expected.sort());
     // every namespace entry is a renderable component

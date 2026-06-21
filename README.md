@@ -6,9 +6,23 @@
   <img align="right" width="35%" src="/.github/images/react-native-a11y-example.gif" alt="Demo of a React Native app driven TalkBack focus order and a physical keyboard">
 </div>
 
-Native-first React Native accessibility toolkit for **both** screen reader focus order &
-announcements (VoiceOver / TalkBack) **and** physical (external) keyboard support — on iOS
-and Android. Everything ships under a single **`A11y.*`** namespace.
+Native-first, **all-in-one** React Native accessibility toolkit — screen reader focus order &
+announcements (VoiceOver / TalkBack), physical (external) keyboard support, keyboard-connection
+status, and iOS accessibility containers, on iOS and Android. Everything ships under a single
+**`A11y.*`** namespace.
+
+It bundles the full feature set of four focused libraries into one self-contained package:
+
+| Bundled library | What it brings |
+| :-- | :-- |
+| [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order) | Screen reader focus **order** control & announcements |
+| [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard) | Using & implementing physical **keyboard** features |
+| [`react-native-is-keyboard-connected`](https://www.npmjs.com/package/react-native-is-keyboard-connected) | Listening for hardware **keyboard connection** |
+| [`react-native-a11y-container`](https://www.npmjs.com/package/react-native-a11y-container) | iOS `UIAccessibilityContainer` semantic grouping |
+
+Plus a built-in **optimistic values** workaround — an alternative to
+[`react-native-a11y-state-patch`](https://www.npmjs.com/package/react-native-a11y-state-patch) —
+that announces the predicted accessibility value the moment the user acts, instead of the stale one.
 
 - 🔢 **Screen reader focus order** — define the exact traversal sequence, independent of render order
 - 🃏 **Cards with inner buttons** — card action and nested controls, both accessible at once
@@ -17,23 +31,26 @@ and Android. Everything ships under a single **`A11y.*`** namespace.
 - 🎯 **Keyboard focus management** — focus/blur events, `autoFocus`, imperative focus via `ref`
 - ⌨️ **Key press events** — handle key-down / key-up with full modifier info
 - 🎨 **Native focus styling** — iOS halo & `tintColor`, Android focus highlight
-- ✨ **Optimistic values** *(iOS)* — announce the predicted value the moment the user acts, not the stale one
+- 📦 **iOS accessibility containers** — `UIAccessibilityContainer` semantic grouping via `a11yUIContainer`
+- 🔌 **Keyboard connection status** — listen for hardware keyboard connect/disconnect with `useIsKeyboardConnected`
+- ✨ **Optimistic values** *(iOS)* — announce the predicted value the moment the user acts, not the stale one (a `react-native-a11y-state-patch` alternative)
 - 📡 **Runtime status hooks** — `useIsKeyboardConnected`, `useIsScreenReaderEnabled`
 - ⚡ New Architecture · Old Architecture · Bridgeless · Expo prebuild
 
 > [!IMPORTANT]
-> **This package re-merges two focused libraries into one.** `react-native-a11y` was
+> **This package re-merges the focused libraries into one.** `react-native-a11y` was
 > originally split — for easier development and support — into
-> [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order)
-> (screen reader) and
-> [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard)
-> (physical keyboard). Both are now mature, and this package recombines them under one
-> unified `A11y.*` namespace. See [The rework](#the-rework) below.
+> [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order),
+> [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard),
+> [`react-native-is-keyboard-connected`](https://www.npmjs.com/package/react-native-is-keyboard-connected),
+> and [`react-native-a11y-container`](https://www.npmjs.com/package/react-native-a11y-container).
+> They are now mature, and this package recombines all of them — plus the optimistic-values
+> workaround — under one unified `A11y.*` namespace. See [The rework](#the-rework) below.
 
 > [!TIP]
-> All three packages stay published and are **mutually exclusive** — install exactly one.
-> Use `react-native-a11y` when you want **both** capabilities; use a split package if you
-> only need one.
+> The focused packages stay published and are **mutually exclusive** — install exactly one.
+> Use `react-native-a11y` for the **complete** toolkit; reach for a single focused package
+> only if you need just that one capability.
 
 </br>
 
@@ -166,28 +183,37 @@ then follow a task-focused guide. The [full docs index](./docs/README.md) links 
 
 ## The rework
 
-The original all-in-one `react-native-a11y` (0.7.0) was **split** into two focused
+The original all-in-one `react-native-a11y` (0.7.0) was **split** into focused
 packages to make each capability easier to develop, test, and support:
 
 - [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order) — screen reader focus order & announcements
 - [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard) — physical keyboard support
+- [`react-native-is-keyboard-connected`](https://www.npmjs.com/package/react-native-is-keyboard-connected) — hardware keyboard connection status
+- [`react-native-a11y-container`](https://www.npmjs.com/package/react-native-a11y-container) — iOS `UIAccessibilityContainer` grouping
 
-Feature work on both is now complete, and they are **recombined here** into a single,
-self-contained `react-native-a11y` — rebuilt fresh from the two modern packages (whose
-native bridges are newer than the legacy 0.7.0 code), not patched on top of the old one.
+Feature work on all of them is now complete, and they are **recombined here** into a single,
+self-contained `react-native-a11y` — rebuilt fresh from the modern packages (whose native
+bridges are newer than the legacy 0.7.0 code), not patched on top of the old one. It also
+folds in an **optimistic-values** workaround as an alternative to
+[`react-native-a11y-state-patch`](https://www.npmjs.com/package/react-native-a11y-state-patch).
 
 What this means for you:
 
 - **One unified namespace.** A single `A11y.View` / `A11y.Pressable` / `A11y.Input` takes
   both screen-reader and keyboard props; each capability is opt-in. A single
   `A11y.FocusTrap` / `A11y.FocusFrame` confines screen-reader **and** keyboard focus.
-- **Self-contained.** No runtime dependency on the two split packages — install only
+- **Everything in one place.** Screen-reader order, keyboard support, keyboard-connection
+  status, iOS accessibility containers, and optimistic value announcements — no need to
+  combine multiple libraries by hand.
+- **Self-contained.** No runtime dependency on the split packages — install only
   `react-native-a11y`.
 - **Migration shim.** The imperative 0.7 focus-order API lives under
   [`Legacy.*`](./docs/api/legacy.md) for a near drop-in upgrade.
 
-Coming from 0.7, `react-native-a11y-order`, or `react-native-external-keyboard`? Each path
-has its own section in the [migration guide](./docs/migration/migration.md).
+Coming from 0.7 or any of the focused packages
+(`react-native-a11y-order`, `react-native-external-keyboard`,
+`react-native-is-keyboard-connected`, `react-native-a11y-container`)? Each path has its own
+section in the [migration guide](./docs/migration/migration.md).
 
 ---
 
@@ -198,12 +224,13 @@ share ideas — see the [contributing guide](CONTRIBUTING.md) for the developmen
 
 ## Acknowledgements
 
-This library stands on the work behind both source packages. Thanks to the initial
+This library stands on the work behind all of its source packages. Thanks to the initial
 authors [Andrii Koval](https://github.com/ZioVio),
 [Michail Chavkin](https://github.com/mchavkin), and
 [Dzmitry Khamitsevich](https://github.com/bulletxenus), and to everyone who contributed,
-reported issues, and followed along across `react-native-a11y-order` and
-`react-native-external-keyboard`.
+reported issues, and followed along across `react-native-a11y-order`,
+`react-native-external-keyboard`, `react-native-is-keyboard-connected`, and
+`react-native-a11y-container`.
 
 ## License
 
