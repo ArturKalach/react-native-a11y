@@ -17,6 +17,13 @@
 
 void RCA11ySwizzleInstanceMethod(Class swizzleClass, SEL originalSelector, SEL swizzledSelector);
 
+// Same as RCA11ySwizzleInstanceMethod, but a no-op when `originalSelector` is not
+// implemented anywhere in `swizzleClass`'s hierarchy. Swizzling a missing original
+// would leave the renamed selector pointing at a NULL IMP and crash when called —
+// guard the optionally-present methods (e.g. the informal UIAccessibilityAction
+// `accessibilityIncrement`/`accessibilityDecrement`) with this variant.
+void RCA11ySwizzleInstanceMethodIfPresent(Class swizzleClass, SEL originalSelector, SEL swizzledSelector);
+
 #define RCA11y_CONCAT_INNER(a, b) a##b
 #define RCA11y_CONCAT(a, b) RCA11y_CONCAT_INNER(a, b)
 

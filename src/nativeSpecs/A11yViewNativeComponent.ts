@@ -72,6 +72,17 @@ export interface A11yViewNativeProps extends ViewProps {
   // Screen-reader
   /** iOS `shouldGroupAccessibilityChildren` (tri-state via Int32). */
   shouldGroupAccessibilityChildren?: Int32;
+
+  // Optimistic accessibility values (iOS only). Flattened from the JS
+  // `optimistic` object — the spec keeps scalar props, like `orderType`.
+  /** Announced as `accessibilityValue` after `accessibilityIncrement`. */
+  optimisticIncrease?: string;
+  /** Announced as `accessibilityValue` after `accessibilityDecrement`. */
+  optimisticDecrease?: string;
+  /** Announced as `accessibilityValue` after `accessibilityActivate`. */
+  optimisticActivate?: string;
+  /** Predicted next checked state, tri-state: 0 unset · 1 false · 2 true. */
+  optimisticState?: Int32;
   /** iOS `UIAccessibilityContainerType`. */
   containerType?: Int32;
   descendantFocusChangedEnabled?: boolean;

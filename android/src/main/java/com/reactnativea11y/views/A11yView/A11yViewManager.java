@@ -213,6 +213,28 @@ public class A11yViewManager extends A11yViewManagerSpec<A11yView> {
     // stub (iOS)
   }
 
+  // ─── Optimistic accessibility values (iOS only) ─────────────────────────────
+
+  @Override
+  public void setOptimisticIncrease(A11yView view, @Nullable String value) {
+    // stub (iOS)
+  }
+
+  @Override
+  public void setOptimisticDecrease(A11yView view, @Nullable String value) {
+    // stub (iOS)
+  }
+
+  @Override
+  public void setOptimisticActivate(A11yView view, @Nullable String value) {
+    // stub (iOS)
+  }
+
+  @Override
+  public void setOptimisticState(A11yView view, int value) {
+    // stub (iOS)
+  }
+
   // ─── Keyboard directional lock + link order ─────────────────────────────────
 
   @Override

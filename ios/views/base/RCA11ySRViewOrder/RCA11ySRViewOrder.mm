@@ -29,7 +29,7 @@
 }
 
 - (void)prepareForRecycle {
-  [_a11yItemDelegate clear];
+  [_a11yItemDelegate prepareForRecycle];
   [super prepareForRecycle];
 }
 

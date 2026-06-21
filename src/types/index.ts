@@ -1,7 +1,7 @@
 /**
  * Shared public types for the unified package.
  *
- * `OrderType` / `FocusTarget` encode the locked rework decisions; the remaining
+ * `OrderType` / `ScreenReaderFocusTarget` encode the locked rework decisions; the remaining
  * modules are the keyboard/focus type layer ported from react-native-external-keyboard
  * (Step 2), retargeted at the merged `A11yView` native spec.
  */
@@ -15,16 +15,21 @@
 export type OrderType = 'auto' | 'keyboard' | 'screen-reader';
 
 /**
- * Which element inside the wrapper actually receives focus.
- * Replaces the legacy `A11yIndex.orderType` (`default|child|subview`) and absorbs
- * the keyboard `focusableWrapper` boolean.
- * - `'self'`    — the wrapper view itself (was `'default'`)
- * - `'child'`   — the first accessible descendant
- * - `'subview'` — the first direct child view
+ * Which element the **screen reader** treats as this view's focus / traversal
+ * node. Drives the SR order target only (the keyboard side has its own
+ * `focusableWrapper`).
+ * - `'self'`           — the view itself (default)
+ * - `'firstAccessible'`— the first accessible descendant, searched depth-first.
+ *   This is the default for wrapper components (see `focusableWrapper`).
+ * - `'child'`          — the first direct child view, no deep search (legacy
+ *   "subview" behavior)
  */
-export type FocusTarget = 'self' | 'child' | 'subview';
+export type ScreenReaderFocusTarget = 'self' | 'firstAccessible' | 'child';
 
-/** @deprecated Use {@link FocusTarget}. Kept as an alias for migration. */
+/** @deprecated Use {@link ScreenReaderFocusTarget}. */
+export type FocusTarget = ScreenReaderFocusTarget;
+
+/** @deprecated Use {@link ScreenReaderFocusTarget}. Kept as an alias for migration. */
 export type A11yOrderType = 'default' | 'child' | 'subview';
 
 // ─── Ported keyboard/focus type layer ───────────────────────────────────────
@@ -48,6 +53,7 @@ export type {
   BaseFocusViewProps,
   BaseKeyboardViewProps,
 } from './baseKeyboardView.types';
+export type { A11yOptimisticConfig } from './optimistic.types';
 export type {
   FocusViewProps,
   KeyboardFocusViewProps,

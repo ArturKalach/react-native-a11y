@@ -28,6 +28,12 @@
 - (void)prepareForRecycle {
   [super prepareForRecycle];
   [_viewDelegate prepareForRecycle];
+  // Drop the global focus subscription and forget the flag so reuse re-evaluates
+  // it from props (and re-subscribes via setDescendantFocusChangedEnabled /
+  // didMoveToSuperview). Recycled views may stay in the pool without a
+  // removeFromSuperview, so don't rely on that to unsubscribe.
+  [[RCA11yFocusService sharedService] unsubscribe:self];
+  _descendantFocusChangedEnabled = NO;
 }
 
 - (void)finalizeUpdates:(RNComponentViewUpdateMask)updateMask {

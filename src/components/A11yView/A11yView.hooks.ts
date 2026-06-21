@@ -1,7 +1,10 @@
 import React, { useContext, useMemo } from 'react';
 import { useKeyPressContext } from '../../context/BubbledKeyPressContext';
 import { A11ySequenceOrderContext } from '../../context/A11ySequenceOrderContext';
-import type { FocusTarget } from '../../types';
+import type {
+  A11yOptimisticConfig,
+  ScreenReaderFocusTarget,
+} from '../../types';
 import type { ScreenReaderCallbacks } from './A11yView.types';
 
 const bubbleStub = () => {};
@@ -85,20 +88,39 @@ export const useSequenceOrderKey = (index: number | undefined) => {
   return { orderKey, hasOrderInfo };
 };
 
-const FOCUS_TARGET_VALUE: Record<FocusTarget, number> = {
+// Native focusTarget Int32: 0 self · 1 first-accessible (deep) · 2 first child (shallow).
+const FOCUS_TARGET_VALUE: Record<ScreenReaderFocusTarget, number> = {
   self: 0,
-  child: 1,
-  subview: 2,
+  firstAccessible: 1,
+  child: 2,
 };
 
 /**
- * Resolves the `focusTarget` Int32 for native. Honors the deprecated
- * `focusableWrapper` boolean (a transparent wrapper ⇒ focus a child).
+ * Resolves the native `focusTarget` Int32. When `screenReaderFocusTarget` is
+ * unset, a keyboard `focusableWrapper` makes the view a transparent wrapper, so
+ * the SR target falls back to the first accessible descendant.
  */
 export const resolveFocusTarget = (
-  focusTarget: FocusTarget | undefined,
+  screenReaderFocusTarget: ScreenReaderFocusTarget | undefined,
   focusableWrapper: boolean | undefined
 ): number | undefined => {
-  const resolved = focusTarget ?? (focusableWrapper ? 'child' : undefined);
+  const resolved =
+    screenReaderFocusTarget ??
+    (focusableWrapper ? 'firstAccessible' : undefined);
   return resolved ? FOCUS_TARGET_VALUE[resolved] : undefined;
 };
+
+/**
+ * Flattens the iOS-only `optimistic` object into the scalar native props
+ * (`A11yViewNativeComponent`). `state` becomes a tri-state Int32 so an unset
+ * value (0) is distinguishable from an explicit `false` (1).
+ */
+export const resolveOptimisticProps = (
+  optimistic: A11yOptimisticConfig | undefined
+) => ({
+  optimisticIncrease: optimistic?.increase,
+  optimisticDecrease: optimistic?.decrease,
+  optimisticActivate: optimistic?.activate,
+  optimisticState:
+    optimistic?.state === undefined ? 0 : optimistic.state ? 2 : 1,
+});

@@ -59,6 +59,7 @@ export const withKeyboardFocus = <
         screenAutoA11yFocusDelay,
         lockFocus,
         defaultFocusHighlightEnabled,
+        optimistic,
         androidKeyboardPressState,
         orderIndex,
         orderGroup,
@@ -168,6 +169,7 @@ export const withKeyboardFocus = <
             screenAutoA11yFocusDelay={screenAutoA11yFocusDelay}
             lockFocus={lockFocus}
             roundedHaloFix={roundedHaloFix}
+            optimistic={optimistic}
             orderIndex={orderIndex}
             orderGroup={orderGroup}
             orderId={orderId}

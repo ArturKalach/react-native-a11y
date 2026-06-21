@@ -22,3 +22,12 @@ void RCA11ySwizzleInstanceMethod(Class swizzleClass, SEL originalSelector, SEL s
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }
 }
+
+void RCA11ySwizzleInstanceMethodIfPresent(Class swizzleClass, SEL originalSelector, SEL swizzledSelector) {
+    // Only swizzle when a real IMP exists (directly or inherited): otherwise the
+    // swizzle would install our method over a missing implementation and leave the
+    // renamed selector pointing at nothing.
+    if (class_getInstanceMethod(swizzleClass, originalSelector)) {
+        RCA11ySwizzleInstanceMethod(swizzleClass, originalSelector, swizzledSelector);
+    }
+}

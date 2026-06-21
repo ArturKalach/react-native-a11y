@@ -21,6 +21,7 @@ import {
   useScreenReaderProps,
   useSequenceOrderKey,
   resolveFocusTarget,
+  resolveOptimisticProps,
 } from './A11yView.hooks';
 import {
   type A11yViewProps,
@@ -73,7 +74,7 @@ export const A11yView = React.memo(
         enableA11yFocus: _enableA11yFocus,
         // Order (shared + links)
         orderType,
-        focusTarget,
+        screenReaderFocusTarget,
         index,
         orderIndex,
         orderGroup,
@@ -90,6 +91,7 @@ export const A11yView = React.memo(
         // Screen reader
         a11yUIContainer,
         shouldGroupAccessibilityChildren,
+        optimistic,
         onScreenReaderFocused,
         onScreenReaderSubViewFocusChange,
         onScreenReaderSubViewFocused,
@@ -212,8 +214,13 @@ export const A11yView = React.memo(
           : 0;
 
       const focusTargetValue = resolveFocusTarget(
-        focusTarget,
+        screenReaderFocusTarget,
         focusableWrapper
+      );
+
+      const optimisticProps = useMemo(
+        () => (isIOS ? resolveOptimisticProps(optimistic) : undefined),
+        [optimistic]
       );
 
       // When this view sits inside an `A11y.Order` and is itself the focus
@@ -263,13 +270,19 @@ export const A11yView = React.memo(
             orderType={orderType ? ORDER_TYPE_VALUE[orderType] : undefined}
             orderIndex={resolvedIndex ?? -1}
             orderGroup={groupId}
-            orderKey={orderKey}
+            // Only forward the SR sequence key for an actual positional item. A
+            // plain view inside a KeyboardOrderFocusGroup inherits the group's
+            // orderKey from context but has no index; sending the key would make
+            // it register (and collide) as an SR-ordered item. Native guards this
+            // too (orderIndex < 0) — this is defense-in-depth.
+            orderKey={resolvedIndex !== undefined ? orderKey : undefined}
             focusTarget={focusTargetValue}
             importantForAccessibility={importantForAccessibility}
             {...wrappedOrderProps}
             // Screen reader
             containerType={containerTypeValue}
             shouldGroupAccessibilityChildren={shouldGroupChildrenValue}
+            {...optimisticProps}
             {...screenReaderNativeProps}
           />
         </KeyPressContext.Provider>

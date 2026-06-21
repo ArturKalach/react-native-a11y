@@ -189,6 +189,18 @@ public class A11yTextInputWrapper extends FocusHighlightBase implements View.OnF
       }
       if (!hasTextEditFocus) {
         updateFocusability();
+        // Once the focus change settles, dismiss the IME unless focus landed on a
+        // field that edits immediately (another text input). Posted so the
+        // destination — reached via Tab, arrows, or the press/pre-0.79 transfer into
+        // the next EditText — is in place when we check. Catches every navigation
+        // path uniformly, where a focusSearch-time check would miss the arrows.
+        post(() -> {
+          View root = getRootView();
+          View current = root != null ? root.findFocus() : null;
+          if (!destinationKeepsKeyboard(current)) {
+            hideSoftKeyboard(textInput);
+          }
+        });
         if (focusType == FOCUS_BY_PRESS) {
           // Tab/Shift+Tab/arrows blur the EditText as part of moving focus to
           // another view — leave it there. Otherwise edit mode was exited in
@@ -289,6 +301,15 @@ public class A11yTextInputWrapper extends FocusHighlightBase implements View.OnF
         || keyCode == KeyEvent.KEYCODE_ENTER;
   }
 
+  // Keys that move keyboard focus to another field (Tab/Shift+Tab and the arrows).
+  private boolean isNavigationKey(int keyCode) {
+    return keyCode == KeyEvent.KEYCODE_TAB
+        || keyCode == KeyEvent.KEYCODE_DPAD_UP
+        || keyCode == KeyEvent.KEYCODE_DPAD_DOWN
+        || keyCode == KeyEvent.KEYCODE_DPAD_LEFT
+        || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT;
+  }
+
   // --- Touch handling ---
 
   @Override
@@ -332,13 +353,6 @@ public class A11yTextInputWrapper extends FocusHighlightBase implements View.OnF
     if (focusType == FOCUS_BY_PRESS) {
       navigatingAway = true;
       post(() -> navigatingAway = false);
-      // Dismiss the IME up front (only when there's actually somewhere to go) so it
-      // hides together with the focus move instead of flashing after the blur. The
-      // destination is an idle wrapper, not an edit field, and Android won't auto-
-      // hide the keyboard when focus leaves an EditText for a plain focusable View.
-      if (next != null && next != focused && this.reactEditText != null) {
-        hideSoftKeyboard(this.reactEditText);
-      }
     }
     return next;
   }
@@ -370,6 +384,15 @@ public class A11yTextInputWrapper extends FocusHighlightBase implements View.OnF
         consumeActivationEnterUp = false;
         return true;
       }
+      // FOCUS_BY_PRESS: a navigation key while editing is about to hand focus to
+      // another field. This listener runs *before* the EditText processes the key
+      // (and blurs), so flag it here — the blur handler then leaves focus on the
+      // destination instead of pulling it back and refocusing the field we left.
+      if (focusType == FOCUS_BY_PRESS && event.getAction() == KeyEvent.ACTION_DOWN
+          && isNavigationKey(keyCode)) {
+        navigatingAway = true;
+        post(() -> navigatingAway = false);
+      }
       if (this.multiline && event.getAction() == KeyEvent.ACTION_DOWN
           && keyCode == KeyEvent.KEYCODE_ENTER && !event.isShiftPressed()) {
         Editable editableText = reactEditText.getText();
@@ -382,6 +405,21 @@ public class A11yTextInputWrapper extends FocusHighlightBase implements View.OnF
       }
       return false;
     });
+  }
+
+  // True when keyboard focus landing on `view` should keep the IME up — i.e. the
+  // destination is a field that starts editing on focus:
+  //   • a ReactEditText (the focus target in 0.79+ default/auto), or
+  //   • a non-press A11yTextInputWrapper. Pre-0.79 (and any wrapper-as-target case)
+  //     the wrapper takes focus but transfers straight into edit mode, so the
+  //     keyboard stays; a press wrapper takes focus in its idle state → hide.
+  // Anything else (a button, a plain view, or no focus at all) → hide.
+  private boolean destinationKeepsKeyboard(View view) {
+    if (view instanceof ReactEditText) return true;
+    if (view instanceof A11yTextInputWrapper) {
+      return ((A11yTextInputWrapper) view).focusType != FOCUS_BY_PRESS;
+    }
+    return false;
   }
 
   private void hideSoftKeyboard(View view) {

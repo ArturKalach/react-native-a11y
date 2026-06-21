@@ -20,10 +20,10 @@
 #define RCA11yView_h
 
 #import <UIKit/UIKit.h>
-#import "RCA11ySRViewOrder.h"
+#import "RCA11yOptimisticBase.h"
 #import "RCA11yKeyboardFocusableProtocol.h"
 
-@interface RCA11yView : RCA11ySRViewOrder <RCA11yKeyboardFocusableProtocol>
+@interface RCA11yView : RCA11yOptimisticBase <RCA11yKeyboardFocusableProtocol>
 
 // Keyboard wrapper flag — derived from `focusTarget` (≠ self ⇒ wrapper). Overrides
 // the base's constant `-focusableWrapper`.
