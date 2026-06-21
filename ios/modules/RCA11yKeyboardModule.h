@@ -14,7 +14,7 @@
 #ifdef RCT_NEW_ARCH_ENABLED
 #import <RNA11ySpec/RNA11ySpec.h>
 
-@interface RCA11yKeyboardModule : NSObject <NativeA11yKeyboardModuleSpec>
+@interface RCA11yKeyboardModule : NSObject <NativeRCA11yKeyboardModuleSpec>
 
 #else
 

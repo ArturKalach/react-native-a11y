@@ -10,4 +10,4 @@ export interface Spec extends TurboModule {
   setPreferredKeyboardFocus: (nativeTag: number) => void;
 }
 
-export default TurboModuleRegistry.get<Spec>('A11yKeyboardModule');
+export default TurboModuleRegistry.get<Spec>('RCA11yKeyboardModule');

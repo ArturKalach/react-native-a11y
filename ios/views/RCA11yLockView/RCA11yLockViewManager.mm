@@ -13,7 +13,7 @@
 
 @implementation RCA11yLockViewManager
 
-RCT_EXPORT_MODULE(A11yLock)
+RCT_EXPORT_MODULE(RCA11yLock)
 
 - (UIView *)view
 {

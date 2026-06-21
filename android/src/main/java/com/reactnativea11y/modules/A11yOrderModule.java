@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * ignored it too).
  */
 public class A11yOrderModule extends A11yOrderModuleSpec {
-  public static final String NAME = "A11yOrderModule";
+  public static final String NAME = "RCA11yOrderModule";
 
   public A11yOrderModule(ReactApplicationContext reactContext) {
     super(reactContext);

@@ -71,13 +71,13 @@ using namespace facebook::react;
 #ifdef RCT_NEW_ARCH_ENABLED
 + (ComponentDescriptorProvider)componentDescriptorProvider
 {
-    return concreteComponentDescriptorProvider<A11yOrderComponentDescriptor>();
+    return concreteComponentDescriptorProvider<RCA11yOrderComponentDescriptor>();
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        static const auto defaultProps = std::make_shared<const A11yOrderProps>();
+        static const auto defaultProps = std::make_shared<const RCA11yOrderProps>();
         _props = defaultProps;
     }
 
@@ -86,8 +86,8 @@ using namespace facebook::react;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<A11yOrderProps const>(_props);
-    const auto &newViewProps = *std::static_pointer_cast<A11yOrderProps const>(props);
+    const auto &oldViewProps = *std::static_pointer_cast<RCA11yOrderProps const>(_props);
+    const auto &newViewProps = *std::static_pointer_cast<RCA11yOrderProps const>(props);
     [super updateProps:props oldProps:oldProps];
 
     if(oldViewProps.orderKey != newViewProps.orderKey) {
@@ -95,7 +95,7 @@ using namespace facebook::react;
          }
 }
 
-Class<RCTComponentViewProtocol> A11yOrderCls(void)
+Class<RCTComponentViewProtocol> RCA11yOrderCls(void)
 {
     return RCA11yOrderView.class;
 }

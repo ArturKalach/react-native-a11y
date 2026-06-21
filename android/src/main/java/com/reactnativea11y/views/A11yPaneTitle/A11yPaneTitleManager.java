@@ -9,7 +9,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 @ReactModule(name = A11yPaneTitleManager.NAME)
 public class A11yPaneTitleManager extends A11yPaneTitleManagerSpec<A11yPaneTitle> {
-  public static final String NAME = "A11yPaneTitle";
+  public static final String NAME = "RCA11yPaneTitle";
 
   @Override
   public String getName() {

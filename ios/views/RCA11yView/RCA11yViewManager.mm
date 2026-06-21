@@ -11,7 +11,7 @@
 
 @implementation RCA11yViewManager
 
-RCT_EXPORT_MODULE(A11yView)
+RCT_EXPORT_MODULE(RCA11yView)
 
 - (UIView *)view
 {

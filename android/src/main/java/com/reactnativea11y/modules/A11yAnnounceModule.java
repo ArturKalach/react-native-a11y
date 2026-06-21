@@ -10,7 +10,7 @@ import com.facebook.react.bridge.ReadableMap;
 
 public class A11yAnnounceModule extends A11yAnnounceModuleSpec {
 
-  public static final String NAME = "A11yAnnounceModule";
+  public static final String NAME = "RCA11yAnnounceModule";
 
   public A11yAnnounceModule(ReactApplicationContext reactContext) {
     super(reactContext);

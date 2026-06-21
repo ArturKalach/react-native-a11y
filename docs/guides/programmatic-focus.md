@@ -112,6 +112,7 @@ const componentRef = useRef<View>(null);
 
 - [Pressable focus handling](./pressable-focus.md) — focus/blur events and styling
 - [API reference → Imperative ref](../api/overview.md#imperative-ref-keyboardfocus)
+- [Advanced: native focus services](./native-focus-services.md) — drive focus from your own native code
 
 ---
 

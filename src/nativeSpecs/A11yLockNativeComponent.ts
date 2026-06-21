@@ -17,4 +17,6 @@ export interface A11yLockNativeComponentProps extends ViewProps {
   forceLock?: boolean;
 }
 
-export default codegenNativeComponent<A11yLockNativeComponentProps>('A11yLock');
+export default codegenNativeComponent<A11yLockNativeComponentProps>(
+  'RCA11yLock'
+);

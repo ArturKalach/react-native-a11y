@@ -31,7 +31,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 public class A11yKeyboardConnectedModule extends A11yKeyboardConnectedModuleSpec implements LifecycleEventListener {
   public static final String KEYBOARD_STATUS_EVENT = "keyboardStatus";
   public static final String EVENT_PROP = "status";
-  public static final String NAME = "A11yKeyboardConnectedModule";
+  public static final String NAME = "RCA11yKeyboardConnectedModule";
 
   private final ReactApplicationContext reactContext;
   private final BroadcastReceiver receiver;

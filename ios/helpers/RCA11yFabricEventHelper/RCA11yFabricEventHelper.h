@@ -5,7 +5,7 @@
 //  Merged Fabric event emitter helper — unifies react-native-a11y-order's
 //  RNAOFabricEventHelper (screen-reader events) and react-native-external-keyboard's
 //  RNCEKVFabricEventHelper (keyboard + key-press events). All events are emitted on
-//  the single merged `A11yViewEventEmitter` (codegen spec RNA11ySpec).
+//  the single merged `RCA11yViewEventEmitter` (codegen spec RNA11ySpec).
 //
 
 #ifdef RCT_NEW_ARCH_ENABLED

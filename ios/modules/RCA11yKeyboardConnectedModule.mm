@@ -76,7 +76,7 @@ NSString *const RCA11yKeyboardStatusProp = @"status";
   }
 }
 
-RCT_EXPORT_MODULE(A11yKeyboardConnectedModule);
+RCT_EXPORT_MODULE(RCA11yKeyboardConnectedModule);
 
 RCT_EXPORT_METHOD(isKeyboardConnected:(RCTPromiseResolveBlock)resolve
                               reject:(RCTPromiseRejectBlock)reject)
@@ -100,7 +100,7 @@ RCT_EXPORT_METHOD(isKeyboardConnected:(RCTPromiseResolveBlock)resolve
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-  return std::make_shared<facebook::react::NativeA11yKeyboardConnectedModuleSpecJSI>(params);
+  return std::make_shared<facebook::react::NativeRCA11yKeyboardConnectedModuleSpecJSI>(params);
 }
 #endif
 

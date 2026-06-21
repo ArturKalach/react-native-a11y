@@ -9,7 +9,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 @ReactModule(name = A11yLockViewManager.NAME)
 public class A11yLockViewManager extends A11yLockManagerSpec<A11yLockView> {
-  public static final String NAME = "A11yLock";
+  public static final String NAME = "RCA11yLock";
 
   @Override
   public String getName() {

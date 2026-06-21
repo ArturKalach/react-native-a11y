@@ -12,7 +12,7 @@
 #ifdef RCT_NEW_ARCH_ENABLED
 #import <RNA11ySpec/RNA11ySpec.h>
 
-@interface RCA11yKeyboardConnectedModule : RCTEventEmitter <NativeA11yKeyboardConnectedModuleSpec>
+@interface RCA11yKeyboardConnectedModule : RCTEventEmitter <NativeRCA11yKeyboardConnectedModuleSpec>
 #else
 #import <React/RCTBridgeModule.h>
 

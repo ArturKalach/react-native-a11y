@@ -14,7 +14,7 @@ const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
 const KeyboardConnectedNative = isTurboModuleEnabled
   ? NativeA11yKeyboardConnectedModule
-  : NativeModules.A11yKeyboardConnectedModule;
+  : NativeModules.RCA11yKeyboardConnectedModule;
 
 const KeyboardConnected: NonNullable<typeof NativeA11yKeyboardConnectedModule> =
   KeyboardConnectedNative ??

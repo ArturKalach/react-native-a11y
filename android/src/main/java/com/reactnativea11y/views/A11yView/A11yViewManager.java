@@ -29,7 +29,7 @@ import com.facebook.react.views.view.ReactViewGroup;
 @ReactModule(name = A11yViewManager.NAME)
 public class A11yViewManager extends A11yViewManagerSpec<A11yView> {
 
-  public static final String NAME = "A11yView";
+  public static final String NAME = "RCA11yView";
 
   @NonNull
   @Override

@@ -32,7 +32,7 @@ using namespace facebook::react;
     if (self = [super initWithFrame:frame]) {
         _isGroupFocused = false;
 #ifdef RCT_NEW_ARCH_ENABLED
-        static const auto defaultProps = std::make_shared<const A11yFocusGroupProps>();
+        static const auto defaultProps = std::make_shared<const RCA11yFocusGroupProps>();
         _props = defaultProps;
 #endif
     }
@@ -59,8 +59,8 @@ using namespace facebook::react;
 
 - (void)onFocusChangeHandler:(BOOL) isFocused {
     if (_eventEmitter) {
-        auto viewEventEmitter = std::static_pointer_cast<A11yFocusGroupEventEmitter const>(_eventEmitter);
-        facebook::react::A11yFocusGroupEventEmitter::OnGroupFocusChange data = {
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yFocusGroupEventEmitter const>(_eventEmitter);
+        facebook::react::RCA11yFocusGroupEventEmitter::OnGroupFocusChange data = {
             .isFocused = isFocused,
         };
         viewEventEmitter->onGroupFocusChange(data);
@@ -85,7 +85,7 @@ using namespace facebook::react;
 #ifdef RCT_NEW_ARCH_ENABLED
 + (ComponentDescriptorProvider)componentDescriptorProvider
 {
-    return concreteComponentDescriptorProvider<A11yFocusGroupComponentDescriptor>();
+    return concreteComponentDescriptorProvider<RCA11yFocusGroupComponentDescriptor>();
 }
 
 - (void)prepareForRecycle
@@ -97,8 +97,8 @@ using namespace facebook::react;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<A11yFocusGroupProps const>(_props);
-    const auto &newViewProps = *std::static_pointer_cast<A11yFocusGroupProps const>(props);
+    const auto &oldViewProps = *std::static_pointer_cast<RCA11yFocusGroupProps const>(_props);
+    const auto &newViewProps = *std::static_pointer_cast<RCA11yFocusGroupProps const>(props);
     [super updateProps:props oldProps:oldProps];
 
 
@@ -120,7 +120,7 @@ using namespace facebook::react;
     }
 }
 
-Class<RCTComponentViewProtocol> A11yFocusGroupCls(void)
+Class<RCTComponentViewProtocol> RCA11yFocusGroupCls(void)
 {
     return RCA11yFocusGroup.class;
 }

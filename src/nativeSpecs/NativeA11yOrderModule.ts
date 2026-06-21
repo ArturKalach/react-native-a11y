@@ -15,4 +15,4 @@ export interface Spec extends TurboModule {
   setA11yOrder: (viewTags: number[], containerTag: number) => void;
 }
 
-export default TurboModuleRegistry.get<Spec>('A11yOrderModule');
+export default TurboModuleRegistry.get<Spec>('RCA11yOrderModule');

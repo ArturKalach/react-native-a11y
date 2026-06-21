@@ -13,7 +13,7 @@
 
 RCT_EXPORT_VIEW_PROPERTY(onGroupFocusChange, RCTDirectEventBlock)
 
-RCT_EXPORT_MODULE(A11yFocusGroup)
+RCT_EXPORT_MODULE(RCA11yFocusGroup)
 
 - (UIView *)view
 {

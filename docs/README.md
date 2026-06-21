@@ -60,6 +60,12 @@ Task-focused walkthroughs. Read them in order, or jump to the one you need.
 | [Optimistic accessibility values](./guides/optimistic-state.md) | `optimistic` prop — announce the predicted value on iOS, not the stale one |
 | [Connection & runtime status](./guides/keyboard-connection-status.md) | `useIsKeyboardConnected` / `useIsScreenReaderEnabled` and their ref variants |
 
+**Advanced**
+
+| Guide | Covers |
+| :-- | :-- |
+| [Native focus services](./guides/native-focus-services.md) | Native-side `RCA11yKeyboardFocusService` / `RCA11yFocusMemoryService` for driving focus from your own native code |
+
 ---
 
 ## Components

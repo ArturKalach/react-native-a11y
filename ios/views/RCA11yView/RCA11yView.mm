@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
   if (self = [super initWithFrame:frame]) {
 #ifdef RCT_NEW_ARCH_ENABLED
     static const auto defaultProps =
-    std::make_shared<const A11yViewProps>();
+    std::make_shared<const RCA11yViewProps>();
     _props = defaultProps;
 #endif
   }
@@ -54,7 +54,7 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
 #ifdef RCT_NEW_ARCH_ENABLED
 + (ComponentDescriptorProvider)componentDescriptorProvider {
   return concreteComponentDescriptorProvider<
-  A11yViewComponentDescriptor>();
+  RCA11yViewComponentDescriptor>();
 }
 
 - (void)prepareForRecycle {
@@ -77,9 +77,9 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
 - (void)updateProps:(Props::Shared const &)props
            oldProps:(Props::Shared const &)oldProps {
   const auto &oldViewProps =
-  *std::static_pointer_cast<A11yViewProps const>(_props);
+  *std::static_pointer_cast<RCA11yViewProps const>(_props);
   const auto &newViewProps =
-  *std::static_pointer_cast<A11yViewProps const>(props);
+  *std::static_pointer_cast<RCA11yViewProps const>(props);
   [super updateProps:props oldProps:oldProps];
 
   NSInteger orderType = newViewProps.orderType;
@@ -157,7 +157,7 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
   }
 }
 
-Class<RCTComponentViewProtocol> A11yViewCls(void) {
+Class<RCTComponentViewProtocol> RCA11yViewCls(void) {
   return RCA11yView.class;
 }
 

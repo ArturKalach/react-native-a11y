@@ -61,10 +61,10 @@ using namespace facebook::react;
 }
 
 + (ComponentDescriptorProvider)componentDescriptorProvider {
-  return concreteComponentDescriptorProvider<A11yCardComponentDescriptor>();
+  return concreteComponentDescriptorProvider<RCA11yCardComponentDescriptor>();
 }
 
-Class<RCTComponentViewProtocol> A11yCardCls(void) {
+Class<RCTComponentViewProtocol> RCA11yCardCls(void) {
   return RCA11yCardView.class;
 }
 

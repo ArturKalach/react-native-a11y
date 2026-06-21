@@ -9,7 +9,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 
 @ReactModule(name = A11yFocusGroupManager.NAME)
 public class A11yFocusGroupManager extends A11yFocusGroupManagerSpec<A11yFocusGroup> {
-  public static final String NAME = "A11yFocusGroup";
+  public static final String NAME = "RCA11yFocusGroup";
 
   @Override
   public String getName() {

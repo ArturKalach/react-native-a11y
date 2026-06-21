@@ -5,4 +5,6 @@ import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNati
 /** Native card backing `A11y.Card` (iOS focusable overlay; Android is JS-only). */
 export interface A11yCardNativeComponentProps extends ViewProps {}
 
-export default codegenNativeComponent<A11yCardNativeComponentProps>('A11yCard');
+export default codegenNativeComponent<A11yCardNativeComponentProps>(
+  'RCA11yCard'
+);

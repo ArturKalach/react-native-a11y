@@ -52,7 +52,7 @@ static const NSInteger AUTO_BLUR = 2;
 {
     if (self = [super initWithFrame:frame]) {
 #ifdef RCT_NEW_ARCH_ENABLED
-        static const auto defaultProps = std::make_shared<const A11yTextInputWrapperProps>();
+        static const auto defaultProps = std::make_shared<const RCA11yTextInputWrapperProps>();
         _props = defaultProps;
 #endif
     }
@@ -64,7 +64,7 @@ static const NSInteger AUTO_BLUR = 2;
 #ifdef RCT_NEW_ARCH_ENABLED
 + (ComponentDescriptorProvider)componentDescriptorProvider
 {
-    return concreteComponentDescriptorProvider<A11yTextInputWrapperComponentDescriptor>();
+    return concreteComponentDescriptorProvider<RCA11yTextInputWrapperComponentDescriptor>();
 }
 
 - (void)prepareForRecycle
@@ -75,8 +75,8 @@ static const NSInteger AUTO_BLUR = 2;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<A11yTextInputWrapperProps const>(_props);
-    const auto &newViewProps = *std::static_pointer_cast<A11yTextInputWrapperProps const>(props);
+    const auto &oldViewProps = *std::static_pointer_cast<RCA11yTextInputWrapperProps const>(_props);
+    const auto &newViewProps = *std::static_pointer_cast<RCA11yTextInputWrapperProps const>(props);
     [super updateProps:props oldProps:oldProps];
 
     if(oldViewProps.focusType != newViewProps.focusType) {
@@ -115,7 +115,7 @@ static const NSInteger AUTO_BLUR = 2;
 
 }
 
-Class<RCTComponentViewProtocol> A11yTextInputWrapperCls(void)
+Class<RCTComponentViewProtocol> RCA11yTextInputWrapperCls(void)
 {
     return RCA11yTextInputWrapper.class;
 }
@@ -127,8 +127,8 @@ Class<RCTComponentViewProtocol> A11yTextInputWrapperCls(void)
 
 - (void)onFocusChangeHandler:(BOOL) isFocused {
     if (_eventEmitter) {
-        auto viewEventEmitter = std::static_pointer_cast<A11yTextInputWrapperEventEmitter const>(_eventEmitter);
-        facebook::react::A11yTextInputWrapperEventEmitter::OnFocusChange data = {
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yTextInputWrapperEventEmitter const>(_eventEmitter);
+        facebook::react::RCA11yTextInputWrapperEventEmitter::OnFocusChange data = {
             .isFocused = isFocused,
         };
         viewEventEmitter->onFocusChange(data);
@@ -138,8 +138,8 @@ Class<RCTComponentViewProtocol> A11yTextInputWrapperCls(void)
 - (void)onMultiplyTextSubmitHandler: (RCTUITextView*) textView {
     if (_eventEmitter) {
       NSString* text = textView != nil ? textView.attributedText.string : @"";
-        auto viewEventEmitter = std::static_pointer_cast<A11yTextInputWrapperEventEmitter const>(_eventEmitter);
-      facebook::react::A11yTextInputWrapperEventEmitter::OnMultiplyTextSubmit data = {
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yTextInputWrapperEventEmitter const>(_eventEmitter);
+      facebook::react::RCA11yTextInputWrapperEventEmitter::OnMultiplyTextSubmit data = {
         .text = [text UTF8String]
       };
         viewEventEmitter->onMultiplyTextSubmit(data);

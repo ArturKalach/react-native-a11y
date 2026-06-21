@@ -16,5 +16,5 @@ export interface A11yFocusGroupNativeComponentProps extends ViewProps {
 }
 
 export default codegenNativeComponent<A11yFocusGroupNativeComponentProps>(
-  'A11yFocusGroup'
+  'RCA11yFocusGroup'
 );

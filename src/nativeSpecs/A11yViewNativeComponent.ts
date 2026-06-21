@@ -147,4 +147,4 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
   supportedCommands: ['focus', 'keyboardFocus', 'screenReaderFocus'],
 });
 
-export default codegenNativeComponent<A11yViewNativeProps>('A11yView');
+export default codegenNativeComponent<A11yViewNativeProps>('RCA11yView');

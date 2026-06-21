@@ -13,7 +13,7 @@ import com.facebook.react.bridge.ReactMethod;
 import java.lang.ref.WeakReference;
 
 public class A11yKeyboardModule extends A11yKeyboardModuleSpec {
-  public static final String NAME = "A11yKeyboardModule";
+  public static final String NAME = "RCA11yKeyboardModule";
   private static WeakReference<View> focusedViewRef = new WeakReference<>(null);
 
   private boolean dismiss() {

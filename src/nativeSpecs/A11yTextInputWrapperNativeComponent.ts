@@ -47,5 +47,5 @@ export interface A11yTextInputWrapperNativeComponentProps extends ViewProps {
 }
 
 export default codegenNativeComponent<A11yTextInputWrapperNativeComponentProps>(
-  'A11yTextInputWrapper'
+  'RCA11yTextInputWrapper'
 );

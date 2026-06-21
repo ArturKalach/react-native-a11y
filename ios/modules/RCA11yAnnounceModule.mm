@@ -49,7 +49,7 @@ using namespace facebook::react;
 
 + (BOOL)requiresMainQueueSetup { return YES; }
 
-RCT_EXPORT_MODULE(A11yAnnounceModule);
+RCT_EXPORT_MODULE(RCA11yAnnounceModule);
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -137,7 +137,7 @@ RCT_EXPORT_MODULE(A11yAnnounceModule);
 #ifdef RCT_NEW_ARCH_ENABLED
 
 - (void)announce:(NSString *)message
-         options:(JS::NativeA11yAnnounceModule::AnnounceOptions &)options
+         options:(JS::NativeRCA11yAnnounceModule::AnnounceOptions &)options
          resolve:(RCTPromiseResolveBlock)resolve
           reject:(RCTPromiseRejectBlock)reject
 {
@@ -239,7 +239,7 @@ RCT_EXPORT_METHOD(cancelAll:(RCTPromiseResolveBlock)resolve
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-    return std::make_shared<facebook::react::NativeA11yAnnounceModuleSpecJSI>(params);
+    return std::make_shared<facebook::react::NativeRCA11yAnnounceModuleSpecJSI>(params);
 }
 #endif
 

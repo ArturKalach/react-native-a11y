@@ -12,7 +12,7 @@
 
 @implementation RCA11yOrderViewManager
 
-RCT_EXPORT_MODULE(A11yOrder)
+RCT_EXPORT_MODULE(RCA11yOrder)
 
 - (UIView *)view
 {
