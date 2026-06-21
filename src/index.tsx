@@ -71,7 +71,7 @@ export {
 
 // ─── Public types ───────────────────────────────────────────────────────────
 export * from './types';
-export type { KeyPress } from './nativeSpecs/A11yViewNativeComponent';
+export type { KeyPress } from './nativeSpecs/RCA11yViewNativeComponent';
 export type {
   A11yViewProps,
   A11yUIContainerType,

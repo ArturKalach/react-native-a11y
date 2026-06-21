@@ -4,7 +4,7 @@ import { debounce } from '../utils';
 
 // Mock the native order module so the manager's setOrder is observable.
 const mockSetA11yOrder = jest.fn();
-jest.mock('../../nativeSpecs/NativeA11yOrderModule', () => ({
+jest.mock('../../nativeSpecs/NativeRCA11yOrderModule', () => ({
   __esModule: true,
   default: { setA11yOrder: (...args: unknown[]) => mockSetA11yOrder(...args) },
 }));
@@ -12,7 +12,7 @@ jest.mock('../../nativeSpecs/NativeA11yOrderModule', () => ({
 // Mock the native keyboard module to observe the imperative focus methods.
 const mockSetKeyboardFocus = jest.fn();
 const mockSetPreferredKeyboardFocus = jest.fn();
-jest.mock('../../nativeSpecs/NativeA11yKeyboardModule', () => ({
+jest.mock('../../nativeSpecs/NativeRCA11yKeyboardModule', () => ({
   __esModule: true,
   default: {
     setKeyboardFocus: (...args: unknown[]) => mockSetKeyboardFocus(...args),

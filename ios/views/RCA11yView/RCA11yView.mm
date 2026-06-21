@@ -24,7 +24,7 @@
 
 using namespace facebook::react;
 
-@interface RCA11yView () <RCTA11yViewViewProtocol>
+@interface RCA11yView () <RCTRCA11yViewViewProtocol>
 
 @end
 

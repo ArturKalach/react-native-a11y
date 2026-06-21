@@ -19,7 +19,7 @@
 
 using namespace facebook::react;
 
-@interface RCA11yFocusGroup () <RCTA11yFocusGroupViewProtocol>
+@interface RCA11yFocusGroup () <RCTRCA11yFocusGroupViewProtocol>
 
 @end
 

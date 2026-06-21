@@ -1,7 +1,7 @@
 import { useRef, useCallback, useMemo, type RefObject } from 'react';
 import { findNodeHandle, type View } from 'react-native';
 
-import NativeA11yOrderModule from '../../nativeSpecs/NativeA11yOrderModule';
+import NativeA11yOrderModule from '../../nativeSpecs/NativeRCA11yOrderModule';
 import { debounce } from '../utils';
 
 const SECONDS_PER_FRAME = 16;

@@ -1,5 +1,5 @@
 import React from 'react';
-import A11yLockNativeComponent from '../../nativeSpecs/A11yLockNativeComponent';
+import A11yLockNativeComponent from '../../nativeSpecs/RCA11yLockNativeComponent';
 import type { A11yLockProps } from './A11yLock.types';
 
 export const A11yBaseLock = React.memo<A11yLockProps>(

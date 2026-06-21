@@ -21,7 +21,7 @@
 
 using namespace facebook::react;
 
-@interface RCA11yLockView () <RCTA11yLockViewProtocol>
+@interface RCA11yLockView () <RCTRCA11yLockViewProtocol>
 
 @end
 

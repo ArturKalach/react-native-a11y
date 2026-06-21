@@ -2,7 +2,7 @@
 //  RCA11yViewManager.h
 //  react-native-a11y
 //
-//  Old-architecture view manager for the merged A11yView (registered as "A11yView").
+//  Old-architecture view manager for the merged A11yView (registered as "RCA11yView").
 //  On the New Architecture the Fabric component is registered via RCA11yViewCls();
 //  this manager provides the legacy view config + command path.
 //

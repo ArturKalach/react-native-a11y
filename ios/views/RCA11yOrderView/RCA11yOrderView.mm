@@ -22,7 +22,7 @@
 
 using namespace facebook::react;
 
-@interface RCA11yOrderView () <RCTA11yOrderViewProtocol>
+@interface RCA11yOrderView () <RCTRCA11yOrderViewProtocol>
 
 @end
 

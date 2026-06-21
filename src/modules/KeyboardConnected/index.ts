@@ -1,5 +1,5 @@
 import { NativeModules, NativeEventEmitter, Platform } from 'react-native';
-import NativeA11yKeyboardConnectedModule from '../../nativeSpecs/NativeA11yKeyboardConnectedModule';
+import NativeA11yKeyboardConnectedModule from '../../nativeSpecs/NativeRCA11yKeyboardConnectedModule';
 
 const KEYBOARD_STATUS_EVENT = 'keyboardStatus';
 

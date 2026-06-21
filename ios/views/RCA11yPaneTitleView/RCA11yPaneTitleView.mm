@@ -24,7 +24,7 @@
 
 using namespace facebook::react;
 
-@interface RCA11yPaneTitleView () <RCTA11yPaneTitleViewProtocol>
+@interface RCA11yPaneTitleView () <RCTRCA11yPaneTitleViewProtocol>
 
 @end
 

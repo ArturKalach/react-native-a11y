@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ViewProps } from 'react-native';
 import { A11ySequenceOrderContext } from '../../context/A11ySequenceOrderContext';
-import A11yOrderNative from '../../nativeSpecs/A11yOrderNativeComponent';
+import A11yOrderNative from '../../nativeSpecs/RCA11yOrderNativeComponent';
 
 /** Props for `A11y.Order` — a screen-reader focus-sequence container. */
 export type A11yOrderProps = ViewProps;
