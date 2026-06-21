@@ -1,5 +1,5 @@
 import { AccessibilityInfo } from 'react-native';
-import NativeA11yKeyboardModule from '../nativeSpecs/NativeA11yKeyboardModule';
+import NativeA11yKeyboardModule from '../nativeSpecs/NativeRCA11yKeyboardModule';
 
 /**
  * Legacy 0.7 imperative focus helpers (tag-based). Wrap a `ref` with

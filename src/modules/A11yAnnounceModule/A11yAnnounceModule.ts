@@ -1,5 +1,5 @@
 import { NativeModules, Platform } from 'react-native';
-import NativeA11yAnnounceModule from '../../nativeSpecs/NativeA11yAnnounceModule';
+import NativeA11yAnnounceModule from '../../nativeSpecs/NativeRCA11yAnnounceModule';
 
 const LINKING_ERROR =
   `The package 'react-native-a11y' doesn't seem to be linked. Make sure: \n\n${Platform.select(

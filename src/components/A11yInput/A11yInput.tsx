@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { TextInput, Platform } from 'react-native';
 
-import A11yTextInputWrapperNative from '../../nativeSpecs/A11yTextInputWrapperNativeComponent';
+import A11yTextInputWrapperNative from '../../nativeSpecs/RCA11yTextInputWrapperNativeComponent';
 import { useFocusStyle } from '../../utils/useFocusStyle';
 import { focusEventMapper } from '../../utils/focusEventMapper';
 import { useGroupIdentifierContext } from '../../context/GroupIdentifierContext';

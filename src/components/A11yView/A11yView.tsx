@@ -7,7 +7,7 @@ import React, {
 import { Platform, type View } from 'react-native';
 import A11yViewNative, {
   Commands,
-} from '../../nativeSpecs/A11yViewNativeComponent';
+} from '../../nativeSpecs/RCA11yViewNativeComponent';
 import type { KeyboardFocus } from '../../types';
 import { KeyPressContext } from '../../context/BubbledKeyPressContext';
 import { useGroupIdentifierContext } from '../../context/GroupIdentifierContext';

@@ -1,5 +1,5 @@
 import React from 'react';
-import A11yFocusGroupNative from '../../nativeSpecs/A11yFocusGroupNativeComponent';
+import A11yFocusGroupNative from '../../nativeSpecs/RCA11yFocusGroupNativeComponent';
 import { GroupIdentifierContext } from '../../context/GroupIdentifierContext';
 import { useOnFocusChange } from '../../utils/useOnFocusChange';
 import { useFocusStyle } from '../../utils/useFocusStyle';

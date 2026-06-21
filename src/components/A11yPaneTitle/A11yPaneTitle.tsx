@@ -1,4 +1,4 @@
-import A11yPaneTitleNative from '../../nativeSpecs/A11yPaneTitleNativeComponent';
+import A11yPaneTitleNative from '../../nativeSpecs/RCA11yPaneTitleNativeComponent';
 import type {
   A11yPaneTitleProps,
   A11yPaneType,

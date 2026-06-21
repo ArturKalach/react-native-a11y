@@ -37,7 +37,7 @@
 
 using namespace facebook::react;
 
-@interface RCA11yTextInputWrapper () <RCTA11yTextInputWrapperViewProtocol>
+@interface RCA11yTextInputWrapper () <RCTRCA11yTextInputWrapperViewProtocol>
 
 @end
 

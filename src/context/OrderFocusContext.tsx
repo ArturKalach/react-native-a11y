@@ -1,7 +1,7 @@
 import React, { useContext, useId } from 'react';
 import { Platform, type ViewProps } from 'react-native';
 import { A11ySequenceOrderContext } from './A11ySequenceOrderContext';
-import A11yOrderNative from '../nativeSpecs/A11yOrderNativeComponent';
+import A11yOrderNative from '../nativeSpecs/RCA11yOrderNativeComponent';
 
 /** Group id for keyboard index-based focus order (`orderGroup`). */
 export const OrderFocusGroupContext = React.createContext<string | undefined>(

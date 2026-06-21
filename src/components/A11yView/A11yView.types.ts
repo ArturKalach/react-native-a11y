@@ -4,7 +4,7 @@ import type {
   OrderType,
   ScreenReaderFocusTarget,
 } from '../../types';
-import type { ScreenReaderDescendantFocusChanged } from '../../nativeSpecs/A11yViewNativeComponent';
+import type { ScreenReaderDescendantFocusChanged } from '../../nativeSpecs/RCA11yViewNativeComponent';
 
 /** iOS `UIAccessibilityContainerType` for `A11y.View` / `A11y.Index`. */
 export type A11yUIContainerType =

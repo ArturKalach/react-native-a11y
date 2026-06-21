@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import Card from '../../nativeSpecs/A11yCardNativeComponent';
+import Card from '../../nativeSpecs/RCA11yCardNativeComponent';
 import { A11yPressable } from '../A11yPressable';
 import type { A11yCardProps } from './A11yCard.types';
 import { A11yView } from '../A11yView';
