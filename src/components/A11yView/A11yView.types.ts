@@ -2,7 +2,7 @@ import type { NativeSyntheticEvent } from 'react-native';
 import type {
   BaseKeyboardViewProps,
   OrderType,
-  FocusTarget,
+  ScreenReaderFocusTarget,
 } from '../../types';
 import type { ScreenReaderDescendantFocusChanged } from '../../nativeSpecs/A11yViewNativeComponent';
 
@@ -61,10 +61,12 @@ export type A11yViewProps = BaseKeyboardViewProps &
      */
     orderType?: OrderType;
     /**
-     * Which element receives focus: `'self'` (default), `'child'`, or `'subview'`.
-     * Replaces the legacy SR `orderType` and the keyboard `focusableWrapper`.
+     * Which element the screen reader treats as this view's focus / traversal
+     * node: `'self'` (default), `'firstAccessible'` (first accessible descendant,
+     * deep), or `'child'` (first direct child, shallow). Keyboard focus
+     * targeting is controlled separately by `focusableWrapper`.
      */
-    focusTarget?: FocusTarget;
+    screenReaderFocusTarget?: ScreenReaderFocusTarget;
     /**
      * Positional index within an enclosing `A11y.Order` (screen-reader order).
      * Alias of `orderIndex`; throws if used outside `A11y.Order`.

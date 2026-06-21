@@ -154,9 +154,13 @@ RCT_CUSTOM_VIEW_PROPERTY(focusTarget, int, RCA11yView)
 RCT_CUSTOM_VIEW_PROPERTY(orderIndex, NSNumber, RCA11yView)
 {
   NSNumber* value = json ? [RCTConvert NSNumber:json] : @(-1);
-  [view setPosition: value];
-  NSNumber* orderPosition = [value intValue] == -1 ? nil : value;
-  [view setOrderPosition: orderPosition];
+  // -1 is the "no order" sentinel. Without a real index a view must not register
+  // as an SR-ordered item (otherwise plain views inside a KeyboardOrderFocusGroup
+  // inherit the group orderKey and all collide on one slot — VoiceOver then reaches
+  // only a single cell). nil position keeps the item delegate's link guard from firing.
+  NSNumber* position = [value intValue] >= 0 ? value : nil;
+  [view setPosition: position];
+  [view setOrderPosition: position];
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(orderKey, NSString, RCA11yView)
@@ -201,6 +205,27 @@ RCT_CUSTOM_VIEW_PROPERTY(containerType, NSInteger, UIView)
 {
   NSInteger viewContainerType = json ? [RCTConvert NSInteger:json] : 0;
   view.accessibilityContainerType = (UIAccessibilityContainerType)viewContainerType;
+}
+
+// ── Optimistic accessibility values (iOS-only announcements) ────────────────────
+RCT_CUSTOM_VIEW_PROPERTY(optimisticIncrease, NSString, RCA11yView)
+{
+  [view setOptimisticIncrease: json ? [RCTConvert NSString:json] : nil];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(optimisticDecrease, NSString, RCA11yView)
+{
+  [view setOptimisticDecrease: json ? [RCTConvert NSString:json] : nil];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(optimisticActivate, NSString, RCA11yView)
+{
+  [view setOptimisticActivate: json ? [RCTConvert NSString:json] : nil];
+}
+
+RCT_CUSTOM_VIEW_PROPERTY(optimisticState, NSInteger, RCA11yView)
+{
+  [view setOptimisticState: json ? [RCTConvert NSInteger:json] : 0];
 }
 
 // ── Commands ───────────────────────────────────────────────────────────────────

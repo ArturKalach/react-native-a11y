@@ -120,7 +120,16 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
   }
 
   // ── Screen-reader capability slices ────────────────────────────────────────────
-  if (screenReaderOrder) {
+  // Only register as an SR-ordered item when there is a real positional index
+  // (orderIndex >= 0, JS sends -1 as the "no order" sentinel) AND a non-empty
+  // orderKey. A plain A11y.View/Pressable that merely sits inside a
+  // KeyboardOrderFocusGroup inherits the group's orderKey from context but has no
+  // index — it must NOT register, otherwise every such view collides on a single
+  // slot (-1) under the group key and VoiceOver is left with just one focusable
+  // element. With nothing registered, the group container's relationship stays
+  // empty → accessibilityElements = nil → passthrough (default traversal of all cells).
+  BOOL isOrderedItem = newViewProps.orderIndex >= 0 && !newViewProps.orderKey.empty();
+  if (screenReaderOrder && isOrderedItem) {
     if (oldViewProps.orderIndex != newViewProps.orderIndex || [self delegatePosition] == nil) {
       [self setPosition: @(newViewProps.orderIndex)];
     }
@@ -129,6 +138,10 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
       [self setOrderKey: [NSString stringWithUTF8String:newViewProps.orderKey.c_str()]];
     }
   }
+
+  // ── Optimistic accessibility values (iOS-only announcements) ──────────────────
+  [self updateOptimisticProps:RCA11y::OptimisticProps::from(oldViewProps)
+                     newProps:RCA11y::OptimisticProps::from(newViewProps)];
 
   if (self.groupChildrenMode != newViewProps.shouldGroupAccessibilityChildren) {
     self.groupChildrenMode = newViewProps.shouldGroupAccessibilityChildren;

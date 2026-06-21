@@ -21,6 +21,7 @@
 - (void)didAddSubview:(UIView *)subview;
 - (void)finalizeUpdates;
 - (void)clear;
+- (void)prepareForRecycle;
 
 @end
 

@@ -23,6 +23,12 @@ public abstract class A11yViewManagerSpec<T extends ReactViewGroup> extends Reac
   public abstract void setContainerType(T view, int value);
   public abstract void setDescendantFocusChangedEnabled(T view, boolean value);
 
+  // Optimistic accessibility values (iOS only; stubbed on Android)
+  public abstract void setOptimisticIncrease(T view, @Nullable String value);
+  public abstract void setOptimisticDecrease(T view, @Nullable String value);
+  public abstract void setOptimisticActivate(T view, @Nullable String value);
+  public abstract void setOptimisticState(T view, int value);
+
   // Keyboard focus
   public abstract void setCanBeFocused(T view, boolean value);
   public abstract void setAutoFocus(T view, boolean value);

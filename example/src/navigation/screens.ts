@@ -13,11 +13,26 @@ import { InputTestScreen } from '../screens/keyboard/InputTestScreen';
 import { ProgrammaticFocusScreen } from '../screens/keyboard/ProgrammaticFocusScreen';
 import { NativeFocusStyleScreen } from '../screens/keyboard/NativeFocusStyleScreen';
 import { FocusEventsScreen } from '../screens/combined/FocusEventsScreen';
+import { OptimisticScreen } from '../screens/combined/OptimisticScreen';
+import { StatusScreen } from '../screens/combined/StatusScreen';
+import { PushScreen } from '../screens/PushScreen';
+import {
+  FocusOrderTestScreen,
+  FocusDPadOrderTestScreen,
+  FocusLinkOrderTestScreen,
+  FocusMixedOrderTestScreen,
+  FocusMixedDpadOrderTestScreen,
+  FocusMixedPositionOrderTestScreen,
+  FocusOrderRandomizerTestScreen,
+  FocusLinkRandomizerTestScreen,
+  FocusMixedRandomizerTestScreen,
+  FocusMixedPositionRandomizerTestScreen,
+} from '../screens/test';
 import { LegacyOrderScreen } from '../screens/legacy/LegacyOrderScreen';
 import { LegacyDynamicOrderScreen } from '../screens/legacy/LegacyDynamicOrderScreen';
 import { LegacyFocusScreen } from '../screens/legacy/LegacyFocusScreen';
 
-export type ScreenGroup = 'Components' | 'Features' | 'API' | 'Legacy';
+export type ScreenGroup = 'Components' | 'Features' | 'API' | 'Test' | 'Legacy';
 
 /** Props every screen may receive from the minimal navigator. */
 export type ScreenNavProps = {
@@ -52,6 +67,10 @@ export const GROUP_META: Record<
   API: {
     color: '#7c3aed',
     caption: 'Imperative announce & focus calls',
+  },
+  Test: {
+    color: '#0891b2',
+    caption: 'Experimental focus-order playgrounds',
   },
   Legacy: {
     color: '#64748b',
@@ -114,6 +133,13 @@ export const SCREENS: ScreenEntry[] = [
 
   // ─── Features ────────────────────────────────────────────────────────────
   {
+    key: 'optimistic',
+    title: 'Optimistic values',
+    subtitle: 'Predicted VoiceOver values on action (iOS)',
+    group: 'Features',
+    Component: OptimisticScreen,
+  },
+  {
     key: 'group',
     title: 'Focus group',
     subtitle: 'Bind members into one keyboard focus unit',
@@ -157,6 +183,92 @@ export const SCREENS: ScreenEntry[] = [
     group: 'API',
     Component: AnnounceScreen,
   },
+  {
+    key: 'status',
+    title: 'Status',
+    subtitle: 'Live screen-reader & keyboard detection',
+    group: 'API',
+    Component: StatusScreen,
+  },
+  {
+    key: 'push-test',
+    title: 'Push test',
+    subtitle: 'Recursively push screens; verify state on back',
+    group: 'API',
+    Component: PushScreen,
+  },
+
+  // ─── Test ────────────────────────────────────────────────────────────────
+  {
+    key: 'focus-order',
+    title: 'Focus order',
+    subtitle: 'Index order + lockFocus',
+    group: 'Test',
+    Component: FocusOrderTestScreen,
+  },
+  {
+    key: 'focus-dpad-order',
+    title: 'DPad order',
+    subtitle: 'Directional arrow-key navigation',
+    group: 'Test',
+    Component: FocusDPadOrderTestScreen,
+  },
+  {
+    key: 'focus-link-order',
+    title: 'Focus link order',
+    subtitle: 'Explicit forward / backward links',
+    group: 'Test',
+    Component: FocusLinkOrderTestScreen,
+  },
+  {
+    key: 'focus-mixed-order',
+    title: 'Mixed order',
+    subtitle: 'Inputs + pressables in one chain',
+    group: 'Test',
+    Component: FocusMixedOrderTestScreen,
+  },
+  {
+    key: 'focus-mixed-dpad',
+    title: 'Mixed DPad',
+    subtitle: 'D-pad across inputs and pressables',
+    group: 'Test',
+    Component: FocusMixedDpadOrderTestScreen,
+  },
+  {
+    key: 'focus-mixed-position',
+    title: 'Mixed position order',
+    subtitle: 'Inputs + pressables by orderIndex',
+    group: 'Test',
+    Component: FocusMixedPositionOrderTestScreen,
+  },
+  {
+    key: 'focus-order-randomizer',
+    title: 'Order randomizer',
+    subtitle: 'Reassign orderIndex live',
+    group: 'Test',
+    Component: FocusOrderRandomizerTestScreen,
+  },
+  {
+    key: 'focus-link-randomizer',
+    title: 'Link randomizer',
+    subtitle: 'Rebuild the link chain live',
+    group: 'Test',
+    Component: FocusLinkRandomizerTestScreen,
+  },
+  {
+    key: 'focus-mixed-randomizer',
+    title: 'Mixed randomizer',
+    subtitle: 'Randomize the link chain (mixed)',
+    group: 'Test',
+    Component: FocusMixedRandomizerTestScreen,
+  },
+  {
+    key: 'focus-mixed-position-randomizer',
+    title: 'Mixed position randomizer',
+    subtitle: 'Randomize orderIndex (mixed)',
+    group: 'Test',
+    Component: FocusMixedPositionRandomizerTestScreen,
+  },
 
   // ─── Legacy ──────────────────────────────────────────────────────────────
   {
@@ -186,5 +298,6 @@ export const GROUPS: ScreenGroup[] = [
   'Components',
   'Features',
   'API',
+  'Test',
   'Legacy',
 ];

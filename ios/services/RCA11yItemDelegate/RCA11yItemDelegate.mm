@@ -132,6 +132,18 @@ typedef NS_ENUM(NSInteger, A11yOrderType) {
   _linkView = nil;
 }
 
+// Full reset for view recycling. Unlike -clear (which only unlinks but keeps the
+// item's order identity, so subview churn / focusType changes can re-link to the
+// same slot), this also forgets position/orderKey/focusType. On reuse, RCA11yView's
+// updateProps guards (delegate* == nil) then re-apply every prop and re-link from
+// scratch — even when the view is recycled into a structurally identical slot.
+- (void)prepareForRecycle {
+  [self clear];
+  _position = nil;
+  _orderKey = nil;
+  _orderFocusType = nil;
+}
+
 #pragma mark - Focus view resolution
 
 - (UIView *)getFocusView:(UIView *)subview {

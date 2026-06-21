@@ -2,6 +2,7 @@ import type { ViewProps, ColorValue } from 'react-native';
 import type { OnFocusChangeFn } from './focus.types';
 import type { OnKeyPressFn } from './keyPress.types';
 import type { FocusOrderProps, LockFocusType } from './focusOrder.types';
+import type { A11yOptimisticConfig } from './optimistic.types';
 
 /** Focus props shared by every keyboard-focusable component. */
 export type CommonFocusProps = {
@@ -115,6 +116,13 @@ export type BaseFocusViewProps = {
    * @deprecated No longer has any effect — kept only for backwards compatibility.
    */
   enableA11yFocus?: boolean;
+  /**
+   * iOS optimistic accessibility-value announcements. See
+   * {@link A11yOptimisticConfig}.
+   *
+   * @platform ios
+   */
+  optimistic?: A11yOptimisticConfig;
 } & CommonFocusProps &
   FocusOrderProps;
 

@@ -117,6 +117,32 @@ struct AutoFocusProps {
   }
 };
 
+// Optimistic accessibility values (iOS only). Snapshot of the announced
+// strings VoiceOver should hear right after an action, before React re-renders.
+// `state` is tri-state: 0 unset · 1 false · 2 true.
+struct OptimisticProps {
+  bool hasConfig{false};
+  std::string increase{};
+  std::string decrease{};
+  std::string activate{};
+  int state{0};
+
+  template <typename T>
+  static OptimisticProps from(const T &props) {
+    bool hasConfig = !props.optimisticIncrease.empty() ||
+                     !props.optimisticDecrease.empty() ||
+                     !props.optimisticActivate.empty() ||
+                     props.optimisticState != 0;
+    return OptimisticProps{
+      hasConfig,
+      props.optimisticIncrease,
+      props.optimisticDecrease,
+      props.optimisticActivate,
+      props.optimisticState,
+    };
+  }
+};
+
 struct KeyPressProps {
   bool hasKeyDownPress{false};
   bool hasKeyUpPress{false};

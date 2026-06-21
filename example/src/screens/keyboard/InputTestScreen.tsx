@@ -21,6 +21,8 @@ const RAIL_CX = 17;
 const DOT_R = 9;
 const nodeY = (i: number) => i * (FIELD_H + GAP) + FIELD_H / 2;
 
+const RAIL_LINE_H = nodeY(2) - nodeY(0);
+
 type FocusType = 'default' | 'press' | 'auto';
 
 const FOCUS_TYPES: { key: FocusType; blurb: string }[] = [
@@ -126,7 +128,7 @@ export const InputTestScreen = () => {
       <View style={styles.form}>
         {/* Left rail with a comet that follows the focused field. */}
         <View style={styles.rail}>
-          <View style={styles.railLine} />
+          <View style={styles.railLine} pointerEvents="none" />
           {FIELDS.map((_, i) => {
             const active = navIndex === i;
             const color = editIndex === i ? EDIT : NAV;
@@ -390,12 +392,11 @@ const styles = StyleSheet.create({
   rail: { width: RAIL_W, height: nodeY(2) + FIELD_H / 2 },
   railLine: {
     position: 'absolute',
-    left: RAIL_CX,
+    left: RAIL_CX - 1,
     top: nodeY(0),
-    height: nodeY(2) - nodeY(0),
-    borderLeftWidth: 2,
-    borderStyle: 'dashed',
-    borderColor: RAIL,
+    height: RAIL_LINE_H,
+    width: 2,
+    backgroundColor: RAIL,
   },
   node: {
     position: 'absolute',
