@@ -242,7 +242,7 @@ export const OptimisticScreen = () => {
         <View style={styles.divider} />
         <Row label="Switch" value={enabled ? 'on' : 'off'} />
         <View style={styles.divider} />
-        <Row label="Priority" value={PRIORITIES[priority]} />
+        <Row label="Priority" value={PRIORITIES[priority] as string} />
         <View style={styles.divider} />
         <Row label="Quantity" value={String(quantity)} />
       </View>
