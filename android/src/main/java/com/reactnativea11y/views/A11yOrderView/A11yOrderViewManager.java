@@ -9,7 +9,7 @@ import com.facebook.react.uimanager.ThemedReactContext;
 @ReactModule(name = A11yOrderViewManager.NAME)
 public class A11yOrderViewManager extends A11yOrderManagerSpec<A11yOrderView> {
 
-  public static final String NAME = "A11yOrder";
+  public static final String NAME = "RCA11yOrder";
 
   @Override
   public String getName() {

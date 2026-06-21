@@ -14,7 +14,7 @@
 #ifdef RCT_NEW_ARCH_ENABLED
 #import <RNA11ySpec/RNA11ySpec.h>
 
-@interface RCA11yOrderModule : NSObject <NativeA11yOrderModuleSpec>
+@interface RCA11yOrderModule : NSObject <NativeRCA11yOrderModuleSpec>
 
 #else
 

@@ -19,7 +19,7 @@ import java.util.Map;
 
 @ReactModule(name = A11yTextInputWrapperManager.NAME)
 public class A11yTextInputWrapperManager extends A11yTextInputWrapperManagerSpec<A11yTextInputWrapper> {
-  public static final String NAME = "A11yTextInputWrapper";
+  public static final String NAME = "RCA11yTextInputWrapper";
 
   @Override
   public String getName() {

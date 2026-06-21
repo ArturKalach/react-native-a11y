@@ -35,4 +35,4 @@ export interface Spec extends TurboModule {
   cancelAll(): Promise<AnnouncementResult>;
 }
 
-export default TurboModuleRegistry.get<Spec>('A11yAnnounceModule');
+export default TurboModuleRegistry.get<Spec>('RCA11yAnnounceModule');

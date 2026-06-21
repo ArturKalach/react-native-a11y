@@ -28,7 +28,7 @@ using namespace facebook::react;
   return YES;
 }
 
-RCT_EXPORT_MODULE(A11yKeyboardModule);
+RCT_EXPORT_MODULE(RCA11yKeyboardModule);
 
 RCT_EXPORT_METHOD(dismissKeyboard:(RCTPromiseResolveBlock)resolve
                            reject:(RCTPromiseRejectBlock)reject)
@@ -99,7 +99,7 @@ RCT_EXPORT_METHOD(setPreferredKeyboardFocus:(double)nativeTag) {
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
 (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-  return std::make_shared<facebook::react::NativeA11yKeyboardModuleSpecJSI>(params);
+  return std::make_shared<facebook::react::NativeRCA11yKeyboardModuleSpecJSI>(params);
 }
 #endif
 

@@ -8,5 +8,5 @@ export interface A11yOrderNativeComponentProps extends ViewProps {
 }
 
 export default codegenNativeComponent<A11yOrderNativeComponentProps>(
-  'A11yOrder'
+  'RCA11yOrder'
 );

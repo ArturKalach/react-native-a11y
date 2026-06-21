@@ -26,7 +26,7 @@ using namespace facebook::react;
 
 + (BOOL)requiresMainQueueSetup { return YES; }
 
-RCT_EXPORT_MODULE(A11yOrderModule);
+RCT_EXPORT_MODULE(RCA11yOrderModule);
 
 // Shared impl for both architectures. `containerTag <= 0` means "no container".
 - (void)_applyOrder:(NSArray *)viewTags containerTag:(double)containerTag {
@@ -73,7 +73,7 @@ RCT_EXPORT_MODULE(A11yOrderModule);
 - (std::shared_ptr<facebook::react::TurboModule>)getTurboModule:
     (const facebook::react::ObjCTurboModule::InitParams &)params
 {
-    return std::make_shared<facebook::react::NativeA11yOrderModuleSpecJSI>(params);
+    return std::make_shared<facebook::react::NativeRCA11yOrderModuleSpecJSI>(params);
 }
 
 #else

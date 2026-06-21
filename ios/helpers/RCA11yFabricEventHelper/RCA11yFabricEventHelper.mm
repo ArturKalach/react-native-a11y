@@ -20,10 +20,10 @@ using namespace facebook::react;
 
 + (void)onKeyDownPressEventEmmiter:(NSDictionary*) dictionary withEmitter:(facebook::react::SharedViewEventEmitter) _eventEmitter {
     if (_eventEmitter) {
-        auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
 
         NSString* unicodeChar = [dictionary valueForKey:@"unicodeChar"];
-        facebook::react::A11yViewEventEmitter::OnKeyDownPress data = {
+        facebook::react::RCA11yViewEventEmitter::OnKeyDownPress data = {
             .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
             .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
             .isAltPressed = [[dictionary valueForKey:@"isAltPressed"] boolValue],
@@ -40,10 +40,10 @@ using namespace facebook::react;
 
 + (void)onKeyUpPressEventEmmiter:(NSDictionary*) dictionary withEmitter:(facebook::react::SharedViewEventEmitter) _eventEmitter {
     if (_eventEmitter) {
-        auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
 
         NSString* unicodeChar = [dictionary valueForKey:@"unicodeChar"];
-        facebook::react::A11yViewEventEmitter::OnKeyUpPress data = {
+        facebook::react::RCA11yViewEventEmitter::OnKeyUpPress data = {
             .keyCode = [[dictionary valueForKey:@"keyCode"] intValue],
             .isLongPress = [[dictionary valueForKey:@"isLongPress"] boolValue],
             .isAltPressed = [[dictionary valueForKey:@"isAltPressed"] boolValue],
@@ -60,8 +60,8 @@ using namespace facebook::react;
 
 + (void)onFocusChangeEventEmmiter:(BOOL)isFocused withEmitter:(facebook::react::SharedViewEventEmitter) _eventEmitter {
     if (_eventEmitter) {
-        auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
-        facebook::react::A11yViewEventEmitter::OnFocusChange data = {
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
+        facebook::react::RCA11yViewEventEmitter::OnFocusChange data = {
             .isFocused = isFocused,
         };
         viewEventEmitter->onFocusChange(data);
@@ -70,16 +70,16 @@ using namespace facebook::react;
 
 + (void)onContextMenuPressEventEmmiter:(facebook::react::SharedViewEventEmitter) _eventEmitter {
     if (_eventEmitter) {
-        auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
-        facebook::react::A11yViewEventEmitter::OnContextMenuPress data = {};
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
+        facebook::react::RCA11yViewEventEmitter::OnContextMenuPress data = {};
         viewEventEmitter->onContextMenuPress(data);
     };
 }
 
 + (void)onBubbledContextMenuPressEventEmmiter:(facebook::react::SharedViewEventEmitter) _eventEmitter {
     if (_eventEmitter) {
-        auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
-        facebook::react::A11yViewEventEmitter::OnBubbledContextMenuPress data = {};
+        auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
+        facebook::react::RCA11yViewEventEmitter::OnBubbledContextMenuPress data = {};
         viewEventEmitter->onBubbledContextMenuPress(data);
     };
 }
@@ -88,8 +88,8 @@ using namespace facebook::react;
 
 + (void)onScreenReaderFocusChange:(BOOL)isFocused withEmitter:(facebook::react::SharedViewEventEmitter) _eventEmitter {
   if (_eventEmitter) {
-    auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
-    facebook::react::A11yViewEventEmitter::OnScreenReaderFocusChange data = {
+    auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
+    facebook::react::RCA11yViewEventEmitter::OnScreenReaderFocusChange data = {
       .isFocused = isFocused,
     };
     viewEventEmitter->onScreenReaderFocusChange(data);
@@ -98,16 +98,16 @@ using namespace facebook::react;
 
 + (void)onScreenReaderFocused:(facebook::react::SharedViewEventEmitter) _eventEmitter {
   if (_eventEmitter) {
-    auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
+    auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
     viewEventEmitter->onScreenReaderFocused({});
   };
 }
 
 + (void)onScreenReaderDescendantFocusChanged:(NSString*)status withId:(NSString*)nativeId withEmitter:(facebook::react::SharedViewEventEmitter) _eventEmitter {
   if (_eventEmitter) {
-    auto viewEventEmitter = std::static_pointer_cast<A11yViewEventEmitter const>(_eventEmitter);
+    auto viewEventEmitter = std::static_pointer_cast<RCA11yViewEventEmitter const>(_eventEmitter);
     NSString* resultID = nativeId == nil ? @"" : nativeId;
-    facebook::react::A11yViewEventEmitter::OnScreenReaderDescendantFocusChanged data = {
+    facebook::react::RCA11yViewEventEmitter::OnScreenReaderDescendantFocusChanged data = {
       .status = [status UTF8String],
       .nativeId = [resultID UTF8String],
     };

@@ -144,13 +144,13 @@ typedef NS_ENUM(NSInteger, RCA11yLockComponentType) {
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
 {
-  return concreteComponentDescriptorProvider<A11yLockComponentDescriptor>();
+  return concreteComponentDescriptorProvider<RCA11yLockComponentDescriptor>();
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
-    static const auto defaultProps = std::make_shared<const A11yLockProps>();
+    static const auto defaultProps = std::make_shared<const RCA11yLockProps>();
     _props = defaultProps;
   }
 
@@ -159,7 +159,7 @@ typedef NS_ENUM(NSInteger, RCA11yLockComponentType) {
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-  const auto &newViewProps = *std::static_pointer_cast<A11yLockProps const>(props);
+  const auto &newViewProps = *std::static_pointer_cast<RCA11yLockProps const>(props);
   [super updateProps:props oldProps:oldProps];
 
   self.componentType = newViewProps.componentType;
@@ -170,7 +170,7 @@ typedef NS_ENUM(NSInteger, RCA11yLockComponentType) {
   self.lockDisabled = newViewProps.lockDisabled;
 }
 
-Class<RCTComponentViewProtocol> A11yLockCls(void)
+Class<RCTComponentViewProtocol> RCA11yLockCls(void)
 {
   return RCA11yLockView.class;
 }

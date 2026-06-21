@@ -49,13 +49,13 @@ using namespace facebook::react;
 
 + (ComponentDescriptorProvider)componentDescriptorProvider
 {
-  return concreteComponentDescriptorProvider<A11yPaneTitleComponentDescriptor>();
+  return concreteComponentDescriptorProvider<RCA11yPaneTitleComponentDescriptor>();
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
-    static const auto defaultProps = std::make_shared<const A11yPaneTitleProps>();
+    static const auto defaultProps = std::make_shared<const RCA11yPaneTitleProps>();
     _props = defaultProps;
     _announced = NO;
   }
@@ -65,8 +65,8 @@ using namespace facebook::react;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-  const auto &oldViewProps = *std::static_pointer_cast<A11yPaneTitleProps const>(_props);
-  const auto &newViewProps = *std::static_pointer_cast<A11yPaneTitleProps const>(props);
+  const auto &oldViewProps = *std::static_pointer_cast<RCA11yPaneTitleProps const>(_props);
+  const auto &newViewProps = *std::static_pointer_cast<RCA11yPaneTitleProps const>(props);
   [super updateProps:props oldProps:oldProps];
 
   // NOTE: the merged spec adds `type` (0 activity · 1 pane · 2 announce); on iOS the
@@ -85,7 +85,7 @@ using namespace facebook::react;
   }
 }
 
-Class<RCTComponentViewProtocol> A11yPaneTitleCls(void)
+Class<RCTComponentViewProtocol> RCA11yPaneTitleCls(void)
 {
   return RCA11yPaneTitleView.class;
 }

@@ -12,7 +12,7 @@
 
 @implementation RCA11yPaneTitleViewManager
 
-RCT_EXPORT_MODULE(A11yPaneTitle)
+RCT_EXPORT_MODULE(RCA11yPaneTitle)
 
 - (UIView *)view
 {

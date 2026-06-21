@@ -131,19 +131,19 @@
     },
     "ios": {
       "componentProvider": {
-        "A11yView": "RCA11yView",
-        "A11yLock": "RCA11yLockView",
-        "A11yOrder": "RCA11yOrderView",
-        "A11yCard": "RCA11yCardView",
-        "A11yPaneTitle": "RCA11yPaneTitleView",
-        "A11yFocusGroup": "RCA11yFocusGroup",
-        "A11yTextInputWrapper": "RCA11yTextInputWrapper"
+        "RCA11yView": "RCA11yView",
+        "RCA11yLock": "RCA11yLockView",
+        "RCA11yOrder": "RCA11yOrderView",
+        "RCA11yCard": "RCA11yCardView",
+        "RCA11yPaneTitle": "RCA11yPaneTitleView",
+        "RCA11yFocusGroup": "RCA11yFocusGroup",
+        "RCA11yTextInputWrapper": "RCA11yTextInputWrapper"
       },
       "modulesProvider": {
-        "A11yAnnounceModule": "RCA11yAnnounceModule",
-        "A11yKeyboardModule": "RCA11yKeyboardModule",
-        "A11yKeyboardConnectedModule": "RCA11yKeyboardConnectedModule",
-        "A11yOrderModule": "RCA11yOrderModule"
+        "RCA11yAnnounceModule": "RCA11yAnnounceModule",
+        "RCA11yKeyboardModule": "RCA11yKeyboardModule",
+        "RCA11yKeyboardConnectedModule": "RCA11yKeyboardConnectedModule",
+        "RCA11yOrderModule": "RCA11yOrderModule"
       }
     }
   },

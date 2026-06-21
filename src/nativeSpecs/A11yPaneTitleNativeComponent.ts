@@ -12,4 +12,4 @@ export interface A11yPaneTitleProps extends ViewProps {
   withFocusRestore?: boolean;
 }
 
-export default codegenNativeComponent<A11yPaneTitleProps>('A11yPaneTitle');
+export default codegenNativeComponent<A11yPaneTitleProps>('RCA11yPaneTitle');

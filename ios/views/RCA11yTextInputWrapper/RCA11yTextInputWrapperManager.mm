@@ -11,7 +11,7 @@
 
 @implementation RCA11yTextInputWrapperManager
 
-RCT_EXPORT_MODULE(A11yTextInputWrapper)
+RCT_EXPORT_MODULE(RCA11yTextInputWrapper)
 
 - (UIView *)view
 {

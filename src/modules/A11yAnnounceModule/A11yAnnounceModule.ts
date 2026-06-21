@@ -12,7 +12,7 @@ const isTurboModuleEnabled = global.__turboModuleProxy != null;
 
 const A11yAnnounceNative = isTurboModuleEnabled
   ? NativeA11yAnnounceModule
-  : NativeModules.A11yAnnounceModule;
+  : NativeModules.RCA11yAnnounceModule;
 
 const A11yAnnounceProxy: typeof NativeA11yAnnounceModule =
   A11yAnnounceNative ??

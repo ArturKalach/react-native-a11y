@@ -8,7 +8,7 @@
 
 @implementation RCA11yCardViewManager
 
-RCT_EXPORT_MODULE(A11yCard)
+RCT_EXPORT_MODULE(RCA11yCard)
 
 - (UIView *)view {
   return [[RCA11yCardView alloc] init];
