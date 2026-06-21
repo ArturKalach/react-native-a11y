@@ -1,444 +1,209 @@
+![react-native-a11y](/.github/images/react-native-a11y.png)
+
 # React Native A11y
 
-## New Release Update
-- Updated setKeyboardFocus to remove limitations. The `setKeyboardFocus` method can now be used with any focusable element via `ref`.
-- Update and refactor example project with usage of `ReactNative 0.80.x`
+<div>
+  <img align="right" width="35%" src="/.github/images/react-native-a11y-example.gif" alt="Demo of a React Native app driven TalkBack focus order and a physical keyboard">
+</div>
 
-## Roadmap:
-- Update and refactor the `react-native-external-keyboard` package.
-- Update and refactor the `react-native-a11y-order` package.
-- Reuse and align functionality from `react-native-external-keyboard` and `react-native-a11y-order`
+Native-first React Native accessibility toolkit for **both** screen reader focus order &
+announcements (VoiceOver / TalkBack) **and** physical (external) keyboard support — on iOS
+and Android. Everything ships under a single **`A11y.*`** namespace.
 
+- 🔢 **Screen reader focus order** — define the exact traversal sequence, independent of render order
+- 🃏 **Cards with inner buttons** — card action and nested controls, both accessible at once
+- 🔒 **Focus lock** — keep VoiceOver, TalkBack, *and* keyboard focus inside modals & overlays
+- 📣 **Announcements** — reliable, navigation-aware messages and screen/panel transitions
+- 🎯 **Keyboard focus management** — focus/blur events, `autoFocus`, imperative focus via `ref`
+- ⌨️ **Key press events** — handle key-down / key-up with full modifier info
+- 🎨 **Native focus styling** — iOS halo & `tintColor`, Android focus highlight
+- ✨ **Optimistic values** *(iOS)* — announce the predicted value the moment the user acts, not the stale one
+- 📡 **Runtime status hooks** — `useIsKeyboardConnected`, `useIsScreenReaderEnabled`
+- ⚡ New Architecture · Old Architecture · Bridgeless · Expo prebuild
 
-# 🚧 🚧 🚧
+> [!IMPORTANT]
+> **This package re-merges two focused libraries into one.** `react-native-a11y` was
+> originally split — for easier development and support — into
+> [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order)
+> (screen reader) and
+> [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard)
+> (physical keyboard). Both are now mature, and this package recombines them under one
+> unified `A11y.*` namespace. See [The rework](#the-rework) below.
 
-### Unfortunately, the library is outdated and uses deprecated APIs. It requires a lot of work to be done.
+> [!TIP]
+> All three packages stay published and are **mutually exclusive** — install exactly one.
+> Use `react-native-a11y` when you want **both** capabilities; use a split package if you
+> only need one.
 
-In spite of that, there are separate repositories you can use to achieve similar functionality:
-- [react-native-a11y-order](https://www.npmjs.com/package/react-native-a11y-order) - for screen reader order control
-- [react-native-external-keyboard](https://www.npmjs.com/package/react-native-external-keyboard) - for using and implementing keyboard features
-- [react-native-is-keyboard-connected](https://www.npmjs.com/package/react-native-is-keyboard-connected) - for listening to keyboard connection
-- [react-native-a11y-container](https://www.npmjs.com/package/react-native-a11y-container) - represents `UIAccessibilityContainer`
-
-# 🚧 🚧 🚧
-
-- 🤖 Reader features: Focus, Order, Reader </br>
-- ⌨️ Keyboard features: Focus </br>
-- 🙌 Others features soon </br>
-- ⚡️ The New Arch support </br>
-
-| iOS reader                                                | Android reader                                                |
-| --------------------------------------------------------- | ------------------------------------------------------------- |
-| <img src="/.github/images/ios-reader.gif" height="500" /> | <img src="/.github/images/android-reader.gif" height="500" /> |
-
-| iOS Keyboard                                                | Android Keyboard                                                |
-| ----------------------------------------------------------- | --------------------------------------------------------------- |
-| <img src="/.github/images/ios-keyboard.gif" height="500" /> | <img src="/.github/images/android-keyboard.gif" height="500" /> |
-
-A11y is important, there are a lot of reasons to support and be compliant with it. First of all, it helps people with disabilities work and use your application easily and live a better life. Banks, medication, shops, and delivery is a small list of what people are usually interested in, and it can be more important for people with limitations.
-
-There are can be other reasons, customer requirements, laws and requirements for specific groups of apps,
-remote control, etc. Based on this you can find a lot of advantages and benefits to supporting A11y.
+</br>
 
 ## Installation
 
-This library is not finished yer and currently on beta stage. We will be glad to issues, questions, and help.
-
-1. Download package with npm or yarn
-
-```
-npm i react-native-a11y
-```
-
-```
+```sh
 yarn add react-native-a11y
+cd ios && pod install
 ```
 
-2. Install pods
-   cd ios && pod install
+Get started with the [getting started guide](./docs/getting-started/getting-started.md)
+or jump straight to the [component overview](./docs/components/overview.md).
 
-3. iOS only
-   > **_NOTE:_** If you don't plan to use the isKeyboardConnected or keyboardStatusListener functionality, you can skip this step. Linking the GameController framework is optional but required for the proper functioning of isKeyboardConnected and keyboardStatusListener.
+## Quick start
 
-Link keyboard(Game) binary with libraries
+Everything is imported from the single `A11y` namespace, with imperative APIs, hooks, and
+the keyboard-focus HOC at the top level.
 
-- Open xcode
-- Select folder in the project bar
-- Select target project
-- Select `Build Phases`
-- Expand `Link Binary With Libraries`
-- Press plus icon
-- You can search for `Game`
-- Select `GameController.framework`
+**Keyboard focus** — `A11y.Pressable`, `A11y.View`, and `A11y.Input` are drop-in,
+keyboard-focusable views:
 
-<details>
-  <summary>Xcode screenshot</summary>
-  <img src="/.github/images/ios-link-binary-with-libraries.png" height="500" />
-</details>
+```tsx
+import { A11y } from 'react-native-a11y';
+import { Text } from 'react-native';
 
-<details>
-  <summary>Why linking is needed</summary>
-
-Unfortunately, the GameController framework is the only viable solution to obtain information about the keyboard and its connection. While there are other potential solutions, they are mostly workarounds and could be rejected by the App Store review process.
-
-</details>
-
-5. Add provider to root of your app:
-
-```
-watch: examples/A11ySample/App.tsx
-
-export const App = () => {
-  return (
-    <A11yProvider>
-        // content here
-    </A11yProvider>
-  );
-};
+<A11y.Pressable
+  autoFocus
+  onPress={onPress}
+  focusStyle={{ backgroundColor: 'dodgerblue' }}
+>
+  <Text>Press me with Space or Enter</Text>
+</A11y.Pressable>;
 ```
 
-## Usage
+**Screen reader order & announcements** — `A11y.Order` + `A11y.Index` define the traversal
+sequence; `announce` posts a message:
 
-A11y library consists of different components and hooks, to start work with `react-native-a11y` you can get familiar with an example app in `examples/A11ySample`.
+```tsx
+import { A11y, announce } from 'react-native-a11y';
 
-### A11yModule
+<A11y.Order>
+  <A11y.Index index={1}><Text>Read first</Text></A11y.Index>
+  <A11y.Index index={3}><Text>Read third</Text></A11y.Index>
+  <A11y.Index index={2}><Text>Read second</Text></A11y.Index>
+</A11y.Order>;
 
-The core of the library is `A11yModule`, `A11yModule` provides additional functions to work with a11y such as order, reader focus, keyboard focus, announcements, etc
-
-| Function                       | Description                                                                                     | Interface                                                                       |
-| ------------------------------ | ----------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `isA11yReaderEnabled`          | return promise with status of a11y reader (TalkBack or VoiceOver) true(enabled)/false(disabled) | `() => Promise<boolean>`                                                        |
-| `isKeyboardConnected`          | return promise with status of keyboard connection, true(connected)/false(disconnected)          | `() => Promise<boolean>`                                                        |
-| `a11yStatusListener`           | listener for a11y reader status                                                                 | `((e: { status: boolean }) => void) => void;`                                   |
-| `keyboardStatusListener`       | listener for keyboard connection status                                                         | `((e: { status: boolean }) => void) => void;`                                   |
-| `announceForAccessibility`     | Post a string to be announced by the screen reader. Android default, ios specific.              | `(announcement: string) => void;`                                               |
-| `announceScreenChange`         | Announces new screen name.                                                                      | `(announcement: string) => void;`                                               |
-| `setA11yFocus`                 | Set a11y reader focus to the component                                                          | `(ref: React.RefObject<React.Component>) => void;`                              |
-| `setKeyboardFocus`             | Set keyboard focus to the component                                                             | `(ref: React.RefObject<React.Component>) => void;`                              |
-| `setPreferredKeyboardFocus`    | `iOS` only, set redirection of keyboard from one component to another one                       | `(nativeTag: number, nextTag: number) => void;`                                 |
-| `focusFirstInteractiveElement` | Focus first interactive element on a screen                                                     | `(ref: React.RefObject<React.Component>) => void;`                              |
-| `setA11yElementsOrder`         | Set a11y reader focus order                                                                     | `setA11yElementsOrder: <T>(info: { tag?: RefObject<T>; views: T[]; }) => void;` |
-
-`setA11yFocus` and `setKeyboardFocus` works similar to ` AccessibilityInfo.setAccessibilityFocus`, difference is they request refs instead of tags and you don't need use `findNodeHandle`.
-
-### Examples
-
-#### setA11yFocus
-
-```
-watch: examples/A11ySample/src/screens/ReaderFocusScreen
-
-import { A11yModule } from "react-native-a11y";
-...
-
-const App = () => {
-  const ref1 = useRef(null);
-  const ref3 = useRef(null);
-...
-
-return (
- ...
- <Button
-    ref={ref1}
-    onPress={() => A11yModule.setA11yFocus(ref3)}
-    title="1. Set focus to third"
- />
- ...
-  <Button
-    ref={ref3}
-    onPress={() => A11yModule.setA11yFocus(ref2)}
-    title="3. Set focus to second"
-  />
-}
+announce('Changes saved');
 ```
 
-#### setKeyboardFocus
-
-```
-watch: examples/A11ySample/src/screens/KeyboardFocusScreen
-
-import { A11yModule, KeyboardProvider } from "react-native-a11y";
-...
-
-const App = () => {
-  const ref1 = useRef(null);
-  const ref3 = useRef(null);
-...
-
-return (
- ...
- <Button
-    ref={ref1}
-    onPress={() => A11yModule.setKeyboardFocus(ref3)}
-    title="1. Set focus to third"
- />
- ...
-  <Button
-    ref={ref3}
-    onPress={() => A11yModule.setKeyboardFocus(ref2)}
-    title="3. Set focus to second"
-  />
-}
-```
-
-You can but not really need to use `A11yModule.setA11yElementsOrder` directly, we have specific useful hooks to work with order.
-
-### useFocusOrder and useDynamicFocusOrder
-
-To set an order for components we have `useFocusOrder`, `useDynamicFocusOrder`
-
-`A11yModule.setA11yElementsOrder` is a more direct one we just pass refs to components and set order, but there are a lot of questions about when to call and set order. To make a better experience two similar hooks were created `useFocusOrder` and `useDynamicFocusOrder`
-
-#### useDynamicFocusOrder
-
-`useDynamicFocusOrder` returns target ref, trigger function, and function to register your components.
-
-```
-export type UseDynamicFocusOrder = () => {
-  a11yOrder: {
-    ref: RefObject<View>; /// target ref, we need a target ref to a container View
-    onLayout: () => void; // trigger, we use onLayout to realize when components are appear on a screen, useEffect and useLayoutEffect don't work properly
-  };
-  registerOrder: (order: number) => (ref: View) => void; // function to set order
-  reset: () => void; // clear function
-};
-```
-
-```
-soon
-```
-
-#### useFocusOrder
-
-`useFocusOrder` is based on `useDynamicFocusOrder` but more static and predictable.
-
-```
-(size: number) // count of refs
-    => FocusOrderInfo<T> = {
-  a11yOrder: {
-    ref: RefObject<T>; // target ref, we need a target ref to a container View
-    onLayout: () => void; // trigger, we use onLayout to realize when components are appear on a screen, useEffect and useLayoutEffect don't work properly
-  };
-  refs: ((ref: T | null) => void)[]; // array of callback refs to use for order
-  reset: () => void; // clear function
-};
+`A11y.View` is one component that accepts **both** prop sets — give it keyboard props,
+screen-reader props, or both. To add keyboard focus to a component the namespace doesn't
+cover, wrap it with the [`withKeyboardFocus`](./docs/components/overview.md#withkeyboardfocus) HOC.
 
-```
+> [!NOTE]
+> On iOS, long-pressing the spacebar does not fire a long press — iOS routes it through
+> *Full Keyboard Access*. Use `Tab + M` (the default "open context menu" command) instead,
+> via `onContextMenuPress`.
 
-```
-watch: examples/A11ySample/src/screens/A11yOrderScreen
+## Architecture support
 
-import { A11yOrder, useFocusOrder } from "react-native-a11y";
+| Capability | Supported |
+| :-- | :-- |
+| New Architecture (Fabric / Turbo Modules) | ✅ |
+| Old Architecture (Bridge) | ✅ |
+| Bridgeless mode | ✅ |
+| Expo (prebuild / bare) | ✅ |
 
-const App = () => {
-    const { a11yOrder, refs } = useFocusOrder(3); // 3 number of wanted refs
-    ...
-    return (
-        <A11yOrder onLayout={onLayoutHandler} a11yOrder=  {a11yOrder}>
-            <Text style={styles.font} ref={refs[0]}>
-                First
-            </Text>
-            <Text style={styles.font} ref={refs[2]}>
-                Third
-            </Text>
-            <Text style={styles.font} ref={refs[1]}>
-                Second
-            </Text>
-        </A11yOrder>
-    )
-```
-
-The code in example set a new order for components, instead of a direct one it will follow 1 -> 3 -> 2
-
-You also can find a new `A11yOrder` component it's just shorts for `<View {...a11yOrder} />`
-
-### KeyboardFocusView
+## Documentation
 
-`KeyboardFocusView` is view based component, has additional props and provide possibility to make component focusable by a keyboard.
-Additionally, you can handle pressing events from keyboard. This system can help to handle `Enter` press or long press on `spacebar`.
+New here? Start with the [getting started guide](./docs/getting-started/getting-started.md),
+then follow a task-focused guide. The [full docs index](./docs/README.md) links everything.
 
-| Props           | Description                                                                   |
-| --------------- | ----------------------------------------------------------------------------- |
-| onFocusChange?  | Event to handle focus change, `(e: event.nativeEvent.isFocused) => void`      |
-| canBeFocused?   | `boolean` default true, describe whether component can be focused by keyboard |
-| onKeyDownPress? | Event to handle a keyboard key down event, `(e: OnKeyPress) => void`          |
-| onKeyUpPress?   | Event to handle a keyboard key up event`(e: OnKeyPress) => void`              |
+**Guides — physical keyboard**
 
-Where `OnKeyPress` is:
+- [Pressable focus handling](./docs/guides/pressable-focus.md) — focus/blur events, `focusStyle`, render props
+- [Native focus styling](./docs/guides/focus-styling.md) — iOS halo & `tintColor`, Android focus highlight
+- [Programmatic focus](./docs/guides/programmatic-focus.md) — `ref.focus()`, `keyboardFocus()`, `autoFocus`
+- [Keyboard text input](./docs/guides/text-input.md) — `A11y.Input`, `focusType`, `blurType`
+- [Keyboard focus order](./docs/guides/focus-order.md) — link-based, index-based, direction locking
 
-```
-type OnKeyPress = NativeSyntheticEvent<{
-  keyCode: number;
-  unicode: number;
-  unicodeChar: string;
-  isLongPress: boolean;
-  isAltPressed: boolean;
-  isShiftPressed: boolean;
-  isCtrlPressed: boolean;
-  isCapsLockOn: boolean;
-  hasNoModifiers: boolean;
-}>;
-```
-
-#### Note:
+**Guides — screen reader**
 
-Latest iOS versions has a `Commands` for a11y support, which override keyboard key presses. If you open `Accessibility` -> `Keyboards` -> `Full Keyboard Access` -> `Commands`, you can find that `Spacebar` key id assigned to the `Activate` command. Because of this, all your `spacebar` presses will be ignored.
+- [Screen-reader focus order](./docs/guides/a11y-order.md) — `A11y.Order` + `A11y.Index`
+- [Cards with inner buttons](./docs/guides/a11y-card.md) — `A11y.Card`
+- [iOS semantic containers](./docs/guides/a11y-ui-container.md) — `a11yUIContainer`
+- [Screen-reader focus events](./docs/guides/focus-events.md) — focus/blur callbacks
+- [Focus lock](./docs/guides/focus-lock.md) — `A11y.FocusTrap` / `A11y.FocusFrame`
+- [Announcements](./docs/guides/announcements.md) — `announce` / `ScreenReader`, `A11y.PaneTitle`
 
-#### Examples
+**Guides — new in the merge**
 
-```
-import { KeyboardFocusView } "react-native-a11y";
+- [Optimistic accessibility values](./docs/guides/optimistic-state.md) — predicted-value announcements (iOS)
+- [Connection & runtime status](./docs/guides/keyboard-connection-status.md) — `useIsKeyboardConnected`, `useIsScreenReaderEnabled`
 
-const App = () => {
+**Reference**
 
-  return <KeyboardFocusView>
-    <Text>Focusable</Text>
-  </KeyboardFocusView>
-}
+- [Component overview](./docs/components/overview.md) — every component and its props
+- [API reference](./docs/api/overview.md) — announcements, modules, hooks, the imperative ref, shared types
+- [Legacy API](./docs/api/legacy.md) — the `Legacy.*` imperative 0.7 shim
+- [Migration guide](./docs/migration/migration.md) — from 0.7, `-order`, or `-external-keyboard`
 
+## What's available
 
-```
+**Components**
 
-### Pressable
+| Export | Purpose |
+| :-- | :-- |
+| [`A11y.View`](./docs/components/overview.md#a11yview) | Unified focusable `View` — screen-reader + keyboard props, all opt-in. |
+| [`A11y.Pressable`](./docs/components/overview.md#a11ypressable) | Keyboard- and screen-reader-focusable `Pressable`. |
+| [`A11y.Input`](./docs/components/overview.md#a11yinput) | `TextInput` with keyboard focus support. |
+| [`A11y.Order` / `A11y.Index`](./docs/guides/a11y-order.md) | Declarative screen-reader traversal order. |
+| [`A11y.Card`](./docs/guides/a11y-card.md) | Card that keeps inner interactive elements accessible. |
+| [`A11y.FocusTrap` / `A11y.FocusFrame`](./docs/guides/focus-lock.md) | Confine screen-reader **and** keyboard focus to a region. |
+| [`A11y.PaneTitle` / `A11y.ScreenChange`](./docs/guides/announcements.md) | Screen / panel transition announcements. |
+| [`A11y.FocusGroup`](./docs/components/overview.md#a11yfocusgroup) | iOS `focusGroupIdentifier` grouping + shared `tintColor`. |
+| [`withKeyboardFocus(C)`](./docs/components/overview.md#withkeyboardfocus) | HOC that adds keyboard focus to any `Pressable`/`Touchable`-like component. |
 
-Almost original pressable, but used `KeyboardFocusView` instead of `View`
-
-Provides additional functionality for usual `Pressable`
+**API**
 
-| Props          | Description                                                                   |
-| -------------- | ----------------------------------------------------------------------------- |
-| onFocusChange? | Event to handle focus change, `(e: event.nativeEvent.isFocused) => void`      |
-| canBeFocused?  | `boolean` default true, describe whether component can be focused by keyboard |
+| Export | Purpose |
+| :-- | :-- |
+| [`announce` / `ScreenReader`](./docs/api/overview.md#announcements) | Reliable, navigation-aware announcements. |
+| [`Keyboard`](./docs/api/overview.md#keyboard-module) | Dismiss the soft keyboard from a hardware keyboard. |
+| [`KeyboardFocus` ref](./docs/api/overview.md#imperative-ref-keyboardfocus) | Imperative focus handle (`focus`, `keyboardFocus`, `screenReaderFocus`). |
+| [Hooks](./docs/api/overview.md#hooks) | `useIsKeyboardConnected`, `useIsScreenReaderEnabled`, `useIsViewFocused`, … |
+| [Focus-order props](./docs/api/overview.md#focus-order-props) | `orderId`, `order*`, `orderIndex`, `orderGroup`, `lockFocus`. |
+| [`Legacy.*`](./docs/api/legacy.md) | Imperative 0.7 focus-order shim (`useFocusOrder`, …). |
 
-#### Examples
+---
 
-```
-watch: examples/A11ySample/src/components/Button
+## The rework
 
-import React, { useState } from "react";
-import { StyleSheet, Text, View, ViewStyle } from "react-native";
-import { Pressable, FocusStyle, OnFocusChangeFn } from "react-native-a11y";
+The original all-in-one `react-native-a11y` (0.7.0) was **split** into two focused
+packages to make each capability easier to develop, test, and support:
 
+- [`react-native-a11y-order`](https://www.npmjs.com/package/react-native-a11y-order) — screen reader focus order & announcements
+- [`react-native-external-keyboard`](https://www.npmjs.com/package/react-native-external-keyboard) — physical keyboard support
 
-export const Button = React.forwardRef<View, Props>(
-  ({ title, onPress, style, focusStyle, canBeFocused = true }, ref) => {
-    ...
+Feature work on both is now complete, and they are **recombined here** into a single,
+self-contained `react-native-a11y` — rebuilt fresh from the two modern packages (whose
+native bridges are newer than the legacy 0.7.0 code), not patched on top of the old one.
 
-    const [focused, setFocusStatus] = useState(false);
+What this means for you:
 
-    const onFocusChangeHandler: OnFocusChangeFn = event => {
-      setFocusStatus(event.nativeEvent.isFocused);
-    };
+- **One unified namespace.** A single `A11y.View` / `A11y.Pressable` / `A11y.Input` takes
+  both screen-reader and keyboard props; each capability is opt-in. A single
+  `A11y.FocusTrap` / `A11y.FocusFrame` confines screen-reader **and** keyboard focus.
+- **Self-contained.** No runtime dependency on the two split packages — install only
+  `react-native-a11y`.
+- **Migration shim.** The imperative 0.7 focus-order API lives under
+  [`Legacy.*`](./docs/api/legacy.md) for a near drop-in upgrade.
 
-    return (
-      <View style={style}>
-        <Pressable
-          onFocusChange={onFocusChangeHandler}
-          canBeFocused={canBeFocused}
-          onPress={onPress}
-          style={[styles.container]}
-          focusStyle={focusStyle || fStyle}
-          ref={ref}
-        >
-          <Text style={[styles.font, focused && styles.focusedFont]}>
-            {title}
-          </Text>
-        </Pressable>
-      </View>
-    );
-  },
-);
-```
+Coming from 0.7, `react-native-a11y-order`, or `react-native-external-keyboard`? Each path
+has its own section in the [migration guide](./docs/migration/migration.md).
 
-### KeyboardFocusTextInput
-
-`KeyboardFocusTextInput` is a TextInput with a view-based wrapper (`TextInputWrapperNative`). This wrapper helps standardize TextInput focusing behavior and also serves as a workaround for the Tab/Shift+Tab issue in Android.
-
-| Props            | Description                                                                                                                                                                                                                                                                                                                                                          |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TextInputProps   | Default TextInput props that are passed to the TextInput                                                                                                                                                                                                                                                                                                             |
-| onFocusChange?   | Event to handle focus change, `(e: event.nativeEvent.isFocused) => void`                                                                                                                                                                                                                                                                                             |
-| canBeFocused?    | `boolean` default true, describe whether component can be focused by keyboard                                                                                                                                                                                                                                                                                        |
-| focusType?:      | Focus type can be default, auto, or press. Based on investigation, Android and iOS typically have different default behaviors. On Android, the TextInput is focused by default, while on iOS, you need to press to focus. auto is used for automatic focusing, while keyboard focus targets the input. With press, you need to press the spacebar to focus an input. |
-| blurType?:       | Only for iOS. This defines the behavior for blurring input when focus moves away from the component. By default, iOS allows typing when the keyboard focus is on another component. You can use disable to blur input when focus moves away. (Further investigation is needed for Android.)                                                                          |
-| containerStyle?: | Style property (StyleProp<ViewStyle>) for wrapper view                                                                                                                                                                                                                                                                                                               |
-
-#### Examples
-
-```
-import { KeyboardFocusTextInput } "react-native-a11y";
-
-const App = () => {
-
-  return  <KeyboardFocusTextInput
-      style={styles.textInput}
-      containerStyle={styles.textInputContainer}
-      value={inputValue}
-      onChangeText={setInputValue}
-      focusType="auto"
-      blurType="auto"
-    />
-}
-
-
-```
-
-### KeyboardProvider
-
-Specific provider, used to block all focusable views (KeyboardFocusView). Based on value props disable or not KeyboardFocusView. It can be useful to block list of components, on screen for example or on Drawer in React Navigation.
-
-```
-watch: examples/A11ySample/src/screens/KeyboardFocusScreen
-
-const App = () => {
-  return <>
-     <Button
-        style={styles.btn}
-        title="Title"
-      />
-      <KeyboardProvider value={false}>
-        <Button title="Disabled focus" />
-        <Button title="Disabled focus" />
-      </KeyboardProvider>
-  </>
-}
-```
-
-## ReactNative old versions supporting
-
-The library provides default support for RN versions starting from v0.66.1 and up to v0.72.\*.
-
-To enable support for versions 0.64._ and 0.65._, add `legacyVer=true` in your `gradle.properties` file
-
-```
-// root/android/gradle.properties
-
-legacyVer=true
-```
-
-If for some reason you need support for older versions, feel free to create an issue.
-
-## Problems
-
-#### iOS
-
-- remove halo effect for ios keyboard focus, focusEffect = nil doesn't work, overriding to. Note: tested on iphone 8 - 15.5, try to a new one
-
-#### Android
-
-- a11y listener for talk back doesn't work perfect, we can not listen TalkBack only, it listen the whole a11y functional in android and can return wrong results.
+---
 
 ## Contributing
 
-Any type of contribution is highly appreciated. Feel free to create PRs, raise issues, or share ideas.
+Any type of contribution is highly appreciated. Feel free to create PRs, raise issues, or
+share ideas — see the [contributing guide](CONTRIBUTING.md) for the development workflow.
 
 ## Acknowledgements
 
-I really appreciate the work and solutions provided by [Andrii Koval](https://github.com/ZioVio), [Michail Chavkin](https://github.com/mchavkin), [Dzmitry Khamitsevich](https://github.com/bulletxenus). I think there was not this library without them, I also want to thank [Aliaksei Kisel](https://github.com/ziginsider) and [Herman Tseranevich](https://github.com/lollegend) for help with publishing and reviewing.
-
-Many thanks to the contributors: [Boaz Poolman](https://github.com/boazpoolman), [YOEL311 Yoel Naki](https://github.com/YOEL311)
-
-And of course, thanks to the issue reporters: [Leonardo Guarnieri de Bastiani](https://github.com/leobastiani), [David](https://github.com/deggertsen), [Summer Knight](https://github.com/ckknight),[Rick Vellinga](https://github.com/RickVellingaa), [joonmanji](https://github.com/joonmanji)
+This library stands on the work behind both source packages. Thanks to the initial
+authors [Andrii Koval](https://github.com/ZioVio),
+[Michail Chavkin](https://github.com/mchavkin), and
+[Dzmitry Khamitsevich](https://github.com/bulletxenus), and to everyone who contributed,
+reported issues, and followed along across `react-native-a11y-order` and
+`react-native-external-keyboard`.
 
 ## License
 
