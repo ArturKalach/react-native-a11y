@@ -1,6 +1,6 @@
 {
   "name": "react-native-a11y",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Improvements of a11y for ReactNative, this library improve work with reader and keyboard focus and reader in general.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
@@ -30,7 +30,7 @@
     "!**/docs"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-external-keyboard-example",
+    "example": "yarn workspace react-native-a11y-example",
     "clean": "del-cli android/build example/android/build example/android/app/build example/ios/build lib",
     "prepare": "bob build",
     "typecheck": "tsc",
@@ -43,12 +43,24 @@
     "react-native",
     "ios",
     "android",
-    "react-native a11y",
+    "accessibility",
     "a11y",
-    "keyboard",
+    "react-native a11y",
+    "WCAG",
+    "screen reader",
+    "VoiceOver",
+    "TalkBack",
     "reader focus",
+    "focus order",
+    "focus trap",
+    "focus lock",
+    "announcements",
+    "keyboard",
+    "physical keyboard",
+    "external keyboard",
     "keyboard focus",
-    "WCAG"
+    "UIFocusHaloEffect",
+    "defaultFocusHighlightEnabled"
   ],
   "repository": "https://github.com/ArturKalach/react-native-a11y",
   "author": "Artur Kalach <artur.kalach.andreevich@gmail.com> (https://github.com/ArturKalach)",
@@ -113,15 +125,25 @@
   "codegenConfig": {
     "name": "RNA11ySpec",
     "type": "all",
-    "jsSrcsDir": "src/nativeSpecs",
+    "jsSrcsDir": "src",
     "android": {
       "javaPackageName": "com.reactnativea11y"
     },
     "ios": {
       "componentProvider": {
-        "RCA11yFocusWrapper": "RCA11yFocusWrapper",
-        "RCA11yPaneView": "RCA11yPaneView",
+        "RCA11yView": "RCA11yView",
+        "RCA11yLock": "RCA11yLockView",
+        "RCA11yOrder": "RCA11yOrderView",
+        "RCA11yCard": "RCA11yCardView",
+        "RCA11yPaneTitle": "RCA11yPaneTitleView",
+        "RCA11yFocusGroup": "RCA11yFocusGroup",
         "RCA11yTextInputWrapper": "RCA11yTextInputWrapper"
+      },
+      "modulesProvider": {
+        "RCA11yAnnounceModule": "RCA11yAnnounceModule",
+        "RCA11yKeyboardModule": "RCA11yKeyboardModule",
+        "RCA11yKeyboardConnectedModule": "RCA11yKeyboardConnectedModule",
+        "RCA11yOrderModule": "RCA11yOrderModule"
       }
     }
   },

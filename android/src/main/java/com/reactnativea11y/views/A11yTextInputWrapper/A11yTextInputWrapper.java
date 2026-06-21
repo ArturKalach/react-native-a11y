@@ -1,0 +1,447 @@
+package com.reactnativea11y.views.A11yTextInputWrapper;
+
+import android.content.Context;
+import android.graphics.Rect;
+import android.os.Build;
+import android.text.Editable;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+
+import com.reactnativea11y.events.EventHelper;
+import com.reactnativea11y.modules.A11yKeyboardModule;
+import com.reactnativea11y.core.FocusHighlightBase;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.views.textinput.ReactEditText;
+
+public class A11yTextInputWrapper extends FocusHighlightBase implements View.OnFocusChangeListener {
+  private final Context context;
+  public static final byte FOCUS_BY_PRESS = 1;
+
+  // RN version is a compile-time constant — cache it once instead of re-reading on every call.
+  private static final boolean IS_NATIVELY_FIXED_VERSION = resolveIsNativelyFixedVersion();
+
+  private ReactEditText reactEditText = null;
+  private boolean focusEventIgnore = false;
+  private int focusType = 0;
+  // Used only to re-apply focusability after React Native attaches the EditText to the window.
+  private View.OnAttachStateChangeListener focusabilityListener;
+  private boolean blurOnSubmit = true;
+  private boolean multiline = false;
+  private boolean keyboardFocusable = true;
+  // FOCUS_BY_PRESS only: set while a directional focus search (Tab/Shift+Tab/arrows)
+  // is moving focus out of the EditText, so the blur handler knows not to pull
+  // focus back to the wrapper. Cleared right after on the message queue.
+  private boolean navigatingAway = false;
+  // FOCUS_BY_PRESS only: set when Enter enters edit mode, so the EditText key listener
+  // swallows the single paired Enter key-up that would otherwise hide the IME hint.
+  private boolean consumeActivationEnterUp = false;
+
+  private static boolean resolveIsNativelyFixedVersion() {
+    try {
+      Object minorValue = com.facebook.react.modules.systeminfo.ReactNativeVersion.VERSION.containsKey("minor")
+          ? com.facebook.react.modules.systeminfo.ReactNativeVersion.VERSION.get("minor")
+          : 0;
+      int minor = (minorValue instanceof Integer) ? (int) minorValue : 0;
+      return minor >= 79;
+    } catch (Exception e) {
+      return false;
+    }
+  }
+
+  // For FOCUS_BY_PRESS: wrapper must always intercept focus so the user navigates
+  //   to the wrapper first, then presses Enter/Space to enter edit mode.
+  // For regular focus: pre-0.79 had a backward-direction bug, so the wrapper handled
+  //   focus transfer. In 0.79+ that is natively fixed and the EditText gets focus directly.
+  private boolean shouldWrapperBeFocusable() {
+    if (!keyboardFocusable) return false;
+    if (focusType == FOCUS_BY_PRESS) return true;
+    return !IS_NATIVELY_FIXED_VERSION;
+  }
+
+  private boolean shouldEditTextBeFocusable() {
+    return keyboardFocusable && !shouldWrapperBeFocusable();
+  }
+
+  private void updateFocusability() {
+    this.setFocusable(shouldWrapperBeFocusable());
+    if (this.reactEditText != null) {
+      boolean editTextFocusable = shouldEditTextBeFocusable();
+      this.reactEditText.setFocusable(editTextFocusable);
+      if (focusType == FOCUS_BY_PRESS) {
+        // RN creates every ReactEditText with focusableInTouchMode=true, so in touch
+        // mode the EditText stays a focus candidate even with focusable=false. During
+        // navigation focus would land on the field (flashing the soft keyboard) before
+        // resolving to the wrapper. Clear it so focus goes straight to the wrapper;
+        // handleTextInputFocus restores it when the user enters edit mode.
+        this.reactEditText.setFocusableInTouchMode(editTextFocusable);
+      }
+    }
+  }
+
+  @Override
+  protected void syncFocusHighlight () {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+      this.setDefaultFocusHighlightEnabled(focusHighlight);
+      if(this.reactEditText != null) {
+        reactEditText.setDefaultFocusHighlightEnabled(focusHighlight);
+      }
+    }
+  }
+
+
+  @Override
+  public View getFirstChild() {
+    // In 0.79+ with regular focus, the EditText receives focus directly.
+    // For FOCUS_BY_PRESS the wrapper itself is the focus target.
+    if (IS_NATIVELY_FIXED_VERSION && focusType != FOCUS_BY_PRESS && this.reactEditText != null) {
+      return this.reactEditText;
+    }
+    return this;
+  }
+
+  @Override
+  public void setNextFocusForwardId(int nextFocusForwardId) {
+    super.setNextFocusForwardId(nextFocusForwardId);
+    if (reactEditText != null) {
+      reactEditText.setNextFocusForwardId(nextFocusForwardId);
+    }
+  }
+
+  // --- Child lifecycle (mirrors A11yView pattern) ---
+
+  // Overrides ViewOrderGroupBase.linkAddView so the manager can call it uniformly
+  // for all children — the ReactEditText filter lives here, not in the manager.
+  @Override
+  public void linkAddView(View child) {
+    if (!(child instanceof ReactEditText)) return;
+    setEditText((ReactEditText) child);  // configure listeners before linking
+    this.syncFocusHighlight();
+    super.linkAddView(child);            // store firstChild + call focusOrderDelegate.link()
+  }
+
+  // Symmetric to linkAddView: manager calls linkRemoveView for all children.
+  @Override
+  public void linkRemoveView(View view) {
+    if (view != this.reactEditText) return;
+    super.linkRemoveView(view);  // call focusOrderDelegate.unlink() + clear firstChild
+    setEditText(null);
+  }
+
+  // --- EditText setup / teardown ---
+
+  public void setEditText(ReactEditText editText) {
+    if (editText != null) {
+      this.reactEditText = editText;
+      updateFocusability();
+      this.reactEditText.addOnAttachStateChangeListener(getFocusabilityListener());
+      subscribeEditTextFocusListener();
+      onMultiplyBlurSubmitHandle();
+    } else {
+      clearEditText();
+    }
+  }
+
+  private View.OnAttachStateChangeListener getFocusabilityListener() {
+    if (focusabilityListener == null) {
+      focusabilityListener = new View.OnAttachStateChangeListener() {
+        @Override
+        public void onViewAttachedToWindow(@NonNull View view) {
+          // Re-apply focusability (both focusable and focusableInTouchMode) after
+          // React Native attaches the view; the framework may reset them during the
+          // layout/commit phase.
+          updateFocusability();
+        }
+        @Override
+        public void onViewDetachedFromWindow(@NonNull View view) {}
+      };
+    }
+    return focusabilityListener;
+  }
+
+  private void clearEditText() {
+    if (this.reactEditText != null) {
+      focusOrderDelegate.unlink();
+      if (focusabilityListener != null) {
+        this.reactEditText.removeOnAttachStateChangeListener(focusabilityListener);
+      }
+      this.reactEditText.setOnFocusChangeListener(null);
+      this.reactEditText.setOnKeyListener(null);
+    }
+    this.reactEditText = null;
+  }
+
+  private void subscribeEditTextFocusListener() {
+    OnFocusChangeListener reactListener = this.reactEditText.getOnFocusChangeListener();
+    this.reactEditText.setOnFocusChangeListener((textInput, hasTextEditFocus) -> {
+      reactListener.onFocusChange(textInput, hasTextEditFocus);
+      this.focusEventIgnore = false;
+      if (focusType != FOCUS_BY_PRESS || !hasTextEditFocus) {
+        onFocusChange(textInput, hasTextEditFocus);
+      }
+      if (hasTextEditFocus) {
+        A11yKeyboardModule.setFocusedTextInput(textInput);
+      }
+      if (!hasTextEditFocus) {
+        updateFocusability();
+        // Once the focus change settles, dismiss the IME unless focus landed on a
+        // field that edits immediately (another text input). Posted so the
+        // destination — reached via Tab, arrows, or the press/pre-0.79 transfer into
+        // the next EditText — is in place when we check. Catches every navigation
+        // path uniformly, where a focusSearch-time check would miss the arrows.
+        post(() -> {
+          View root = getRootView();
+          View current = root != null ? root.findFocus() : null;
+          if (!destinationKeepsKeyboard(current)) {
+            hideSoftKeyboard(textInput);
+          }
+        });
+        if (focusType == FOCUS_BY_PRESS) {
+          // Tab/Shift+Tab/arrows blur the EditText as part of moving focus to
+          // another view — leave it there. Otherwise edit mode was exited in
+          // place (Enter/submit, keyboard dismissed), and clearFocus() would let
+          // the framework default focus to the first view on screen, so pull
+          // focus back to the wrapper to stay on this control in its idle state.
+          if (!navigatingAway) {
+            post(() -> A11yTextInputWrapper.this.requestFocus());
+          }
+        }
+      }
+    });
+  }
+
+  // --- Focus change event ---
+
+  @Override
+  public void onFocusChange(View v, boolean hasFocus) {
+    if (!this.focusEventIgnore) {
+      EventHelper.focusChanged((ReactContext) context, this.getId(), hasFocus);
+    }
+  }
+
+  public void subscribeOnFocus() {
+    this.setOnFocusChangeListener(this);
+  }
+
+  // --- Props ---
+
+  public void setKeyboardFocusable(boolean canBeFocusable) {
+    if (keyboardFocusable == canBeFocusable) return;
+    keyboardFocusable = canBeFocusable;
+    updateFocusability();
+  }
+
+  public void setFocusType(int focusType) {
+    if (this.focusType == focusType) return;
+    this.focusType = focusType;
+    updateFocusability();
+    // On 0.79+ getFirstChild() switches between wrapper and reactEditText based on
+    // focusType. If the EditText is already attached, re-link so the delegate
+    // registers the correct child for the new mode.
+    if (reactEditText != null && reactEditText.isAttachedToWindow()) {
+      focusOrderDelegate.unlink();
+      focusOrderDelegate.link();
+    }
+  }
+
+  public void setBlurType(int blurType) {
+    // Stub: Android does not allow typing in an EditText from another view.
+  }
+
+  public void setBlurOnSubmit(boolean blurOnSubmit) {
+    this.blurOnSubmit = blurOnSubmit;
+  }
+
+  public void setMultiline(boolean multiline) {
+    this.multiline = multiline;
+    onMultiplyBlurSubmitHandle();
+  }
+
+  // --- Constructor ---
+
+  public A11yTextInputWrapper(Context context) {
+    super(context);
+    this.context = context;
+    setFocusable(shouldWrapperBeFocusable());
+  }
+
+  // --- Key handling ---
+
+  @Override
+  public boolean onKeyDown(int keyCode, KeyEvent event) {
+    if (isFocusLocked(event)) return true;
+    if (focusType == FOCUS_BY_PRESS && this.reactEditText != null) {
+      this.reactEditText.setFocusable(false);
+    }
+    // Only activate from the wrapper's idle state (wrapper itself focused). While the
+    // EditText is editing it — not the wrapper — holds focus, so an Enter that bubbles
+    // up here must fall through to submit/blur instead of re-entering edit mode.
+    if (isActivationKey(keyCode) && this.isFocused()) {
+      if (keyCode == KeyEvent.KEYCODE_ENTER) {
+        // Focus is about to move to the EditText; the paired Enter key-up will land on
+        // it and ReactEditText.onKeyUp(Enter) would hide the soft-input hint we just
+        // raised (a visible blink). Mark it so the EditText key listener swallows that
+        // one key-up.
+        consumeActivationEnterUp = true;
+      }
+      this.handleTextInputFocus();
+      return true;
+    }
+    return super.onKeyDown(keyCode, event);
+  }
+
+  private boolean isActivationKey(int keyCode) {
+    return keyCode == KeyEvent.KEYCODE_SPACE
+        || keyCode == KeyEvent.KEYCODE_DPAD_CENTER
+        || keyCode == KeyEvent.KEYCODE_ENTER;
+  }
+
+  // Keys that move keyboard focus to another field (Tab/Shift+Tab and the arrows).
+  private boolean isNavigationKey(int keyCode) {
+    return keyCode == KeyEvent.KEYCODE_TAB
+        || keyCode == KeyEvent.KEYCODE_DPAD_UP
+        || keyCode == KeyEvent.KEYCODE_DPAD_DOWN
+        || keyCode == KeyEvent.KEYCODE_DPAD_LEFT
+        || keyCode == KeyEvent.KEYCODE_DPAD_RIGHT;
+  }
+
+  // --- Touch handling ---
+
+  @Override
+  public boolean onInterceptTouchEvent(MotionEvent ev) {
+    // In FOCUS_BY_PRESS mode the EditText is non-focusable (wrapper holds focus).
+    // Intercept the down event so a tap activates edit mode, same as a keyboard press.
+    if (focusType == FOCUS_BY_PRESS && ev.getAction() == MotionEvent.ACTION_DOWN) {
+      handleTextInputFocus();
+    }
+    return false; // don't consume — let the touch reach the EditText for cursor positioning
+  }
+
+  // --- Focus search / request ---
+
+  @Override
+  public View focusSearch(int direction) {
+    // focusSearch(View, int) is only called when a descendant is focused.
+    // When the wrapper itself is focused (FOCUS_BY_PRESS idle state), we must
+    // handle orderForward/orderBackward here instead.
+
+      if (focusType == FOCUS_BY_PRESS) {
+      if (direction == FOCUS_FORWARD && orderForward != null) {
+        View next = focusOrderDelegate.getLink(orderForward);
+        if (next != null && next.isAttachedToWindow()) return next;
+      }
+      if (direction == FOCUS_BACKWARD && orderBackward != null) {
+        View prev = focusOrderDelegate.getLink(orderBackward);
+        if (prev != null && prev.isAttachedToWindow()) return prev;
+      }
+    }
+    return super.focusSearch(direction);
+  }
+
+  @Override
+  public View focusSearch(View focused, int direction) {
+    // Called when a descendant (the EditText, in edit mode) drives a directional
+    // focus search. Flag it so the blur handler lets focus move to the next view
+    // instead of pulling it back to the wrapper. Cleared on the next loop tick so
+    // a search that finds no target (no blur fired) doesn't strand the flag.
+    View next = super.focusSearch(focused, direction);
+    if (focusType == FOCUS_BY_PRESS) {
+      navigatingAway = true;
+      post(() -> navigatingAway = false);
+    }
+    return next;
+  }
+
+  @Override
+  public boolean requestFocus(int direction, Rect previouslyFocusedRect) {
+    if (focusType != FOCUS_BY_PRESS) {
+      // 0.79+: wrapper is not focusable, pass through.
+      if (IS_NATIVELY_FIXED_VERSION) return super.requestFocus(direction, previouslyFocusedRect);
+      // Pre-0.79: intercept forward/backward and transfer focus directly to EditText.
+      if (direction == View.FOCUS_FORWARD || direction == View.FOCUS_BACKWARD) {
+        this.handleTextInputFocus();
+        return true;
+      }
+    }
+    return super.requestFocus(direction, previouslyFocusedRect);
+  }
+
+  // --- Internal helpers ---
+
+  private void onMultiplyBlurSubmitHandle() {
+    if (this.reactEditText == null) return;
+    this.reactEditText.setOnKeyListener((v, keyCode, event) -> {
+      // Swallow the single Enter key-up that immediately follows entering edit mode,
+      // so ReactEditText.onKeyUp doesn't hide the freshly raised soft-input hint.
+      // Runs before the EditText's own onKeyUp, so returning true suppresses the hide.
+      if (consumeActivationEnterUp && event.getAction() == KeyEvent.ACTION_UP
+          && keyCode == KeyEvent.KEYCODE_ENTER) {
+        consumeActivationEnterUp = false;
+        return true;
+      }
+      // FOCUS_BY_PRESS: a navigation key while editing is about to hand focus to
+      // another field. This listener runs *before* the EditText processes the key
+      // (and blurs), so flag it here — the blur handler then leaves focus on the
+      // destination instead of pulling it back and refocusing the field we left.
+      if (focusType == FOCUS_BY_PRESS && event.getAction() == KeyEvent.ACTION_DOWN
+          && isNavigationKey(keyCode)) {
+        navigatingAway = true;
+        post(() -> navigatingAway = false);
+      }
+      if (this.multiline && event.getAction() == KeyEvent.ACTION_DOWN
+          && keyCode == KeyEvent.KEYCODE_ENTER && !event.isShiftPressed()) {
+        Editable editableText = reactEditText.getText();
+        String text = editableText == null ? "" : String.valueOf(editableText);
+        EventHelper.multiplyTextSubmit((ReactContext) context, getId(), text);
+        if (blurOnSubmit && v instanceof EditText) {
+          v.clearFocus();
+          return true;
+        }
+      }
+      return false;
+    });
+  }
+
+  // True when keyboard focus landing on `view` should keep the IME up — i.e. the
+  // destination is a field that starts editing on focus:
+  //   • a ReactEditText (the focus target in 0.79+ default/auto), or
+  //   • a non-press A11yTextInputWrapper. Pre-0.79 (and any wrapper-as-target case)
+  //     the wrapper takes focus but transfers straight into edit mode, so the
+  //     keyboard stays; a press wrapper takes focus in its idle state → hide.
+  // Anything else (a button, a plain view, or no focus at all) → hide.
+  private boolean destinationKeepsKeyboard(View view) {
+    if (view instanceof ReactEditText) return true;
+    if (view instanceof A11yTextInputWrapper) {
+      return ((A11yTextInputWrapper) view).focusType != FOCUS_BY_PRESS;
+    }
+    return false;
+  }
+
+  private void hideSoftKeyboard(View view) {
+    try {
+      InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+      if (imm != null) {
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+      }
+    } catch (Exception ignored) {
+    }
+  }
+
+  private void handleTextInputFocus() {
+    this.focusEventIgnore = true;
+    this.setFocusable(false);
+    this.reactEditText.setFocusable(true);
+    // focusableInTouchMode is required for requestFocus() to succeed when the device
+    // is in touch mode (canTakeFocus() returns false without it), and re-arms the
+    // EditText as a focus target after updateFocusability cleared it for navigation.
+    this.reactEditText.setFocusableInTouchMode(true);
+    if (!this.reactEditText.hasFocus()) {
+      this.reactEditText.requestFocusFromJS();
+    }
+  }
+}
