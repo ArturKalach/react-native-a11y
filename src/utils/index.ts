@@ -11,6 +11,7 @@ export {
 export { useOnFocusChange } from './useOnFocusChange';
 export { useOrderValidation } from './useOrderValidation';
 export { useRenderedChildren } from './useRenderedChildren';
+export { useContainerStyle } from './useContainerStyle';
 export { useWrappedOrderProps } from './useWrappedOrderProps';
 export { focusEventMapper } from './focusEventMapper';
 export { withKeyboardFocus } from './withKeyboardFocus';

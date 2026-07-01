@@ -8,20 +8,15 @@
 #import "RCA11yFocusEffectUtility.h"
 #import "RCA11yHaloDelegate.h"
 
-#ifdef RCT_NEW_ARCH_ENABLED
-#import "RCTViewComponentView+RCA11y.h"
-#endif
-
+// Builds (and caches) the keyboard focus halo from the view's explicit halo props
+// — `haloCornerRadius`, `haloExpendX`, `haloExpendY`. The radius is an input, not
+// observed off the layer, so there is no stable-radius tracking and no re-arm loop.
 @implementation RCA11yHaloDelegate {
   UIView<RCA11yHaloProtocol> *_delegate;
   UIFocusEffect *_currentEffect;
   BOOL _isDirty;
   CGRect _prevBounds;
   CGFloat _prevRadius;
-  // Last non-zero layer.cornerRadius we observed. RN's invalidateLayer toggles
-  // the live cornerRadius between the styled value and 0 (its two border-render
-  // paths); we pin the halo to this stable value so it stops following the 0.
-  CGFloat _stableRadius;
 }
 
 - (instancetype _Nonnull)initWithView:(UIView<RCA11yHaloProtocol> *_Nonnull)delegate {
@@ -32,7 +27,6 @@
     _isDirty = YES;
     _prevBounds = CGRectZero;
     _prevRadius = -1;
-    _stableRadius = 0;
   }
   return self;
 }
@@ -43,20 +37,17 @@
   }
 
   UIView *focusingView = [_delegate getFocusTargetView];
+  CGFloat cornerRadius = _delegate.haloCornerRadius;
 
-  // Track the view's intended corner radius, ignoring the transient 0 RN sets
-  // while it draws the image-based border.
-  [self observeCornerRadius:focusingView.layer.cornerRadius];
-
-  // Explicit haloCornerRadius wins; otherwise pin to the view's stable radius.
-  CGFloat cornerRadius = _delegate.haloCornerRadius > 0 ? _delegate.haloCornerRadius
-                                                        : _stableRadius;
-
-  BOOL hasCustomSettings = _delegate.haloExpendX || _delegate.haloExpendY || _delegate.haloCornerRadius;
-  if (!hasCustomSettings && !_delegate.roundedHaloFix) {
+  // No explicit halo customization: let UIKit draw its own default halo, which
+  // tracks the focused view's bounds (and its own corner radius) for free.
+  BOOL hasCustomSettings = _delegate.haloExpendX || _delegate.haloExpendY || cornerRadius;
+  if (!hasCustomSettings) {
     return nil;
   }
 
+  // Rebuild only when the geometry/radius the rounded-rect depends on changed, or a
+  // halo prop changed (`invalidate`). Expansion changes arrive via `invalidate`.
   BOOL boundsChanged = !CGRectEqualToRect(_prevBounds, focusingView.bounds);
   BOOL radiusChanged = _prevRadius != cornerRadius;
 
@@ -74,13 +65,6 @@
   return _currentEffect;
 }
 
-- (void)observeCornerRadius:(CGFloat)radius {
-  if (radius > 0 && radius != _stableRadius) {
-    _stableRadius = radius;
-    _isDirty = YES;
-  }
-}
-
 - (void)invalidate {
   _isDirty = YES;
 }
@@ -90,7 +74,6 @@
   _isDirty = YES;
   _prevBounds = CGRectZero;
   _prevRadius = -1;
-  _stableRadius = 0;
 }
 
 @end

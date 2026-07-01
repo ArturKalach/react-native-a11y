@@ -7,10 +7,12 @@
 
 #import "RCA11yFocusDelegate.h"
 #import "RCA11yFocusProtocol.h"
-#import "RCA11yFocusEffectUtility.h"
 
 @implementation RCA11yFocusDelegate{
   UIView<RCA11yFocusProtocol>* _delegate;
+  // The view UIKit actually focused inside our subtree (set from the focus engine,
+  // not guessed). Weak so a removed/recycled view can't be retained or go stale.
+  __weak UIView* _focusedTarget;
 }
 
 - (instancetype _Nonnull )initWithView:(UIView<RCA11yFocusProtocol> *_Nonnull)delegate{
@@ -19,6 +21,30 @@
     _delegate = delegate;
   }
   return self;
+}
+
+- (void)reset {
+  _focusedTarget = nil;
+}
+
+// Whether `view` is the focus target THIS wrapper owns. A non-wrapper owns only
+// itself. A wrapper owns a focused descendant only when it is the *nearest* wrapper
+// — i.e. no other focusable wrapper sits between `view` and us — so nested wrappers
+// don't both claim (and double-halo) the same focused view.
+- (BOOL)ownsFocusedView:(UIView *)view {
+  if (!_delegate.focusableWrapper) {
+    return view == _delegate;
+  }
+  if (view == _delegate || ![view isDescendantOfView:_delegate]) {
+    return NO;
+  }
+  for (UIView *v = view.superview; v && v != _delegate; v = v.superview) {
+    if ([v conformsToProtocol:@protocol(RCA11yFocusProtocol)] &&
+        [(id<RCA11yFocusProtocol>)v focusableWrapper]) {
+      return NO; // a nearer wrapper owns it
+    }
+  }
+  return YES;
 }
 
 - (UIView*)getFirstFocusable:(UIView*)view {
@@ -55,6 +81,14 @@
         return _delegate;
     }
 
+    // Prefer the view the focus engine actually focused (correct even when it isn't
+    // the first child). Only trust it while it's still inside our subtree.
+    if (_focusedTarget && [_focusedTarget isDescendantOfView:_delegate]) {
+        return _focusedTarget;
+    }
+
+    // Fallback before focus exists (e.g. setKeyboardFocus / focus-link setup):
+    // best-effort guess at the first focusable child.
     UIView *gestureHandlerView = [self focusingViewForGestureHandler];
     if (gestureHandlerView) {
         return gestureHandlerView;
@@ -76,10 +110,21 @@
 }
 
 - (NSNumber*)isFocusChanged:(UIFocusUpdateContext *)context {
-  UIView* view = [self getFocusingView];
-  if(context.nextFocusedView == view) {
+  UIView *next = context.nextFocusedView;
+  UIView *prev = context.previouslyFocusedView;
+
+  // Focus entered our subtree: remember the *actual* focused view and report focus.
+  if (next && [self ownsFocusedView:next]) {
+    if (next == _focusedTarget) {
+      return nil; // already tracking this view — not a change
+    }
+    _focusedTarget = next;
     return @YES;
-  } else if (context.previouslyFocusedView == view) {
+  }
+
+  // Focus left the view we were tracking.
+  if (prev && prev == _focusedTarget) {
+    _focusedTarget = nil;
     return @NO;
   }
 

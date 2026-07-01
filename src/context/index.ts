@@ -1,4 +1,5 @@
 export { IsViewFocusedContext, useIsViewFocused } from './IsViewFocusedContext';
+export { IsViewPressedContext, useIsViewPressed } from './IsViewPressedContext';
 export {
   GroupIdentifierContext,
   useGroupIdentifierContext,

@@ -24,6 +24,10 @@
 @property (nonatomic, assign) BOOL isHaloHidden;
 @property (nonatomic, assign) BOOL roundedHaloFix;
 
+/// Whether this view currently owns keyboard focus. Default NO; the focus-change
+/// subclass overrides it. Used to skip the layout halo refresh on unfocused views.
+- (BOOL)isKeyboardFocused;
+
 #ifdef RCT_NEW_ARCH_ENABLED
 - (void)updateHaloProps:(const RCA11y::HaloProps &)oldProps
                newProps:(const RCA11y::HaloProps &)newProps;

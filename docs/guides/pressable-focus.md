@@ -5,8 +5,8 @@
 | <!-- TODO: capture combined-package demo (keyboard-pressable-ios.gif) --> <img src="../images/keyboard-pressable-ios.gif" height="400" alt="Pressable focus on iOS" /> | <!-- TODO: capture combined-package demo (keyboard-pressable-android.gif) --> <img src="../images/keyboard-pressable-android.gif" height="400" alt="Pressable focus on Android" /> |
 
 This guide covers how a keyboard-focusable component reports focus and how to style it:
-the focus lifecycle events (`onFocus`, `onBlur`, `onFocusChange`), the two style hooks
-(`focusStyle`, `containerFocusStyle`), and the two render props (`renderContent`,
+the focus lifecycle events (`onFocus`, `onBlur`, `onFocusChange`), the state-driven style
+callbacks (`style`, `containerStyle`), and the two render props (`renderContent`,
 `renderFocusable`).
 
 Everything here applies to `A11y.Pressable`, `A11y.View`, and any component created with
@@ -18,7 +18,10 @@ set up:
 ```tsx
 import { A11y } from 'react-native-a11y';
 
-<A11y.Pressable onPress={onPress} focusStyle={{ backgroundColor: 'dodgerblue' }}>
+<A11y.Pressable
+  onPress={onPress}
+  style={({ focused }) => focused && { backgroundColor: 'dodgerblue' }}
+>
   <Text>Item</Text>
 </A11y.Pressable>
 ```
@@ -81,44 +84,46 @@ const [focused, setFocused] = useState(false);
 
 ## Styling the focused state
 
-There are two layers you can style, each with a static-or-callback
-[`FocusStyle`](../api/overview.md#focusstyle):
+`style` and `containerStyle` each accept a **static style/array** or a **callback that
+receives `{ focused, pressed }`** — one consistent shape for both keyboard focus and
+press. Two layers:
 
-| Prop | Applies to | Pair with |
-| :-- | :-- | :-- |
-| `focusStyle` | The **inner** component | `style` |
-| `containerFocusStyle` | The **outer** container | `containerStyle` |
-
-The container wraps the inner component; use `containerFocusStyle` for outlines/rings
-that should sit around the whole element, and `focusStyle` for changes to the pressable
-surface itself.
+| Prop | Applies to |
+| :-- | :-- |
+| `style` | The **inner** component (the pressable surface). |
+| `containerStyle` | The **outer** container — outlines/rings around the whole element. |
 
 ```tsx
 <A11y.Pressable
-  style={styles.button}
-  focusStyle={{ backgroundColor: 'dodgerblue' }}
-  containerStyle={styles.container}
-  containerFocusStyle={{ borderColor: 'dodgerblue', borderWidth: 2 }}
+  style={({ focused, pressed }) => [
+    styles.button,
+    focused && { backgroundColor: 'dodgerblue' },
+    pressed && { opacity: 0.85 },
+  ]}
+  containerStyle={({ focused }) => [
+    styles.container,
+    focused && { borderColor: 'dodgerblue', borderWidth: 2 },
+  ]}
   onPress={onPress}
 >
   <Text>Styled on focus</Text>
 </A11y.Pressable>
 ```
 
-### Callback form
-
-Both props accept a function receiving `{ focused }`, so you can compute the style:
+Pass a plain style/array when you don't need the state:
 
 ```tsx
-<A11y.Pressable
-  focusStyle={({ focused }) => ({
-    transform: [{ scale: focused ? 1.05 : 1 }],
-  })}
-  onPress={onPress}
->
-  <Text>Scales on focus</Text>
+<A11y.Pressable style={styles.button} containerStyle={styles.container} onPress={onPress}>
+  <Text>Static</Text>
 </A11y.Pressable>
 ```
+
+> [!NOTE]
+> **Deprecated: `focusStyle` / `containerFocusStyle`.** Earlier versions used separate
+> focus-only props. They still work but are deprecated — prefer the unified callback,
+> which also gives you `pressed`: `style={(s) => (s.focused ? focusedStyle : baseStyle)}`.
+> (`withPressedStyle` is likewise deprecated — the pressed callback is enabled
+> automatically when `style` is a function.)
 
 ---
 
@@ -172,7 +177,7 @@ const KeyboardTouchable = withKeyboardFocus(TouchableOpacity);
 
 | Situation | Use |
 | :-- | :-- |
-| Only need a style change on focus | `focusStyle` / `containerFocusStyle` |
+| Only need a style change on focus/press | `style` / `containerStyle` callback |
 | Need `focused` inside the rendered content | `renderFocusable` |
 | Wrapped `Pressable` and need `pressed` + `focused` together | `renderContent` |
 

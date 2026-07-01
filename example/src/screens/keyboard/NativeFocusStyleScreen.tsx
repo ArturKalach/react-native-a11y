@@ -183,8 +183,8 @@ const HaloCard = ({
 }) => {
   const expanded = variant === 'expanded';
   const custom = variant === 'custom';
-  // The last two avoid corner radius — the iOS halo follows the view's
-  // cornerRadius, and rounding it (haloCornerRadius / roundedHaloFix) is flaky.
+  // The expanded variant rounds + pads the halo via haloCornerRadius / haloExpend*;
+  // set haloCornerRadius to match the card's borderRadius (it isn't inferred).
   return (
     <A11y.Pressable
       onFocusChange={(isFocused) => onNav(index, isFocused)}
@@ -193,7 +193,6 @@ const HaloCard = ({
       haloExpendX={expanded ? 16 : undefined}
       haloExpendY={expanded ? 16 : undefined}
       haloCornerRadius={expanded ? 16 : undefined}
-      roundedHaloFix={expanded ? true : undefined}
       defaultFocusHighlightEnabled={custom ? false : undefined}
       focusStyle={custom ? styles.customRing : undefined}
       style={[

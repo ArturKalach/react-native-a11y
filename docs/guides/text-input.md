@@ -97,7 +97,7 @@ focus styles. See [Native focus styling](./focus-styling.md) for the full pictur
 | :-- | :-- | :-- | :-- |
 | `focusable` | `boolean` | `true` | Whether the input can be keyboard-focused. Also controls `editable`. |
 | `haloEffect` | `boolean` | `true` | *(iOS)* Halo ring on focus. |
-| `roundedHaloFix` | `boolean` | `false` | *(iOS)* Keeps a disabled halo (`haloEffect={false}`) suppressed on rounded (`borderRadius`) views. [Why & alternative](./focus-styling.md#roundedhalofix). |
+| `roundedHaloFix` | `boolean` | `false` | *(iOS)* **Deprecated & ignored** — a disabled halo no longer reappears on rounded views. Removed next major. |
 | `defaultFocusHighlightEnabled` | `boolean` | `true` | *(Android)* Default focus highlight. |
 | `tintType` | `'default' \| 'none'` | `'default'` | Cross-platform shortcut: `'none'` disables the native focus indicator on both platforms (iOS halo + Android highlight). [Details](./focus-styling.md#turning-off-all-native-indicators). |
 | `tintColor` | `string` | — | *(iOS)* Halo / tint color. |

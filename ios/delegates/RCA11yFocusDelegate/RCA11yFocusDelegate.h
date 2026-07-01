@@ -16,6 +16,8 @@
 - (UIView*_Nonnull)getFocusingView;
 - (BOOL)canBecomeFocused;
 - (nullable NSNumber*)isFocusChanged:(UIFocusUpdateContext *_Nonnull)context;
+/** Clears the captured focused view; call on view recycle. */
+- (void)reset;
 
 @end
 

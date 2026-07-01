@@ -59,8 +59,8 @@ Everything ships under the `A11y` namespace, plus top-level imperative APIs:
   `isKeyboardConnected`, `keyboardStatusListener`.
 - **Hooks / utils**: `withKeyboardFocus`, `combineRefs`, `isScreenReaderEnabled` /
   `screenReaderStatusListener`, `useIsScreenReaderEnabled(Ref)`, `useIsKeyboardConnected(Ref)`.
-- **Context**: `useIsViewFocused`, `KeyboardOrderFocusGroup`, `useOrderFocusGroup`,
-  `OrderFocusGroupContext`.
+- **Context**: `useIsViewFocused`, `useIsViewPressed`, `KeyboardOrderFocusGroup`,
+  `useOrderFocusGroup`, `OrderFocusGroupContext`.
 - **`A11yProvider`** — a backward-compat passthrough (status hooks live in `utils/`, no real provider needed).
 - **`Legacy.*`** — the imperative focus-order shim: `useFocusOrder`,
   `useDynamicFocusOrder`, `useCombinedRef`, `A11yOrder`, `setAccessibilityFocus`,
@@ -95,6 +95,35 @@ validates order props (`useOrderValidation`), and forwards everything to the sin
 `A11yViewNative` (`RCA11yView`). It also backs `A11y.Index` (positional `index` / `A11y.Order`
 membership wires the SR sequence key). Imperative ref commands: `keyboardFocus`,
 `screenReaderFocus`, `focus`.
+
+### `withKeyboardFocus` — the focus/press stores
+
+`utils/withKeyboardFocus.tsx` is the HOC behind `A11y.Pressable`/`A11y.View`/`A11y.Input`. Two
+per-instance stores (`utils/useValueStore.ts`, a minimal `useSyncExternalStore`-shaped boolean
+store) let descendants react to focus/press **without** re-rendering the host:
+
+- **Focus store** (`context/IsViewFocusedContext.tsx`, `useIsViewFocused`) — always updated on
+  focus change; the host itself only re-renders when something it owns needs `focused`
+  (`reactToFocus`, computed from `focusStyle`/`containerFocusStyle`/`renderContent`/
+  `renderFocusable`/function `style`/function `containerStyle` — note `renderContent` **does**
+  set `reactToFocus`, since it needs a live `focused` value merged into its render-prop state).
+- **Press store** (`context/IsViewPressedContext.tsx`, `useIsViewPressed`) — updated
+  unconditionally in `handlePressIn`/`handlePressOut` (the single choke point both touch *and*
+  physical-keyboard activation flow through) and cleared on blur if a press was left stuck. This
+  is the only press signal that's correct on touch + keyboard, both platforms, without depending
+  on the Android heuristic below.
+
+**Android keyboard-press gotcha:** physical keyboard activation never reaches RN `Pressable`'s
+own touch responder, so anything reading `pressed` from *RN's own* render-prop state (function
+`style`/`containerStyle`, `renderContent`, function `children`) needs `androidKeyboardPressState`
+enabled to get keyboard parity with touch. `withKeyboardFocus` auto-enables it whenever
+`style`/`containerStyle` is a function, or `renderContent`/function `children` is used
+(`hasPressedRenderProp`) — if a future change adds another way to consume the wrapped
+component's own `pressed`, it must be added to that auto-enable check too, or keyboard press will
+silently stop styling/re-rendering on Android only (this exact bug shipped once already).
+
+See [docs/guides/withKeyboardHandler.md](docs/guides/withKeyboardHandler.md) for the full
+re-render-cost ranking of every declaration style.
 
 ## Codegen / native contract (`src/nativeSpecs/`)
 

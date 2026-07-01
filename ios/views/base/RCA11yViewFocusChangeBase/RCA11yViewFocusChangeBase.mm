@@ -32,6 +32,7 @@
 
 - (void)cleanReferences {
   [super cleanReferences];
+  [_focusDelegate reset];
   _isFocused = nil;
   _canBeFocused = false;
   _hasOnFocusChanged = false;

@@ -37,10 +37,11 @@ Task-focused walkthroughs. Read them in order, or jump to the one you need.
 | # | Guide | Covers |
 | :-- | :-- | :-- |
 | 1 | [Pressable focus handling](./guides/pressable-focus.md) | Focus/blur events, `focusStyle`, `containerFocusStyle`, render props |
-| 2 | [Native focus styling](./guides/focus-styling.md) | iOS halo (`haloEffect`, `tintColor`, `halo*`, `roundedHaloFix`) and Android highlight |
+| 2 | [Native focus styling](./guides/focus-styling.md) | iOS halo (`haloEffect`, `tintColor`, `halo*`) and Android highlight |
 | 3 | [Programmatic focus](./guides/programmatic-focus.md) | `ref.focus()`, `keyboardFocus()`, `screenReaderFocus()`, `autoFocus` |
 | 4 | [Keyboard text input](./guides/text-input.md) | `A11y.Input`, `focusType`, `blurType`, multiline submit |
 | 5 | [Keyboard focus order](./guides/focus-order.md) | Link-based, index-based, and direction-lock keyboard ordering |
+| 6 | [`withKeyboardFocus` efficiency](./guides/withKeyboardHandler.md) | S–D ranking of every focus/press declaration by re-render cost & reliability |
 
 **Screen reader**
 

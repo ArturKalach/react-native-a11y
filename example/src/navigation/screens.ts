@@ -12,6 +12,7 @@ import { FocusGroupScreen } from '../screens/keyboard/FocusGroupScreen';
 import { InputTestScreen } from '../screens/keyboard/InputTestScreen';
 import { ProgrammaticFocusScreen } from '../screens/keyboard/ProgrammaticFocusScreen';
 import { NativeFocusStyleScreen } from '../screens/keyboard/NativeFocusStyleScreen';
+import { PressableStyledScreen } from '../screens/keyboard/PressableStyledScreen';
 import { FocusEventsScreen } from '../screens/combined/FocusEventsScreen';
 import { OptimisticScreen } from '../screens/combined/OptimisticScreen';
 import { StatusScreen } from '../screens/combined/StatusScreen';
@@ -199,6 +200,13 @@ export const SCREENS: ScreenEntry[] = [
   },
 
   // ─── Test ────────────────────────────────────────────────────────────────
+  {
+    key: 'pressable-styled',
+    title: 'Pressable declarations',
+    subtitle: 'Compare A11y.Pressable forms & re-renders',
+    group: 'Test',
+    Component: PressableStyledScreen,
+  },
   {
     key: 'focus-order',
     title: 'Focus order',

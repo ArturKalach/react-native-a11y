@@ -33,7 +33,12 @@ export type FocusTarget = ScreenReaderFocusTarget;
 export type A11yOrderType = 'default' | 'child' | 'subview';
 
 // ─── Ported keyboard/focus type layer ───────────────────────────────────────
-export type { FocusStateCallbackType, FocusStyle } from './focusStyle.types';
+export type {
+  FocusStateCallbackType,
+  FocusStyle,
+  InteractionState,
+  InteractiveStyleProp,
+} from './focusStyle.types';
 export type {
   OnFocusChangeFn,
   KeyboardFocusHandle,
@@ -71,4 +76,6 @@ export type {
   WithKeyboardFocusProps,
   WithKeyboardFocusPropsWithRef,
   KeyboardFocusableComponentDeclaration,
+  ContainerStyle,
+  ContainerStyleStateType,
 } from './withKeyboardFocus.types';

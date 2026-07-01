@@ -9,7 +9,12 @@ import type { OnKeyPress } from './keyPress.types';
 export type FocusViewProps = {
   /** Key codes that trigger `onPress` / `onLongPress`. Defaults to spacebar and enter. */
   triggerCodes?: number[];
-  /** Style applied to the inner component while focused. */
+  /**
+   * Style applied to the inner component while focused.
+   *
+   * @deprecated Use `style={(s) => (s.focused ? … : …)}` instead — the `style`
+   * callback now receives `{ focused, pressed }`.
+   */
   focusStyle?: FocusStyle;
   /** Called on press — from touch (`GestureResponderEvent`) or physical key ({@link OnKeyPress}). */
   onPress?: (e: GestureResponderEvent | OnKeyPress) => void;
