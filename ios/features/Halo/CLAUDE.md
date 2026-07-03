@@ -25,7 +25,7 @@ features/Halo/
 | Role | File | What it does |
 |---|---|---|
 | contract | `RCA11yHaloProtocol.h` | Capability the halo reads: `isHaloHidden`, `haloCornerRadius`, `haloExpendX/Y`, `roundedHaloFix` (deprecated), `getFocusTargetView`. |
-| `base/` | `RCA11yKeyboardHaloBase` | The **view-layer integration** — a link in `RCA11yView`'s base chain (subclass of `RCA11yViewOrderGroupBase`, superclass of `RCA11yViewGroupIdentifierBase`). Owns one delegate, exposes the halo props, and drives the layout refresh. |
+| `base/` | `RCA11yKeyboardHaloBase` | The **view-layer integration** — a link in `RCA11yView`'s base chain (subclass of `RCA11yViewOrderGroupBase`, superclass of `RCA11yViewGroupIdentifierBase`). Owns one delegate and exposes the halo props + `customFocusEffect` for the pull getter. |
 | `delegate/` | `RCA11yHaloDelegate` | Per-view cached builder. Turns the view's explicit halo props into an effect (via the util) and caches it; rebuilds only when bounds / radius / a prop changes. Keeps caching out of the view. |
 | `utils/` | `RCA11yFocusEffectUtility` | Stateless construction of the `UIFocusHaloEffect` — `emptyFocusEffect` (suppressed) and `getFocusEffect:withExpandedX:withExpandedY:withCornerRadius:` (rounded rect, continuous curve). |
 
@@ -56,14 +56,22 @@ guessed first child.
   halo, which already tracks the view's bounds. (The "simple" case.)
 - **radius / expand set** → a rounded-rect effect built from the focus target's bounds.
 
-### Layout refresh
+### Pull-only — no layout re-apply
 
-A static `UIFocusHaloEffect` does **not** follow bounds, and UIKit only re-queries
-`focusEffect` at focus-update time — so on geometry change `RCA11yKeyboardHaloBase`
-`layoutSubviews` → `refreshHalo` re-pulls `customFocusEffect` and writes it back to the
-focus target. It is **gated** on a real change (pointer compare against the delegate's
-pointer-stable cached effect), so it can't feed a layout loop. A `nil` effect needs no
-refresh — UIKit's default halo tracks bounds itself.
+The halo is **purely pull-based**: UIKit queries `focusEffect` at focus-update time
+and the delegate computes it then. There is no `layoutSubviews`/`refreshHalo`
+write-back — an earlier version re-pushed the effect on every layout to keep a static
+effect tracking bounds, but it was a no-op in practice and is gone. Consequences:
+
+- **Default case (nil effect)** — the common one: UIKit's own default halo tracks the
+  focused view's bounds **and** corner radius for free, so a ring that should follow a
+  rounded card comes from the view's own `borderRadius` + `borderWidth`
+  (`layer.cornerRadius`), not from us. Round the card and the halo rounds with it.
+- **Explicit `haloCornerRadius` / `haloExpend*` (custom effect)** — a *static*
+  `UIFocusHaloEffect` built from the focus target's bounds at focus time. It does not
+  re-track bounds if the view resizes *while focused*; a prop change re-invalidates the
+  delegate so the next focus query rebuilds. This is deliberate — prefer driving the
+  ring off `borderRadius`/`borderWidth` (the default path) over a static custom effect.
 
 ## Design notes / history
 
@@ -73,7 +81,8 @@ refresh — UIKit's default halo tracks bounds itself.
 - This replaced an older system that observed the live layer radius and re-armed the
   effect through a coalesced `dispatch_after` loop (`_stableRadius`, `setNeedsHaloRearm`,
   `flushHaloRearm`, `_forceRearm`, plus a new-arch `invalidateLayer` override). All of
-  that is gone — radius-as-prop + the gated layout refresh make it unnecessary.
+  that is gone — radius-as-prop + the pull-based `focusEffect` getter make it
+  unnecessary (there is no layout write-back at all; see "Pull-only" above).
 - **`roundedHaloFix` is deprecated and ignored.** It suppressed a halo that re-armed from
   the live layer radius; with a deterministic effect always returned, a disabled halo can't
   reappear. The prop is kept (no-op) for back-compat and removed next major.

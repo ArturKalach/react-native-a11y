@@ -14,10 +14,6 @@
 
 @implementation RCA11yKeyboardHaloBase {
   RCA11yHaloDelegate *_haloDelegate;
-  // Last effect handed to the focus target. The delegate returns a pointer-stable
-  // object while its inputs are unchanged, so this doubles as the change gate that
-  // keeps the layout refresh from re-applying (and re-triggering layout) in a loop.
-  UIFocusEffect *_lastAppliedEffect;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
@@ -46,51 +42,18 @@
   return [super focusEffect];
 }
 
-- (void)layoutSubviews {
-  [super layoutSubviews];
-  [self refreshHalo];
-}
-
-// Re-apply the halo after the focus target's geometry changes. UIKit only queries
-// `focusEffect` at focus-update time, not on every layout, so a custom (static)
-// effect would otherwise keep the bounds it had when focus arrived. The pull getter
-// recomputes from current bounds; assigning it back forces UIKit to repaint.
-// A `nil` effect needs no work — UIKit's own default halo already tracks the bounds.
-// Default; the focus-change subclass overrides with the real focus state.
-- (BOOL)isKeyboardFocused {
-  return NO;
-}
-
-- (void)refreshHalo {
-  // Fast path: only the focused view ever needs its halo re-applied. Bail before the
-  // (relatively costly) getFocusTargetView lookup so unfocused views pay ~nothing on
-  // every layout pass.
-  if (![self isKeyboardFocused]) {
-    return;
-  }
-
-  if (@available(iOS 15.0, *)) {
-    UIView *target = [self getFocusTargetView];
-    if (!target.isFocused) return;
-
-    UIFocusEffect *effect = [self customFocusEffect];
-    if (effect == _lastAppliedEffect) return;
-
-    _lastAppliedEffect = effect;
-    target.focusEffect = effect;
-  }
-}
-
-// A halo prop changed: rebuild on next query and re-apply now if focused.
+// The halo is fully pull-based: UIKit queries `focusEffect` at focus-update time and
+// the delegate computes it from the focus target's current bounds/radius. With no
+// explicit halo props the delegate returns nil and UIKit's default halo tracks the
+// view's own borderRadius/borderWidth. So a prop change only needs to invalidate the
+// delegate's cache — the next query rebuilds; there is nothing to re-apply on layout.
 - (void)haloAppearanceChanged {
   [_haloDelegate invalidate];
-  [self refreshHalo];
 }
 
 - (void)cleanReferences {
   [super cleanReferences];
   [_haloDelegate clear];
-  _lastAppliedEffect = nil;
   _isHaloHidden = false;
   _haloExpendX = 0;
   _haloExpendY = 0;
@@ -122,19 +85,26 @@
 
 - (void)updateHaloProps:(const RCA11y::HaloProps &)oldProps
                newProps:(const RCA11y::HaloProps &)newProps {
+  // Guard every halo param against the current INSTANCE STATE, not `oldProps`.
+  // Fabric recycles views, and `-cleanReferences` resets these ivars to 0 — but
+  // `_props` (hence `oldProps`) is NOT reset on recycle. A view reused for a
+  // component with the SAME halo props would see `oldProps == newProps`, skip the
+  // setter, and stay stuck at the reset value (e.g. haloCornerRadius 0 → a square
+  // halo). Comparing to the ivar re-applies the real value after recycle. This
+  // matches `_isHaloHidden` here and every check in `updateFocusProps`.
   if (_isHaloHidden == newProps.haloEffect) {
     [self setIsHaloHidden: !newProps.haloEffect];
   }
 
-  if (oldProps.haloExpendX != newProps.haloExpendX) {
+  if (_haloExpendX != newProps.haloExpendX) {
     [self setHaloExpendX:newProps.haloExpendX];
   }
 
-  if (oldProps.haloExpendY != newProps.haloExpendY) {
+  if (_haloExpendY != newProps.haloExpendY) {
     [self setHaloExpendY:newProps.haloExpendY];
   }
 
-  if (oldProps.haloCornerRadius != newProps.haloCornerRadius) {
+  if (_haloCornerRadius != newProps.haloCornerRadius) {
     [self setHaloCornerRadius:newProps.haloCornerRadius];
   }
 
