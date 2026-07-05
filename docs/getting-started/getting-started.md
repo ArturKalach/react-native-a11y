@@ -82,7 +82,7 @@ export default function App() {
     <A11y.Pressable
       autoFocus
       onPress={() => console.log('activated')}
-      focusStyle={{ backgroundColor: 'dodgerblue' }}
+      style={({ focused }) => focused && { backgroundColor: 'dodgerblue' }}
       onFocus={() => console.log('focused')}
       onBlur={() => console.log('blurred')}
     >
@@ -123,7 +123,7 @@ screen-reader props, or both — unused capabilities cost nothing:
 ```tsx
 <A11y.View
   // keyboard
-  focusStyle={{ borderColor: 'dodgerblue', borderWidth: 2 }}
+  style={({ focused }) => focused && { borderColor: 'dodgerblue', borderWidth: 2 }}
   onKeyDownPress={(e) => console.log(e.nativeEvent.unicodeChar)}
   // screen reader
   a11yUIContainer="list"

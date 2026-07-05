@@ -74,6 +74,7 @@ export { Legacy } from './legacy';
 // ─── Context (focus group / focus state) ────────────────────────────────────
 export {
   useIsViewFocused,
+  useIsViewPressed,
   KeyboardOrderFocusGroup,
   useOrderFocusGroup,
   OrderFocusGroupContext,

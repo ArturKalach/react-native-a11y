@@ -8,7 +8,6 @@
 #import <React/RCTViewManager.h>
 #import <React/RCTLog.h>
 #import <React/RCTUITextView.h>
-#import "RCA11yFocusEffectUtility.h"
 #import "RCTBaseTextInputView.h"
 #import "UIViewController+RCA11y.h"
 
