@@ -2,8 +2,9 @@
 
 `react-native-a11y` re-merges `react-native-a11y-order` and
 `react-native-external-keyboard` into one package under a single `A11y.*` namespace. There
-are three ways to arrive here — pick the section that matches where you're coming from.
+are four ways to arrive here — pick the section that matches where you're coming from.
 
+- [From 0.8.0 to 0.9.0](#from-080-to-090)
 - [From legacy `react-native-a11y` 0.7](#from-legacy-react-native-a11y-07)
 - [From `react-native-a11y-order`](#from-react-native-a11y-order)
 - [From `react-native-external-keyboard`](#from-react-native-external-keyboard)
@@ -12,6 +13,125 @@ are three ways to arrive here — pick the section that matches where you're com
 > The three packages stay published and are **mutually exclusive** — install exactly one.
 > `react-native-a11y` is self-contained; remove `react-native-a11y-order` /
 > `react-native-external-keyboard` if you switch to it.
+
+---
+
+## From 0.8.0 to 0.9.0
+
+0.9.0 reworks the `withKeyboardFocus` style/press pipeline (`A11y.View` / `A11y.Pressable` /
+`A11y.Input` all go through it) and simplifies the iOS halo. Nothing in this section requires
+changes to keep working — the old props still compile — but the notes below tell you what's
+now deprecated, what's auto-enabled, and the one place a raw-context consumer needs an update.
+
+### `style` / `containerStyle` unify with `focusStyle` / `containerFocusStyle`
+
+`style` and `containerStyle` now each accept a callback that receives the current
+`InteractionState` — `{ focused, pressed }` — instead of only a static style. This replaces
+the separate `focusStyle` / `containerFocusStyle` props, which are now **deprecated** (still
+work, no timeline for removal yet).
+
+| 0.8 | 0.9 |
+| :-- | :-- |
+| `focusStyle={{ backgroundColor: 'dodgerblue' }}` | `style={({ focused }) => focused && { backgroundColor: 'dodgerblue' }}` |
+| `containerFocusStyle={{ borderColor: 'dodgerblue' }}` | `containerStyle={({ focused }) => focused && { borderColor: 'dodgerblue' }}` |
+| `focusStyle={({ focused }) => ...}` | `style={({ focused, pressed }) => ...}` (now also gets `pressed`) |
+
+```tsx
+// Before (0.8)
+<A11y.Pressable
+  style={styles.button}
+  focusStyle={{ backgroundColor: 'dodgerblue' }}
+  containerStyle={styles.container}
+  containerFocusStyle={{ borderColor: 'dodgerblue', borderWidth: 2 }}
+  onPress={onPress}
+>
+  <Text>Item</Text>
+</A11y.Pressable>
+
+// After (0.9)
+<A11y.Pressable
+  style={({ focused, pressed }) => [
+    styles.button,
+    focused && { backgroundColor: 'dodgerblue' },
+    pressed && { opacity: 0.85 },
+  ]}
+  containerStyle={({ focused }) => [
+    styles.container,
+    focused && { borderColor: 'dodgerblue', borderWidth: 2 },
+  ]}
+  onPress={onPress}
+>
+  <Text>Item</Text>
+</A11y.Pressable>
+```
+
+Static styles (no callback) work unchanged on both `style` and `containerStyle` — you only
+need to touch call sites that used `focusStyle` / `containerFocusStyle`.
+
+See [Pressable focus handling](../guides/pressable-focus.md) and
+[Focus styling](../guides/focus-styling.md) for the full guide, and the new
+[withKeyboardFocus re-render guide](../guides/withKeyboardHandler.md) for the cost of each
+declaration style.
+
+### `withPressedStyle` and `androidKeyboardPressState` are now automatic
+
+- `withPressedStyle` is **deprecated** — the pressed-style handling it used to gate on now
+  turns on automatically whenever `style` (or `containerStyle`) is a function. You can delete
+  `withPressedStyle` from custom `withKeyboardFocus`-wrapped components.
+- `androidKeyboardPressState` (Android-only; makes physical-keyboard activation report
+  `pressed` the same way touch does) now **auto-enables** whenever a pressed-reactive style or
+  render prop is present (`style`/`containerStyle` as a function, `renderContent`, or a
+  function `children`). An explicit `true`/`false` still overrides the auto-detection.
+
+If you were setting either prop by hand purely to make keyboard press styling work, it's safe
+to remove it.
+
+### New: `useIsViewPressed()`
+
+A press-state counterpart to `useIsViewFocused()`, backed by a new `IsViewPressedContext`.
+It reflects touch **and** physical-keyboard press, on both platforms, and lets a descendant
+react to press without re-rendering the focusable host itself:
+
+```tsx
+import { A11y, useIsViewPressed } from 'react-native-a11y';
+
+const Label = () => {
+  const pressed = useIsViewPressed();
+  return <Text style={pressed && styles.pressed}>Item</Text>;
+};
+
+<A11y.Pressable onPress={onPress}>
+  <Label />
+</A11y.Pressable>;
+```
+
+### Breaking (edge case): `IsViewFocusedContext`'s raw value changed shape
+
+If you call `useIsViewFocused()`, nothing changes — it still returns a `boolean`. But if any
+code reads `IsViewFocusedContext` directly with `useContext(IsViewFocusedContext)` (bypassing
+the hook), the context value changed from a plain `boolean` to a `FocusStore | null` (an
+object with `subscribe`/`getSnapshot`, used internally so focus updates skip re-rendering the
+host). Switch any direct `useContext(IsViewFocusedContext)` call to `useIsViewFocused()`.
+
+### iOS halo: `roundedHaloFix` is now fully unnecessary
+
+A disabled halo (`haloEffect={false}` or `tintType="none"`) now **always** stays disabled on
+rounded views — the halo is computed fresh from props on every focus query instead of being
+re-armed off the view's live `layer.cornerRadius`. `roundedHaloFix` is a no-op; delete it from
+any component that still passes it. Keep rounding the **view** via `containerStyle`
+(`borderRadius`) and, if you want the halo ring itself rounded to match, set
+`haloCornerRadius` to the same value — the halo doesn't infer its radius from the view's
+style. See [Focus styling § Shaping the halo](../guides/focus-styling.md#shaping-the-halo).
+
+### Bug fixes (no action needed)
+
+- **iOS halo props on recycled Fabric views** — a view recycled by Fabric for a new component
+  with an *unchanged* halo prop (e.g. same `haloCornerRadius`) could get stuck with a
+  previously-reset value instead of the real one. Fixed by comparing against live instance
+  state rather than the previous props snapshot.
+- **`A11y.Card` touch / drag screen-reader exploration** — an iOS `accessibilityElements`
+  override on the card's overlay view was interfering with touch-exploration ("drag to
+  discover") over the card's children. Removed; card content is discoverable via touch again.
 
 ---
 
