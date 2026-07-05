@@ -39,7 +39,7 @@ drive the **keyboard** focus capability.
 | `haloCornerRadius` | `number` | — | *(iOS)* Corner radius of the halo ring, in points. |
 | `haloExpendX` | `number` | — | *(iOS)* Horizontal expansion of the halo beyond the view bounds. |
 | `haloExpendY` | `number` | — | *(iOS)* Vertical expansion of the halo beyond the view bounds. |
-| `roundedHaloFix` | `boolean` | — | *(iOS)* When `haloEffect={false}`, keeps the disabled halo from reappearing on rounded (`borderRadius`) views. [Why & alternative](../guides/focus-styling.md#roundedhalofix). |
+| `roundedHaloFix` | `boolean` | — | *(iOS)* **Deprecated & ignored** — a disabled halo no longer reappears on rounded views, so this is no longer needed. Removed next major. |
 | `defaultFocusHighlightEnabled` | `boolean` | `true` | *(Android)* Enables Android's default focus highlight. |
 | `tintType` | `'default' \| 'none'` | `'default'` | Cross-platform shortcut: `'none'` disables the native focus indicator on both platforms (iOS halo + Android highlight). [Details](../guides/focus-styling.md#turning-off-all-native-indicators). |
 | `groupIdentifier` | `string` | — | *(iOS)* `focusGroupIdentifier` this view belongs to. |
@@ -82,10 +82,10 @@ All standard `ViewProps`, all [common focus props](#common-focus-props), plus:
 
 | Prop | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `style` | `StyleProp<ViewStyle>` | — | Style for the inner component. |
-| `focusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | Style applied to the inner component when focused. |
-| `containerStyle` | `StyleProp<ViewStyle>` | — | Style for the container. |
-| `containerFocusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | Style applied to the container when focused. |
+| `style` | `InteractiveStyleProp` | — | Inner component style: static or `({ focused, pressed }) => style`. |
+| `focusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | **Deprecated** — use `style={(s) => (s.focused ? … : …)}`. Applied to the inner component when focused. |
+| `containerStyle` | `InteractiveStyleProp` | — | Container style: static or `({ focused, pressed }) => style`. |
+| `containerFocusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | **Deprecated** — use `containerStyle={(s) => (s.focused ? … : …)}`. Applied to the container when focused. |
 | `orderType` | `'auto' \| 'keyboard' \| 'screen-reader'` | `'auto'` | Which ordering engine applies. |
 | `screenReaderFocusTarget` | `'self' \| 'firstAccessible' \| 'child'` | `'self'` | Which element the screen reader treats as this view's focus node. See [Screen-reader focus order](../guides/a11y-order.md#screenreaderfocustarget--which-element-gets-focused). |
 | `index` | `number` | — | Positional index within an enclosing `A11y.Order`. Throws if used outside one. |
@@ -123,10 +123,10 @@ All `PressableProps`, all [common focus props](#common-focus-props), plus the
 
 | Prop | Type | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `style` | `StyleProp<ViewStyle>` | — | Styles the inner component. |
-| `focusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | Style applied to the inner component when focused. |
-| `containerStyle` | `StyleProp<ViewStyle>` | — | Style for the container. |
-| `containerFocusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | Style applied to the container when focused. |
+| `style` | `InteractiveStyleProp` | — | Inner component style: static or `({ focused, pressed }) => style`. |
+| `focusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | **Deprecated** — use `style={(s) => (s.focused ? … : …)}`. Applied to the inner component when focused. |
+| `containerStyle` | `InteractiveStyleProp` | — | Container style: static or `({ focused, pressed }) => style`. |
+| `containerFocusStyle` | [`FocusStyle`](../api/overview.md#focusstyle) | — | **Deprecated** — use `containerStyle={(s) => (s.focused ? … : …)}`. Applied to the container when focused. |
 | `renderContent` | `(state: ChildrenRenderState & { focused: boolean }) => ReactNode` | — | For components whose `children` is a render function (e.g. `Pressable`); merges the component's own render state with `{ focused }`. |
 | `renderFocusable` | `(state: { focused: boolean }) => ReactNode` | — | Replaces `children` with a render prop receiving `{ focused }`. For components without a render-prop `children`. |
 | `triggerCodes` | `number[]` | space + enter | Key codes that trigger `onPress` / `onLongPress`. |
@@ -157,7 +157,7 @@ All standard `TextInputProps`, plus:
 | `onSubmitEditing` | `(e: NativeSyntheticEvent<TextInputSubmitEditingEventData>) => void` | — | Extended `onSubmitEditing` supporting multiline input. |
 | `onFocusChange` | `(isFocused: boolean) => void` | — | Called on focus or blur. |
 | `haloEffect` | `boolean` | `true` | *(iOS)* Halo ring on focus. |
-| `roundedHaloFix` | `boolean` | `false` | *(iOS)* Keep a disabled halo suppressed on rounded views. |
+| `roundedHaloFix` | `boolean` | `false` | *(iOS)* **Deprecated & ignored** — no longer needed; removed next major. |
 | `defaultFocusHighlightEnabled` | `boolean` | `true` | *(Android)* Default focus highlight. |
 | `tintType` | `'default' \| 'none'` | `'default'` | Cross-platform: `'none'` disables the native indicator. |
 | `tintColor` | `string` | — | *(iOS)* Tint color on focus. |

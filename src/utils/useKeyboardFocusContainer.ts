@@ -1,9 +1,8 @@
 import { useCallback, useMemo } from 'react';
-import type { PressableProps } from 'react-native';
 import { useFocusStyle } from './useFocusStyle';
 import { useKeyboardPress } from './useKeyboardPress/useKeyboardPress';
 import { useKeyboardPressState } from './useKeyboardPressState';
-import type { FocusStyle, OnKeyPressFn } from '../types';
+import type { FocusStyle, InteractiveStyleProp, OnKeyPressFn } from '../types';
 
 type AnyPressHandler = (event?: any) => void;
 
@@ -14,8 +13,10 @@ export type UseKeyboardFocusContainerProps<
   focusStyle?: FocusStyle;
   containerFocusStyle?: FocusStyle;
   onFocusChange?: (isFocused: boolean) => void;
-  style?: PressableProps['style'];
+  style?: InteractiveStyleProp;
   pressedStyleSignature?: boolean;
+  /** Re-render on focus change (default `true`). See {@link useFocusStyle}. */
+  reactToFocus?: boolean;
   onKeyUpPress?: OnKeyPressFn;
   onKeyDownPress?: OnKeyPressFn;
   onPress?: TPress;
@@ -35,6 +36,7 @@ export const useKeyboardFocusContainer = <
   onFocusChange,
   style,
   pressedStyleSignature,
+  reactToFocus,
   onKeyUpPress,
   onKeyDownPress,
   onPress,
@@ -56,12 +58,14 @@ export const useKeyboardFocusContainer = <
     containerFocusedStyle,
     componentStyleViewStyle,
     onFocusChangeHandler,
+    focusStore,
   } = useFocusStyle({
     onFocusChange: keyboardPress.onFocusChange,
     focusStyle,
     containerFocusStyle,
     style,
     pressedStyleSignature,
+    reactToFocus,
   });
 
   const { onKeyUpPressHandler, onKeyDownPressHandler, onPressHandler } =
@@ -89,6 +93,7 @@ export const useKeyboardFocusContainer = <
 
   return {
     focused,
+    focusStore,
     keyboardPressed: keyboardPress.pressed,
     containerFocusedStyle,
     componentStyleViewStyle: componentStyle,

@@ -21,9 +21,6 @@ using namespace facebook::react;
   NSString *_contentFocusGroupIdentifier;
 }
 
-- (nullable NSArray *)accessibilityElements {
-  return self.subviews;
-}
 
 - (void)willRemoveSubview:(UIView *)subview {
   [super willRemoveSubview:subview];

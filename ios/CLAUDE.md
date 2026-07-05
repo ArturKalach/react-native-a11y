@@ -34,7 +34,7 @@ a11y-order's screen-reader index view and external-keyboard's focusable view thr
 RCA11yBaseViewClass        // = RCTViewComponentView (newarch) / RCTView (oldarch)
   → RCA11yViewGroupBase
   → RCA11yViewOrderGroupBase
-  → RCA11yKeyboardHaloBase          ┐
+  → RCA11yKeyboardHaloBase          ┐ (lives in features/Halo/)
   → RCA11yViewGroupIdentifierBase   │ keyboard chain
   → RCA11yViewFocusChangeBase       │ (focus, halo, key events,
   → RCA11yViewContextMenuBase       │  context menu, order group)
@@ -52,6 +52,11 @@ RCA11yBaseViewClass        // = RCTViewComponentView (newarch) / RCTView (oldarc
 `RCA11yTextInputWrapper` reuses the keyboard chain (subclasses `RCA11yViewFocusChangeBase`).
 The other views (`RCA11yLockView`, `RCA11yOrderView`, `RCA11yCardView`,
 `RCA11yPaneTitleView`, `RCA11yFocusGroup`) subclass `RCTViewComponentView`/`RCTView` directly.
+
+> The **halo** subsystem is grouped under [`features/Halo/`](features/Halo/CLAUDE.md):
+> `RCA11yKeyboardHaloBase` (the base-chain layer above), `RCA11yHaloDelegate`,
+> `RCA11yFocusEffectUtility`, and `RCA11yHaloProtocol`. Every other base-chain layer
+> lives in `views/base/`.
 
 ## Modules (`ios/modules/`, registered via codegen `modulesProvider`)
 
@@ -71,15 +76,18 @@ resolve a React tag to a `UIView` across Paper, bridgeless new arch, and bridgef
   `RCA11yFocusMemoryService`, `RCA11yOrderLinking` + `RCA11yKbdOrderLinking` (SR + keyboard
   order), `RCA11yFocusLinkObserver` (+`RCA11yOrderSubscriber`) for directional `orderId` links,
   `RCA11yRelationship`, `RCA11ySortedMap`, `RCA11yItemDelegate`.
-- **`delegates/`** — focus, focus-link, focus-sequence, group-identifier, halo, and
-  view-item delegates (each `RCA11y*Delegate`).
+- **`features/Halo/`** — the keyboard focus halo, grouped as one feature
+  (`RCA11yKeyboardHaloBase`, `RCA11yHaloDelegate`, `RCA11yFocusEffectUtility`,
+  `RCA11yHaloProtocol`). See [`features/Halo/CLAUDE.md`](features/Halo/CLAUDE.md).
+- **`delegates/`** — focus, focus-link, focus-sequence, group-identifier, and
+  view-item delegates (each `RCA11y*Delegate`). (The halo delegate lives in `features/Halo/`.)
 - **`protocols/`** — capability protocols (`RCA11yFocusProtocol`, `RCA11yFocusOrderProtocol`,
-  `RCA11yKeyboardFocusableProtocol`, `RCA11yHaloProtocol`, `RCA11yGroupIdentifierProtocol`,
-  `RCA11yOptimisticProtocol`, etc.).
+  `RCA11yKeyboardFocusableProtocol`, `RCA11yGroupIdentifierProtocol`,
+  `RCA11yOptimisticProtocol`, etc.; `RCA11yHaloProtocol` lives in `features/Halo/`).
 - **`helpers/`** — `RCA11yFabricEventHelper` (event dispatch), `RCA11yKeyboardKeyPressHandler`,
-  `RCA11yFocusEffectUtility`, `RCA11yFocusGuideHelper`, `RCA11yPropsHelper`,
+  `RCA11yFocusGuideHelper`, `RCA11yPropsHelper`,
   `RCA11ySpeechAttributes`, `RCA11yDebouncer`, `RCA11ySwizzleInstanceMethod`,
-  `RCA11yFocusChangeListener`.
+  `RCA11yFocusChangeListener`. (`RCA11yFocusEffectUtility` lives in `features/Halo/`.)
 - **`extensions/`** — categories adding a11y behavior to RN/UIKit views: `RCTViewComponentView`,
   `RCTCustomScrollView`/`RCTEnhancedScrollView`, `RCTModalHostViewComponentView`,
   `RCTTextInputComponentView`, `UIView`, `UIViewController`.
