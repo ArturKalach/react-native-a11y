@@ -4,7 +4,7 @@
 //
 #ifndef RCT_NEW_ARCH_ENABLED
 
-#import "RCTScrollView.h"
+#import <React/RCTScrollView.h>
 #import "RCA11ySwizzleInstanceMethod.h"
 
 static void RCA11yRCTScrollViewSwizzle(void) {

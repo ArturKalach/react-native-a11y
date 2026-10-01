@@ -10,7 +10,7 @@
 
 #ifdef RCT_NEW_ARCH_ENABLED
 
-#import "RCTModalHostViewComponentView.h"
+#import <React/RCTModalHostViewComponentView.h>
 
 
 @interface RCTModalHostViewComponentView (RCA11y)
@@ -18,7 +18,7 @@
 
 #else
 
-#import "RCTModalHostView.h"
+#import <React/RCTModalHostView.h>
 
 @interface RCTModalHostView (RCA11y)
 @end

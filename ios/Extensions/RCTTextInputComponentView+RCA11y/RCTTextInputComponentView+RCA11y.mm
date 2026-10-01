@@ -7,8 +7,8 @@
 #import <React/RCTBackedTextInputViewProtocol.h>
 #import <objc/runtime.h>
 #import "RCA11yCustomFocusEffectProtocol.h"
-#import "RCTUITextField.h"
-#import "RCTUITextView.h"
+#import <React/RCTUITextField.h>
+#import <React/RCTUITextView.h>
 
 @implementation RCTTextInputComponentView (RCA11y)
 
