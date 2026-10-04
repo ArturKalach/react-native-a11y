@@ -97,9 +97,9 @@ using namespace facebook::react;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<RCA11yFocusGroupProps const>(_props);
+    const auto oldViewPropsPtr = std::static_pointer_cast<RCA11yFocusGroupProps const>(_props);
+    const auto &oldViewProps = *oldViewPropsPtr;
     const auto &newViewProps = *std::static_pointer_cast<RCA11yFocusGroupProps const>(props);
-    [super updateProps:props oldProps:oldProps];
 
 
     UIColor* newColor = RCTUIColorFromSharedColor(newViewProps.tintColor);
@@ -118,6 +118,8 @@ using namespace facebook::react;
         [self setCustomGroupId:newGroupId];
       }
     }
+
+    [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> RCA11yFocusGroupCls(void)

@@ -160,7 +160,6 @@ typedef NS_ENUM(NSInteger, RCA11yLockComponentType) {
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
   const auto &newViewProps = *std::static_pointer_cast<RCA11yLockProps const>(props);
-  [super updateProps:props oldProps:oldProps];
 
   self.componentType = newViewProps.componentType;
   self.containerKey = newViewProps.containerKey.empty()
@@ -168,6 +167,8 @@ typedef NS_ENUM(NSInteger, RCA11yLockComponentType) {
     : [NSString stringWithUTF8String:newViewProps.containerKey.c_str()];
   self.forceLock = newViewProps.forceLock;
   self.lockDisabled = newViewProps.lockDisabled;
+
+  [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> RCA11yLockCls(void)
