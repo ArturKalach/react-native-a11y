@@ -20,7 +20,7 @@
 #import <react/renderer/components/RNA11ySpec/Props.h>
 #import <react/renderer/components/RNA11ySpec/RCTComponentViewHelpers.h>
 #import "RCA11yPropsHelper.h"
-#import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFabricComponentsPlugins.h>
 
 using namespace facebook::react;
 

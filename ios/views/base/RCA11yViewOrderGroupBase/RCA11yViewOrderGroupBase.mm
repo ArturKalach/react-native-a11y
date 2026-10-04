@@ -7,7 +7,7 @@
 #import "RCA11yViewOrderGroupBase.h"
 #import "RCA11yKbdOrderLinking.h"
 #import "UIViewController+RCA11y.h"
-#import "UIView+React.h"
+#import <React/UIView+React.h>
 #import "RCA11yPropsHelper.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
