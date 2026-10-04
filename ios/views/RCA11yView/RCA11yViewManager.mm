@@ -7,7 +7,7 @@
 #import <React/RCTUIManager.h>
 #import "RCA11yViewManager.h"
 #import "RCA11yView.h"
-#import "RCTBridge.h"
+#import <React/RCTBridge.h>
 
 @implementation RCA11yViewManager
 

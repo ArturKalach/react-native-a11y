@@ -13,6 +13,7 @@ import { InputTestScreen } from '../screens/keyboard/InputTestScreen';
 import { ProgrammaticFocusScreen } from '../screens/keyboard/ProgrammaticFocusScreen';
 import { NativeFocusStyleScreen } from '../screens/keyboard/NativeFocusStyleScreen';
 import { PressableStyledScreen } from '../screens/keyboard/PressableStyledScreen';
+import { FocusSandboxScreen } from '../screens/keyboard/FocusSandboxScreen';
 import { FocusEventsScreen } from '../screens/combined/FocusEventsScreen';
 import { OptimisticScreen } from '../screens/combined/OptimisticScreen';
 import { StatusScreen } from '../screens/combined/StatusScreen';
@@ -206,6 +207,13 @@ export const SCREENS: ScreenEntry[] = [
     subtitle: 'Compare A11y.Pressable forms & re-renders',
     group: 'Test',
     Component: PressableStyledScreen,
+  },
+  {
+    key: 'focus-sandbox',
+    title: 'Focus sandbox',
+    subtitle: 'Tab order across covering-content shapes (iOS 26)',
+    group: 'Test',
+    Component: FocusSandboxScreen,
   },
   {
     key: 'focus-order',

@@ -8,13 +8,13 @@
 #import <React/RCTViewManager.h>
 #import <React/RCTLog.h>
 #import <React/RCTUITextView.h>
-#import "RCTBaseTextInputView.h"
 #import "UIViewController+RCA11y.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #import "RCTTextInputComponentView+RCA11y.h"
 #import <React/RCTTextInputComponentView.h>
 #else
+#import <React/RCTBaseTextInputView.h>
 #import <React/RCTSinglelineTextInputView.h>
 #import <React/RCTMultilineTextInputView.h>
 #endif
@@ -31,7 +31,7 @@
 
 #import "RCA11yPropsHelper.h"
 #import "RCTViewComponentView+RCA11y.h"
-#import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFabricComponentsPlugins.h>
 #include "RCA11yNativeProps.h"
 
 using namespace facebook::react;
@@ -74,9 +74,9 @@ static const NSInteger AUTO_BLUR = 2;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<RCA11yTextInputWrapperProps const>(_props);
+    const auto oldViewPropsPtr = std::static_pointer_cast<RCA11yTextInputWrapperProps const>(_props);
+    const auto &oldViewProps = *oldViewPropsPtr;
     const auto &newViewProps = *std::static_pointer_cast<RCA11yTextInputWrapperProps const>(props);
-    [super updateProps:props oldProps:oldProps];
 
     if(oldViewProps.focusType != newViewProps.focusType) {
         [self setFocusType: newViewProps.focusType];
@@ -112,6 +112,7 @@ static const NSInteger AUTO_BLUR = 2;
         self.tintColor = RCTUIColorFromSharedColor(newViewProps.tintColor);
     }
 
+    [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> RCA11yTextInputWrapperCls(void)

@@ -15,7 +15,7 @@
 #include <string>
 
 #import "RCA11yPropsHelper.h"
-#import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFabricComponentsPlugins.h>
 #import "RCA11yFabricEventHelper.h"
 #import <React/RCTConversions.h>
 #import <stdlib.h>
@@ -76,11 +76,11 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
 
 - (void)updateProps:(Props::Shared const &)props
            oldProps:(Props::Shared const &)oldProps {
-  const auto &oldViewProps =
-  *std::static_pointer_cast<RCA11yViewProps const>(_props);
+  const auto oldViewPropsPtr =
+  std::static_pointer_cast<RCA11yViewProps const>(_props);
+  const auto &oldViewProps = *oldViewPropsPtr;
   const auto &newViewProps =
   *std::static_pointer_cast<RCA11yViewProps const>(props);
-  [super updateProps:props oldProps:oldProps];
 
   NSInteger orderType = newViewProps.orderType;
   BOOL screenReaderOrder = orderType != RCA11yOrderTypeKeyboard;     // auto or screen-reader
@@ -155,6 +155,8 @@ typedef NS_ENUM(NSInteger, RCA11yOrderType) {
     NSInteger containerType = newViewProps.containerType;
     self.accessibilityContainerType = (UIAccessibilityContainerType)containerType;
   }
+
+  [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> RCA11yViewCls(void) {
