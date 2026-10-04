@@ -7,7 +7,7 @@
 #import <React/RCTUIManager.h>
 #import "RCA11yFocusGroupManager.h"
 #import "RCA11yFocusGroup.h"
-#import "RCTBridge.h"
+#import <React/RCTBridge.h>
 
 @implementation RCA11yFocusGroupManager
 

@@ -7,7 +7,7 @@
 #import <React/RCTUIManager.h>
 #import "RCA11yTextInputWrapperManager.h"
 #import "RCA11yTextInputWrapper.h"
-#import "RCTBridge.h"
+#import <React/RCTBridge.h>
 
 @implementation RCA11yTextInputWrapperManager
 
