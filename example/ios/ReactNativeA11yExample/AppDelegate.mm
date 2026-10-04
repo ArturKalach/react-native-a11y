@@ -1,4 +1,5 @@
 #import "AppDelegate.h"
+#import "SceneDelegate.h"
 
 #import <React/RCTBundleURLProvider.h>
 
@@ -10,6 +11,8 @@
   // You can add your custom initial props in the dictionary below.
   // They will be passed down to the ViewController used by React Native.
   self.initialProps = @{};
+  // The window is created per scene in SceneDelegate (UIScene life cycle).
+  self.automaticallyLoadReactNativeWindow = NO;
 
   return [super application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -26,6 +29,16 @@
 #else
   return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
+}
+
+- (UISceneConfiguration *)application:(UIApplication *)application
+    configurationForConnectingSceneSession:(UISceneSession *)connectingSceneSession
+                                   options:(UISceneConnectionOptions *)options
+{
+  UISceneConfiguration *configuration = [[UISceneConfiguration alloc] initWithName:@"Default Configuration"
+                                                                       sessionRole:connectingSceneSession.role];
+  configuration.delegateClass = [SceneDelegate class];
+  return configuration;
 }
 
 @end
