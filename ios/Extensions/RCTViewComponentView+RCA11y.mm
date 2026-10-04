@@ -9,6 +9,22 @@
 #import "RCA11yCustomGroupIdProtocol.h"
 #import "RCA11yFocusProtocol.h"
 
+
+static const NSUInteger kRCA11yMaxFocusContentDepth = 3;
+
+static inline BOOL RCA11yIsFocusWrapper(UIView *view) {
+  return [view conformsToProtocol:@protocol(RCA11yFocusProtocol)] &&
+         [(id<RCA11yFocusProtocol>)view focusableWrapper];
+}
+
+static inline BOOL RCA11yIsFocusTarget(UIView *view) {
+  if (RCA11yIsFocusWrapper(view.superview)) {
+    return YES;
+  }
+  return [view conformsToProtocol:@protocol(RCA11yFocusProtocol)] &&
+         ![(id<RCA11yFocusProtocol>)view focusableWrapper];
+}
+
 @implementation RCA11yViewClass (RCA11y)
 
 - (NSString *)focusGroupIdentifier {
@@ -45,6 +61,26 @@
   }
 
   return [super canBecomeFocused];
+}
+
+
+- (BOOL)isTransparentFocusItem {
+  if ([super isTransparentFocusItem]) {
+    return YES;
+  }
+
+  if (@available(iOS 26.0, *)) {
+    UIView *target = self.superview;
+    for (NSUInteger depth = 0;
+         target != nil && depth < kRCA11yMaxFocusContentDepth;
+         depth++, target = target.superview) {
+      if (RCA11yIsFocusTarget(target)) {
+        return YES;
+      }
+    }
+  }
+
+  return NO;
 }
 
 @end
