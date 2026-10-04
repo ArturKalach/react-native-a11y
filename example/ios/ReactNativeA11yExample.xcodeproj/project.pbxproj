@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A11E00015C3E0000000000B1 /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A11E00015C3E0000000000A2 /* SceneDelegate.mm */; };
 		00E356F31AD99517003FC87E /* ReactNativeA11yExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* ReactNativeA11yExampleTests.m */; };
 		0C80B921A6F3F58F76C31292 /* libPods-ReactNativeA11yExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-ReactNativeA11yExample.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
@@ -16,6 +15,7 @@
 		7699B88040F8A987B510C191 /* libPods-ReactNativeA11yExample-ReactNativeA11yExampleTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-ReactNativeA11yExample-ReactNativeA11yExampleTests.a */; };
 		7B03B7A06C00D80D78BF92CC /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		A11E00015C3E0000000000B1 /* SceneDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = A11E00015C3E0000000000A2 /* SceneDelegate.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,8 +29,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A11E00015C3E0000000000A1 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDelegate.h; path = ReactNativeA11yExample/SceneDelegate.h; sourceTree = "<group>"; };
-		A11E00015C3E0000000000A2 /* SceneDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SceneDelegate.mm; path = ReactNativeA11yExample/SceneDelegate.mm; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* ReactNativeA11yExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ReactNativeA11yExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ReactNativeA11yExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ReactNativeA11yExampleTests.m; sourceTree = "<group>"; };
@@ -48,6 +46,8 @@
 		5DCACB8F33CDC322A6C60F78 /* libPods-ReactNativeA11yExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ReactNativeA11yExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = ReactNativeA11yExample/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-ReactNativeA11yExample-ReactNativeA11yExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ReactNativeA11yExample-ReactNativeA11yExampleTests.release.xcconfig"; path = "Target Support Files/Pods-ReactNativeA11yExample-ReactNativeA11yExampleTests/Pods-ReactNativeA11yExample-ReactNativeA11yExampleTests.release.xcconfig"; sourceTree = "<group>"; };
+		A11E00015C3E0000000000A1 /* SceneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SceneDelegate.h; path = ReactNativeA11yExample/SceneDelegate.h; sourceTree = "<group>"; };
+		A11E00015C3E0000000000A2 /* SceneDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = SceneDelegate.mm; path = ReactNativeA11yExample/SceneDelegate.mm; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
