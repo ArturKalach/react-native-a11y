@@ -86,13 +86,15 @@ using namespace facebook::react;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<RCA11yOrderProps const>(_props);
+    const auto oldViewPropsPtr = std::static_pointer_cast<RCA11yOrderProps const>(_props);
+    const auto &oldViewProps = *oldViewPropsPtr;
     const auto &newViewProps = *std::static_pointer_cast<RCA11yOrderProps const>(props);
-    [super updateProps:props oldProps:oldProps];
 
     if(oldViewProps.orderKey != newViewProps.orderKey) {
           [self setOrderKey:  [NSString stringWithUTF8String:newViewProps.orderKey.c_str()]];
          }
+
+    [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> RCA11yOrderCls(void)

@@ -74,9 +74,9 @@ static const NSInteger AUTO_BLUR = 2;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-    const auto &oldViewProps = *std::static_pointer_cast<RCA11yTextInputWrapperProps const>(_props);
+    const auto oldViewPropsPtr = std::static_pointer_cast<RCA11yTextInputWrapperProps const>(_props);
+    const auto &oldViewProps = *oldViewPropsPtr;
     const auto &newViewProps = *std::static_pointer_cast<RCA11yTextInputWrapperProps const>(props);
-    [super updateProps:props oldProps:oldProps];
 
     if(oldViewProps.focusType != newViewProps.focusType) {
         [self setFocusType: newViewProps.focusType];
@@ -112,6 +112,7 @@ static const NSInteger AUTO_BLUR = 2;
         self.tintColor = RCTUIColorFromSharedColor(newViewProps.tintColor);
     }
 
+    [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> RCA11yTextInputWrapperCls(void)

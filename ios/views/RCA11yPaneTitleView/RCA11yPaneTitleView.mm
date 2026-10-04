@@ -65,9 +65,9 @@ using namespace facebook::react;
 
 - (void)updateProps:(Props::Shared const &)props oldProps:(Props::Shared const &)oldProps
 {
-  const auto &oldViewProps = *std::static_pointer_cast<RCA11yPaneTitleProps const>(_props);
+  const auto oldViewPropsPtr = std::static_pointer_cast<RCA11yPaneTitleProps const>(_props);
+  const auto &oldViewProps = *oldViewPropsPtr;
   const auto &newViewProps = *std::static_pointer_cast<RCA11yPaneTitleProps const>(props);
-  [super updateProps:props oldProps:oldProps];
 
   // NOTE: the merged spec adds `type` (0 activity · 1 pane · 2 announce); on iOS the
   // behavior is uniform (announce title / detach message), so `type` is unused here.
@@ -83,6 +83,8 @@ using namespace facebook::react;
   if (_withFocusRestore != newViewProps.withFocusRestore) {
     [self setWithFocusRestore: newViewProps.withFocusRestore];
   }
+
+  [super updateProps:props oldProps:oldProps];
 }
 
 Class<RCTComponentViewProtocol> RCA11yPaneTitleCls(void)
