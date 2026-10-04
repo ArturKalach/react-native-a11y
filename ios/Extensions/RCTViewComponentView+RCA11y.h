@@ -4,7 +4,9 @@
 //
 //  Keyboard focus overrides on the RN host view (ported from
 //  react-native-external-keyboard's RCTViewComponentView+RNCEKVExternalKeyboard):
-//  focusGroupIdentifier / focusEffect / canBecomeFocused defer to an A11y parent.
+//  focusGroupIdentifier / focusEffect / canBecomeFocused defer to an A11y parent;
+//  isTransparentFocusItem (iOS 26+) keeps content covering a focus target from
+//  occluding it.
 //  The screen-reader focus-delegate storage + accessibility swizzle live in the
 //  separate UIView+RCA11y category (they apply to any accessible child view).
 //

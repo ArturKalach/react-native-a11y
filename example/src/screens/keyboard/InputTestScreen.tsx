@@ -249,6 +249,11 @@ const Field = ({
         editing && styles.fieldEditing,
       ]}
     >
+      {/* iOS 26+: Tab only moves past an A11y.Input that is drawn last among its
+          siblings, so StatePill renders before it. Moving StatePill after the input,
+          or reordering with row-reverse, makes Tab stop at this field again. */}
+      <StatePill navFocused={navFocused} editing={editing} />
+
       {navFocused && !editing ? (
         <Animated.View
           pointerEvents="none"
@@ -293,8 +298,6 @@ const Field = ({
           style={styles.input}
         />
       </View>
-
-      <StatePill navFocused={navFocused} editing={editing} />
     </View>
   );
 };
@@ -432,6 +435,7 @@ const styles = StyleSheet.create({
   fields: { flex: 1, gap: GAP },
   field: {
     height: FIELD_H,
+    // Plain row, not row-reverse — see the comment on StatePill's render in Field.
     flexDirection: 'row',
     alignItems: 'center',
     gap: 10,
