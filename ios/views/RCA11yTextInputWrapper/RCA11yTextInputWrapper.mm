@@ -8,13 +8,13 @@
 #import <React/RCTViewManager.h>
 #import <React/RCTLog.h>
 #import <React/RCTUITextView.h>
-#import "RCTBaseTextInputView.h"
 #import "UIViewController+RCA11y.h"
 
 #ifdef RCT_NEW_ARCH_ENABLED
 #import "RCTTextInputComponentView+RCA11y.h"
 #import <React/RCTTextInputComponentView.h>
 #else
+#import <React/RCTBaseTextInputView.h>
 #import <React/RCTSinglelineTextInputView.h>
 #import <React/RCTMultilineTextInputView.h>
 #endif
@@ -31,7 +31,7 @@
 
 #import "RCA11yPropsHelper.h"
 #import "RCTViewComponentView+RCA11y.h"
-#import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFabricComponentsPlugins.h>
 #include "RCA11yNativeProps.h"
 
 using namespace facebook::react;

@@ -15,7 +15,7 @@
 #include <string>
 
 #import "RCA11yPropsHelper.h"
-#import "RCTFabricComponentsPlugins.h"
+#import <React/RCTFabricComponentsPlugins.h>
 #import "RCA11yFabricEventHelper.h"
 #import <React/RCTConversions.h>
 #import <stdlib.h>

@@ -6,9 +6,9 @@
 
 #ifdef RCT_NEW_ARCH_ENABLED
 
-#import "RCTEnhancedScrollView.h"
+#import <React/RCTEnhancedScrollView.h>
 #import "RCA11ySwizzleInstanceMethod.h"
-#import "RCTScrollViewComponentView.h"
+#import <React/RCTScrollViewComponentView.h>
 
 static void RCA11yEnhancedScrollViewSwizzle(void) {
   RCA11ySwizzleInstanceMethod([RCTEnhancedScrollView class], @selector(initWithFrame:), @selector(rca11yInitWithFrame:));
