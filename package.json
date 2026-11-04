@@ -13,6 +13,8 @@
     "android",
     "ios",
     "cpp",
+    "Package.swift",
+    "spm-headers",
     "*.podspec",
     "react-native.config.js",
     "!lib/typescript/example",
@@ -208,5 +210,8 @@
   "eslintIgnore": [
     "node_modules/",
     "lib/"
-  ]
+  ],
+  "swiftpmConfig": {
+    "name": "RNA11y"
+  }
 }

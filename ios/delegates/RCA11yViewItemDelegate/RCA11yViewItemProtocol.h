@@ -6,6 +6,8 @@
 #ifndef RCA11yViewItemProtocol_h
 #define RCA11yViewItemProtocol_h
 
+#import <UIKit/UIKit.h>
+
 @protocol RCA11yViewItemProtocol <NSObject>
 
 - (void)onFocusItemLinked: (UIView*)view;

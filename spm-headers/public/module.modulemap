@@ -1,0 +1,4 @@
+// No consumer imports this library's headers; codegen reaches its classes by name.
+module RNA11y {
+    export *
+}
