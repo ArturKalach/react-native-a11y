@@ -25,7 +25,8 @@ It has **no runtime dependency** on any other package and ships independently.
 - A `Legacy.*` shim preserves the older imperative focus-order API.
 - Native views are merged but modules stay scoped; native naming is unified on
   `RCA11y*` (iOS) / `com.reactnativea11y` (Android).
-- Web is a best-effort View-mocked passthrough (`index.web.ts` re-exports the default entry).
+- Web is a best-effort View-mocked passthrough: `index.tsx` is the entry on every platform, and
+  components with `.web` variants pick them up through platform resolution.
 
 > History: this library was assembled from two focused packages — `react-native-a11y-order`
 > (SR) and `react-native-external-keyboard` (keyboard). The pre-merge `0.7.0` design
@@ -74,7 +75,7 @@ Everything ships under the `A11y` namespace, plus top-level imperative APIs:
 ## Source structure (`src/`)
 
 ```
-index.tsx / index.web.ts   // A11y namespace + top-level exports; web re-exports default entry
+index.tsx                  // A11y namespace + top-level exports, on every platform
 components/                // A11yView (the merged core view), A11yPressable, A11yInput,
                            //   A11yOrder, A11yIndex, A11yCard, A11yLock (FocusTrap + FocusFrame),
                            //   A11yPaneTitle (+ A11yScreenChange), A11yFocusGroup,
